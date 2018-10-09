@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffff</color>
+    <color name="black">#E5000000</color>
+    <color name="blue">#2196f3</color>
+    <color name="green">#1FA129</color>
+    <color name="yellow">#D18929</color>
+    <color name="blue_light">#45c7fa</color>
+    <color name="gray">#33FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="window_background">#111111</color>
+
+
+    <color name="appointment_bg">#181818</color>
+    <color name="appointment_btn_gray">#6B6B6B</color>
+    <color name="appointment_text_bg">#19FFFFFF</color>
+    <color name="appointment_text_color">#80FFFFFF</color>
+    <color name="air_text_color">#50FAFAFA</color>
+
+    <color name="calendar_week_bg">#424242</color>
+    <color name="calendar_bg">#000000</color>
+    <integer name="theme_id">0</integer>
+
+
+    <color name="pm2.5_color_bar">#FF00B751</color>
+    <color name="pm2.5_color_bar1">#FFE5DC33</color>
+    <color name="pm2.5_color_bar2">#FFEAB421</color>
+    <color name="pm2.5_color_bar3">#FFDF2406</color>
+    <color name="pm2.5_color_bar4">#FF893DC9</color>
+    <color name="pm2.5_color_bar5">#FF692608</color>
+
+    <color name="unavailable_blue">#462196F3</color>
+    <color name="tem_font_unavailable">#46FAFAFA</color>
+    <color name="tem_font">#FAFAFA</color>
+    <color name="air_acc_background">#46111111</color>
+    <color name="champagne">#885229</color>
+    <color name="unavailable_champagne">#46885229</color>
+    <color name="blue_pressed">#2196f3</color>
+    <color name="champagne_pressed">#7a4924</color>
+    <color name="menu_line">#14FFFFFF</color>
+</resources>
