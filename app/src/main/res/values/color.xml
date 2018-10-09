@@ -1,41 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="text_gray1">#777777</color>
+    <color name="text_gray2">#767676</color>
+    <color name="text_blue1">#1173CB</color>
+    <color name="text_blue2">#1173CA</color>
+
+    <color name="transparentBlack">#77000000</color>
     <color name="white">#ffffff</color>
-    <color name="black">#E5000000</color>
-    <color name="blue">#2196f3</color>
-    <color name="green">#1FA129</color>
-    <color name="yellow">#D18929</color>
-    <color name="blue_light">#45c7fa</color>
-    <color name="gray">#33FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#cccccc</color>
     <color name="transparent">#00000000</color>
-    <color name="window_background">#111111</color>
+    <color name="translucent">#30ffffff</color>
+    <color name="red">#ff0000</color>
+    <color name="grayA">#999999</color>
+    <color name="redA">#f35556</color>
+    <color name="redB">#50f35556</color>
+    <color name="redC">#F643BF</color>
+    <color name="blue">#273655</color>
+    <color name="blueB">#2BAAA3</color>
+    <color name="blueC">#4ab7e8</color>
+    <color name="blueD">#324ab7e8</color>
+    <color name="grayC">#E4E4E4</color>
+    <color name="grayD">#F4F4F4</color>
+    <color name="grayE">#F2F2F2</color>
+    <color name="green">#2aa515</color>
+    <color name="windowTitleBackground">#f35556</color>
+    <color name="windowBackground">#F6F6F6</color>
+    <color name="blackA">#9B9B9B</color>
+    <color name="blackB">#4A4A4A</color>
+    <color name="blackC">#111111</color>
+    <color name="blackD">#333333</color>
+    <color name="blackE">#222222</color>
+    <color name="transparent1">#AAffffff</color>
+
+    <color name="hint_edit">#818181</color>
+    <!-- not used-->
+    <color name="grayB">#bababa</color>
+    <color name="textColorBlack">#3a3a3a</color>
+    <color name="secondTitleColor">#e2e2e2</color>
+
+    <color name="titleRedText">#fdbec6</color>
+    <color name="emoji_bg">#eaeded</color>
+    <color name="item_sign">#4f4665</color>
+    <color name="yellow">#FFD000</color>
+    <color name="orange">#F58E20</color>
+    <color name="line">#E5E5E5</color>
 
 
-    <color name="appointment_bg">#181818</color>
-    <color name="appointment_btn_gray">#6B6B6B</color>
-    <color name="appointment_text_bg">#19FFFFFF</color>
-    <color name="appointment_text_color">#80FFFFFF</color>
-    <color name="air_text_color">#50FAFAFA</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
+    <color name="result_text">#ffffffff</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
 
-    <color name="calendar_week_bg">#424242</color>
-    <color name="calendar_bg">#000000</color>
-    <integer name="theme_id">0</integer>
 
-
-    <color name="pm2.5_color_bar">#FF00B751</color>
-    <color name="pm2.5_color_bar1">#FFE5DC33</color>
-    <color name="pm2.5_color_bar2">#FFEAB421</color>
-    <color name="pm2.5_color_bar3">#FFDF2406</color>
-    <color name="pm2.5_color_bar4">#FF893DC9</color>
-    <color name="pm2.5_color_bar5">#FF692608</color>
-
-    <color name="unavailable_blue">#462196F3</color>
-    <color name="tem_font_unavailable">#46FAFAFA</color>
-    <color name="tem_font">#FAFAFA</color>
-    <color name="air_acc_background">#46111111</color>
-    <color name="champagne">#885229</color>
-    <color name="unavailable_champagne">#46885229</color>
-    <color name="blue_pressed">#2196f3</color>
-    <color name="champagne_pressed">#7a4924</color>
-    <color name="menu_line">#14FFFFFF</color>
 </resources>
