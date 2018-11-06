@@ -20,17 +20,14 @@
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dm_15"
+        android:paddingLeft="@dimen/dm_10"
+        android:paddingRight="@dimen/dm_10"
         android:background="@color/redA">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dm_1"
-                android:background="@color/gray" />
 
             <FrameLayout
                 android:id="@android:id/tabcontent"

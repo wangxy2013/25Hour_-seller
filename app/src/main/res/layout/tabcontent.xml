@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_margin="@dimen/dm_15"
+        android:layout_margin="@dimen/dm_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/tab_bg_selector"
@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dm_5"
+            android:layout_marginRight="@dimen/dm_5"
             android:layout_toRightOf="@+id/image"
             android:textColor="@color/white"
             android:textSize="16sp" />
