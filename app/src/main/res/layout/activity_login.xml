@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/ll_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dm_30"
+        android:layout_marginRight="@dimen/dm_30"
+        android:padding="@dimen/dm_30">
+
+        <TextView
+            android:id="@+id/tv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="名称："
+            android:textColor="@color/white"
+            android:textSize="@dimen/t16" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm_5"
+            android:textColor="@color/blackA"
+            android:layout_toRightOf="@+id/tv_account"
+            android:background="@drawable/gray_frame_5dp"
+            android:hint="请输入登录名称"
+            android:padding="@dimen/dm_5"
+            android:textSize="@dimen/t14" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_account"
+        android:layout_marginLeft="@dimen/dm_30"
+        android:layout_marginRight="@dimen/dm_30"
+        android:padding="@dimen/dm_30">
+
+        <TextView
+            android:id="@+id/tv_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="密码："
+            android:textColor="@color/white"
+            android:textSize="@dimen/t16" />
+
+        <EditText
+            android:textColor="@color/blackA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dm_5"
+            android:layout_toRightOf="@+id/tv_pwd"
+            android:background="@drawable/gray_frame_5dp"
+            android:hint="请输入登录密码"
+            android:inputType="textPassword"
+            android:padding="@dimen/dm_5"
+            android:textSize="@dimen/t14" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/t14"
+        android:text="@string/corporate_name"
+        android:layout_marginBottom="@dimen/dm_60"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -26,7 +26,7 @@ public class StatisticsFragment extends BaseFragment
 
         if (rootView == null)
         {
-            rootView = inflater.inflate(R.layout.fragment_setting, null);
+            rootView = inflater.inflate(R.layout.fragment_statistics, null);
             unbinder = ButterKnife.bind(this, rootView);
             initData();
             initViews();

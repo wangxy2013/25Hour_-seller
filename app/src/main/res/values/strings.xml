@@ -7,4 +7,8 @@
     <string name="permission_read_storage_rationale">选择图片时需要读取权限</string>
     <string name="permission_write_storage_rationale">拍照时需要存储权限</string>
     <string name="modify"><u>修改</u></string>
+
+
+    <string name="corporate_name">\@厦门玖壹柒电子商务有限公司</string>
+
 </resources>
