@@ -9,10 +9,13 @@ import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.LogUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -144,7 +147,7 @@ public class HttpRequest implements Runnable
         urlRequest = urlRequest + concatParams();
         LogUtil.e("TAG", urlRequest);
         Request request = new Request.Builder().url(urlRequest).addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                .addHeader("Accept-Encoding", "gzip, deflate").addHeader("Connection", "close").addHeader("Accept", "*/*").build();
+                .addHeader("Accept-Encoding", "gzip, deflate").addHeader("Connection", "close").addHeader("Accept", "*/*").addHeader("Authorization" , "Bearer " + ConfigManager.instance().getToken()).build();
         Response response = mOkHttpClient.newCall(request).execute();// execute
         if (response.isSuccessful())
         {
@@ -158,61 +161,21 @@ public class HttpRequest implements Runnable
 
     private Response doPost() throws Exception
     {
-
         LogUtil.e("TAG", urlRequest + concatParams());
-        OkHttpClient mOkHttpClient = new OkHttpClient();
-        // mOkHttpClient.connectTimeoutMillis()
-        // mOkHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
-        mOkHttpClient.newBuilder().connectTimeout(30, TimeUnit.SECONDS);
-        //                mOkHttpClient.newBuilder().readTimeout(10, TimeUnit.SECONDS);
-        //                mOkHttpClient.newBuilder().writeTimeout(10, TimeUnit.SECONDS);
-        /**
-         * 3.0之后版本
-         */
-        FormBody.Builder builder = new FormBody.Builder();
-        //FormEncodingBuilder builder = new FormEncodingBuilder();
-        /**
-         * 在这对添加的参数进行遍历，map遍历有四种方式，如果想要了解的可以网上查找
-         */
-        for (Map.Entry<String, String> map : valuePair.entrySet())
-        {
-            String key = map.getKey().toString();
-            String value = null;
-            /**
-             * 判断值是否是空的
-             */
-            if (map.getValue() == null)
-            {
-                value = "";
-            }
-            else
-            {
-                value = map.getValue();
-            }
-            /**
-             * 把key和value添加到formbody中
-             */
-            builder.add(key, value);
-        }
-        RequestBody requestBody = builder.build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).writeTimeout(10, TimeUnit.SECONDS).readTimeout
+                (20, TimeUnit.SECONDS).build();
 
-        //当写请求头的时候，使用 header(name, value) 可以设置唯一的name、value。如果已经有值，旧的将被移除，然后添加新的。使用 addHeader(name, value) 可以添加多值（添加，不移除已有的）。
-        Request request = new Request.Builder().url(urlRequest).header("User-Agent", "OkHttp Headers.java").addHeader("Accept", "application/json; " +
-                "" + "q=0.5").addHeader("Accept", "application/vnd.github.v3+json").post(requestBody).build();
+        //使用Gson将对象转换为json字符串
+        String json = valuePair.get("json");
 
-        Response response = mOkHttpClient.newCall(request).execute();// execute
-        if (response.isSuccessful())
-        {
-            System.out.println(response.code());
-            //String body = response.body().string();
-            return response;
+        //MediaType  设置Content-Type 标头中包含的媒体类型值
+        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
 
-        }
-        else
-        {
-            LogUtil.e("TAG", "response--->" + response.code());
-        }
-        return null;
+        Request request = new Request.Builder().url(urlRequest)//请求的url
+                .post(requestBody).addHeader("Accept", "*/*").addHeader("Authorization", "Bearer " + ConfigManager.instance().getToken()).build();
+        Response response = okHttpClient.newCall(request).execute();
+        return response;
+
     }
 
 

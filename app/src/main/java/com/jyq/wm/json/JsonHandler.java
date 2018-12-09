@@ -38,21 +38,17 @@ public abstract class JsonHandler
 
                 Log.e("tag", "response result : " + jsonString);
                 setHeader(response.header("Date"));
+
+
                 JSONObject jsonObject = new JSONObject(jsonString);
 
-                if ("true".equals(jsonObject.optString("status")) || "true".equals(jsonObject.optString("count")))
+                if ("".equals(jsonObject.optString("status")))
                 {
                     setResultCode(ConstantUtil.RESULT_SUCCESS);
                 }
                 else
                 {
-//                    if ("1904".equals(jsonObject.optString("code")))
-//                    {
-//                        if (null != mContext)
-//                            mContext.startActivity(new Intent(mContext, LoginActivity.class));
-//                    }
-
-                    setResultCode(jsonObject.optString("code"));
+                    setResultCode(ConstantUtil.RESULT_FAIL);
                 }
                 setResultMsg(jsonObject.optString("message"));
                 parseJson(jsonObject);
@@ -60,23 +56,8 @@ public abstract class JsonHandler
         }
         catch (Exception e)
         {
-            if (null != jsonString && jsonString.contains("baidu.com"))
-            {
-                setResultCode(ConstantUtil.RESULT_SUCCESS);
-                try
-                {
-                    parseJson(new JSONObject().put("baidu", jsonString));
-                }
-                catch (Exception e1)
-                {
-                    e1.printStackTrace();
-                }
-            }
-            else
-            {
-                setResultCode(ConstantUtil.RESULT_FAIL);
-                setResultMsg("网络请求失败...");
-            }
+            setResultCode(ConstantUtil.RESULT_FAIL);
+            setResultMsg("网络请求失败...");
 
         }
 

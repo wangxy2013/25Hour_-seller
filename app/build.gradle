@@ -16,6 +16,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    signingConfigs {
+        release {
+            keyAlias 'qs'
+            keyPassword 'qs2018'
+            storeFile file('F:/project/25Hour/app/qs.jks')
+            storePassword 'qs2018'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
@@ -39,4 +54,6 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.contrarywind:Android-PickerView:3.2.6'
+    compile 'com.google.code.gson:gson:2.8.1'
+    implementation files('libs/BaiduLBS_Android.jar')
 }

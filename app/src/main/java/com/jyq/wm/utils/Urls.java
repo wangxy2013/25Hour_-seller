@@ -25,10 +25,20 @@ public class Urls
     }
 
 
-    //用戶注册
-    public static String getRegisterUrl()
+    //operateType (string, optional): 1-上线0-下线
+    //骑手上线或者下线
+    public static String getOnOfflinUrl()
     {
-        return ConfigManager.instance().getDomainName() + "/user/register";
+        return HTTP_IP + "/app/deliverUserOperater/onOfflin";
+    }
+
+    public static String getUserInfoUrl()
+    {
+        return HTTP_IP + "/app/auth/userInfo";
+    }
+    public static String getOrderListUrl()
+    {
+        return HTTP_IP + "/deliverUserOperater/robbing/query";
     }
 
 

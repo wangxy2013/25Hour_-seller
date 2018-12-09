@@ -8,7 +8,7 @@ import org.json.JSONObject;
 /**
  * 描述：一句话简单描述
  */
-public class LoginHandler extends JsonHandler
+public class OrderListHandler extends JsonHandler
 {
 
 
@@ -20,8 +20,6 @@ public class LoginHandler extends JsonHandler
 
             if (null != jsonObject)
             {
-                String token = jsonObject.optString("token");
-                ConfigManager.instance().setToken(token);
             }
 
 

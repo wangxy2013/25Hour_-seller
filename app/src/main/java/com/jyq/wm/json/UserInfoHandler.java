@@ -1,6 +1,7 @@
 package com.jyq.wm.json;
 
 
+import com.jyq.wm.bean.UserInfo;
 import com.jyq.wm.utils.ConfigManager;
 
 import org.json.JSONObject;
@@ -8,7 +9,7 @@ import org.json.JSONObject;
 /**
  * 描述：一句话简单描述
  */
-public class LoginHandler extends JsonHandler
+public class UserInfoHandler extends JsonHandler
 {
 
 
@@ -20,9 +21,14 @@ public class LoginHandler extends JsonHandler
 
             if (null != jsonObject)
             {
-                String token = jsonObject.optString("token");
-                ConfigManager.instance().setToken(token);
+                UserInfo mUserInfo = new UserInfo(jsonObject);
+
+                if(null != mUserInfo)
+                {
+                    ConfigManager.instance().setUserId(mUserInfo.getId());
+                }
             }
+
 
 
         }
