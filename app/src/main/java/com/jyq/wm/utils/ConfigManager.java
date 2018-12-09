@@ -24,7 +24,7 @@ public class ConfigManager
     /**
      * config
      */
-    private static String            CONFIG_NAME        = "config";
+    private static String            CONFIG_NAME        = "qs_config";
 
     private static final String IS_FRIST_LOGING = "IS_FRIST_LOGING";
     private static final String USER_PWD        = "user_pwd";//密码
@@ -49,20 +49,10 @@ public class ConfigManager
 
     private static final String DOMAIN_NAME = "domain_name";
 
-    private static final String CROSSFIRE       = "crossfire";
-    private static final String REG_CLOSED      = "reg_closed";
-    private static final String IP_LOOK_UP      = "ip_look_up";
-    private static final String VIP_LEVEL       = "vip_level";
-    private static final String VIP_TYPE        = "VIP_TYPE";
-    private static final String ZDY_DOMAIN_NAME = "zdy_domain_name";
 
-    private static final String USER_ROLE = "user_role";
 
-    private static final String UPLOAD_URL = "upload_url";
 
-    private static final String CHAT_URL = "chat_url";
 
-    private static final String VALID_VIP = "valid_vip";
 
     /**
      * 返回实例
@@ -301,109 +291,5 @@ public class ConfigManager
         return mSharedPreferences.getString(DOMAIN_NAME, "");
     }
 
-    public void setCrossfire(String str)
-    {
-        mSharedPreferences.edit().putString(CROSSFIRE, str).commit();
-    }
-
-    public String getCrossfire()
-    {
-        return mSharedPreferences.getString(CROSSFIRE, "");
-    }
-
-
-    public void setRegClosed(boolean str)
-    {
-        mSharedPreferences.edit().putBoolean(REG_CLOSED, str).commit();
-    }
-
-    public boolean getRegClosed()
-    {
-        return mSharedPreferences.getBoolean(REG_CLOSED, false);
-    }
-
-    public void setIpLookUp(String str)
-    {
-        mSharedPreferences.edit().putString(IP_LOOK_UP, str).commit();
-    }
-
-    public String getIpLookUp()
-    {
-        return mSharedPreferences.getString(IP_LOOK_UP, "");
-    }
-
-    public void setVipLevel(int str)
-    {
-        mSharedPreferences.edit().putInt(VIP_LEVEL, str).commit();
-    }
-
-    public int getVipLevelVIE()
-    {
-        return mSharedPreferences.getInt(VIP_LEVEL, 0);
-    }
-
-    public void setZdyDomainName(String str)
-    {
-        mSharedPreferences.edit().putString(ZDY_DOMAIN_NAME, str).commit();
-    }
-
-    public String getZydDomainName()
-    {
-        return mSharedPreferences.getString(ZDY_DOMAIN_NAME, "");
-    }
-
-
-    public void setUserRole(int str)
-    {
-        mSharedPreferences.edit().putInt(USER_ROLE, str).commit();
-    }
-
-    public int getUserRole()
-    {
-        return mSharedPreferences.getInt(USER_ROLE, 0);
-    }
-
-
-    public void setUploadUrl(String str)
-    {
-        mSharedPreferences.edit().putString(UPLOAD_URL, str).commit();
-    }
-
-    public String getUploadUrl()
-    {
-        return mSharedPreferences.getString(UPLOAD_URL, "");
-    }
-
-
-    public void setVipType(int str)
-    {
-        mSharedPreferences.edit().putInt(VIP_TYPE, str).commit();
-    }
-
-    public int getVipType()
-    {
-        return mSharedPreferences.getInt(VIP_TYPE, 0);
-    }
-
-
-    public void setChatUrl(String str)
-    {
-        mSharedPreferences.edit().putString(CHAT_URL, str).commit();
-    }
-
-    public String getChatUrl()
-    {
-        return mSharedPreferences.getString(CHAT_URL, "ws://116.213.43.157:9501");
-    }
-
-    public void setValid_vip(boolean str)
-    {
-        mSharedPreferences.edit().putBoolean(VALID_VIP, str).commit();
-    }
-
-    public boolean getValid_vip()
-    {
-        return mSharedPreferences.getBoolean(VALID_VIP, false);
-    }
 }
 
