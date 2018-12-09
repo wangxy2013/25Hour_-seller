@@ -11,8 +11,14 @@
     <RelativeLayout
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@drawable/fragment_top_bg" />
+        android:layout_height="140dp"
+        android:background="@drawable/fragment_top_bg">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_main_logo" />
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -20,8 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dm_30"
-        android:layout_marginRight="@dimen/dm_30"
-        android:layout_marginTop="@dimen/dm_60">
+        android:layout_marginTop="@dimen/dm_60"
+        android:layout_marginRight="@dimen/dm_30">
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,8 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="@dimen/dm_30"
-        android:layout_marginRight="@dimen/dm_30"
         android:layout_marginTop="@dimen/dm_5"
+        android:layout_marginRight="@dimen/dm_30"
         android:background="@color/red" />
 
     <RelativeLayout
@@ -54,8 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dm_30"
-        android:layout_marginRight="@dimen/dm_30"
-        android:layout_marginTop="@dimen/dm_20">
+        android:layout_marginTop="@dimen/dm_20"
+        android:layout_marginRight="@dimen/dm_30">
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,8 +85,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="@dimen/dm_30"
-        android:layout_marginRight="@dimen/dm_30"
         android:layout_marginTop="@dimen/dm_5"
+        android:layout_marginRight="@dimen/dm_30"
         android:background="@color/red" />
 
 
@@ -89,8 +95,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dm_30"
-        android:layout_marginRight="@dimen/dm_30"
-        android:layout_marginTop="@dimen/dm_20">
+        android:layout_marginTop="@dimen/dm_20"
+        android:layout_marginRight="@dimen/dm_30">
 
         <TextView
             android:layout_width="wrap_content"
@@ -114,18 +120,17 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="@dimen/dm_30"
-        android:layout_marginRight="@dimen/dm_30"
         android:layout_marginTop="@dimen/dm_5"
+        android:layout_marginRight="@dimen/dm_30"
         android:background="@color/red" />
 
     <RelativeLayout
         android:id="@+id/rl_voice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm_5"
         android:layout_marginLeft="@dimen/dm_30"
-        android:layout_marginRight="@dimen/dm_30"
-        >
+        android:layout_marginTop="@dimen/dm_5"
+        android:layout_marginRight="@dimen/dm_30">
 
         <TextView
             android:layout_width="wrap_content"

@@ -89,7 +89,7 @@ public class LoginActivity extends BaseActivity implements IRequestListener
     @Override
     protected void initViewData()
     {
-
+        etPhone.setText(ConfigManager.instance().getUserName());
     }
 
     @Override
@@ -98,9 +98,6 @@ public class LoginActivity extends BaseActivity implements IRequestListener
         super.onClick(v);
         if (v == tvLogin)
         {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-
             account = etPhone.getText().toString();
             pwd = etPwd.getText().toString();
             if (TextUtils.isEmpty(account) || account.length() < 11)
@@ -117,8 +114,11 @@ public class LoginActivity extends BaseActivity implements IRequestListener
 
             showProgressDialog();
             Map<String, String> valuePairs = new HashMap<>();
-            DataRequest.instance().request(LoginActivity.this, Urls.getLoginUrl(), this,
-                    HttpRequest.POST, USER_LOGIN, valuePairs, new LoginHandler());
+            valuePairs.put("password", pwd);
+            valuePairs.put("username", account);
+            valuePairs.put("userType", "7");
+            DataRequest.instance().request(LoginActivity.this, Urls.getLoginUrl(), this, HttpRequest.POST, USER_LOGIN, valuePairs, new LoginHandler
+                    ());
 
         }
     }

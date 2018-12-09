@@ -59,14 +59,7 @@ public class HttpRequest implements Runnable
         //valuePair.put("channel", ConstantUtil.CHANNEL_NO);
         // valuePair.put("auth", ConfigManager.instance().getUniqueCode());
 
-        if (!url.contains("?auth"))
-        {
-            urlRequest = url + "?auth=" + ConfigManager.instance().getUniqueCode() + "&device=android";
-        }
-        else
-        {
-            urlRequest = url;
-        }
+        urlRequest = url;
 
         if (valuePair == null)
         {
@@ -205,7 +198,7 @@ public class HttpRequest implements Runnable
 
         //当写请求头的时候，使用 header(name, value) 可以设置唯一的name、value。如果已经有值，旧的将被移除，然后添加新的。使用 addHeader(name, value) 可以添加多值（添加，不移除已有的）。
         Request request = new Request.Builder().url(urlRequest).header("User-Agent", "OkHttp Headers.java").addHeader("Accept", "application/json; " +
-                "q=0.5").addHeader("Accept", "application/vnd.github.v3+json").post(requestBody).build();
+                "" + "q=0.5").addHeader("Accept", "application/vnd.github.v3+json").post(requestBody).build();
 
         Response response = mOkHttpClient.newCall(request).execute();// execute
         if (response.isSuccessful())

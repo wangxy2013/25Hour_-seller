@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.jyq.wm.R;
 import com.jyq.wm.http.IRequestListener;
+import com.jyq.wm.utils.LogUtil;
+import com.jyq.wm.utils.StringUtils;
+import com.jyq.wm.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,8 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class StatisticsFragment extends BaseFragment implements IRequestListener, View
-        .OnClickListener
+public class StatisticsFragment extends BaseFragment implements IRequestListener, View.OnClickListener
 {
 
     @BindView(R.id.tv_order_count)
@@ -54,11 +56,11 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
     TextView tvQuery;
     private View rootView = null;
     private Unbinder unbinder;
-    private List<String> tabs = new ArrayList<>(); //标签名称
+    private String mStartTime;
+    private String mEndTime;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
-            savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
 
         if (rootView == null)
@@ -103,16 +105,23 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
     {
         Calendar cal = Calendar.getInstance();
         int y = cal.get(Calendar.YEAR);
-        int m = cal.get(Calendar.MONTH);
+        int m = cal.get(Calendar.MONTH) + 1;
         int d = cal.get(Calendar.DATE);
 
-        tvStartYear.setText(y);
-        tvStartMonth.setText(m);
-        tvStartDay.setText(d);
+        String monthStr = m < 10 ? "0" + m : m + "";
+        String dayStr = d < 10 ? "0" + d : d + "";
 
-        tvEndYear.setText(y);
-        tvEndMonth.setText(m);
-        tvEndDay.setText(d);
+        tvStartYear.setText(y + "");
+        tvStartMonth.setText(monthStr);
+        tvStartDay.setText(dayStr);
+
+        tvEndYear.setText(y + "");
+        tvEndMonth.setText(monthStr);
+        tvEndDay.setText(dayStr);
+
+        mStartTime = y + "-" + monthStr + "-" + dayStr;
+        mEndTime = y + "-" + monthStr + "-" + dayStr;
+
 
     }
 
@@ -127,8 +136,7 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
     {
         if (v == rlStartTime)
         {
-            TimePickerView pvTime = new TimePickerView.Builder(getActivity(), new TimePickerView
-                    .OnTimeSelectListener()
+            TimePickerView pvTime = new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener()
             {
                 @Override
                 public void onTimeSelect(Date date, View v)
@@ -146,6 +154,8 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
                     tvStartYear.setText(yearStr);
                     tvStartMonth.setText(monthStr);
                     tvStartDay.setText(dayStr);
+
+                    mStartTime = yearStr + "-" + monthStr + "-" + dayStr;
                 }
             }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
                     .setCancelText("取消")//取消按钮文字
@@ -171,8 +181,7 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
         }
         else if (v == rlEndTime)
         {
-            TimePickerView pvTime = new TimePickerView.Builder(getActivity(), new TimePickerView
-                    .OnTimeSelectListener()
+            TimePickerView pvTime = new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener()
             {
                 @Override
                 public void onTimeSelect(Date date, View v)
@@ -190,6 +199,8 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
                     tvEndYear.setText(yearStr);
                     tvEndMonth.setText(monthStr);
                     tvEndDay.setText(dayStr);
+
+                    mEndTime = yearStr + "-" + monthStr + "-" + dayStr;
                 }
             }).setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
                     .setCancelText("取消")//取消按钮文字
@@ -202,6 +213,14 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
         }
         else if (v == tvQuery)
         {
+            int result = StringUtils.compare_date(mEndTime, mStartTime);
+            LogUtil.e("TAG", "result = " + result);
+
+            if (result == -1)
+            {
+                ToastUtil.show(getActivity(), "请选择正确的查询周期");
+                return;
+            }
 
         }
 

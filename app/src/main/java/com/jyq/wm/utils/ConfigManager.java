@@ -51,7 +51,7 @@ public class ConfigManager
 
 
 
-
+    private static final String VOICE_IS_OPEND     = "voice_is_opend";
 
 
     /**
@@ -290,6 +290,19 @@ public class ConfigManager
     {
         return mSharedPreferences.getString(DOMAIN_NAME, "");
     }
+
+
+
+    public void setVoiceIsOpend(boolean opend)
+    {
+        mSharedPreferences.edit().putBoolean(VOICE_IS_OPEND, opend).commit();
+    }
+
+    public boolean getVoiceIsOpend()
+    {
+        return mSharedPreferences.getBoolean(VOICE_IS_OPEND, true);
+    }
+
 
 }
 

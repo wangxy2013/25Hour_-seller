@@ -8,7 +8,7 @@ package com.jyq.wm.utils;
  */
 public class Urls
 {
-    public static final String HTTP_IP = "http://www.883974.com/";
+    public static final String HTTP_IP = "http://47.100.20.214:8081";
 
 
     //获取版本信息
@@ -21,7 +21,7 @@ public class Urls
     //用戶登录
     public static String getLoginUrl()
     {
-        return ConfigManager.instance().getDomainName() + "/user/login";
+        return HTTP_IP + "/app/auth/login";
     }
 
 

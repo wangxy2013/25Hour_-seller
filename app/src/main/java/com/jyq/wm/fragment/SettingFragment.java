@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jyq.wm.R;
+import com.jyq.wm.utils.ConfigManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class SettingFragment extends BaseFragment
+public class SettingFragment extends BaseFragment implements View.OnClickListener
 {
 
     @BindView(R.id.rl_user)
@@ -29,10 +30,10 @@ public class SettingFragment extends BaseFragment
     ImageView ivSwitch;
     @BindView(R.id.rl_voice)
     RelativeLayout rlVoice;
-    Unbinder unbinder1;
     private View rootView = null;
     private Unbinder unbinder;
-    private List<String> tabs = new ArrayList<>(); //标签名称
+
+    private boolean voiceOpend = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -52,7 +53,6 @@ public class SettingFragment extends BaseFragment
         {
             parent.removeView(rootView);
         }
-        unbinder1 = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -71,7 +71,9 @@ public class SettingFragment extends BaseFragment
     @Override
     protected void initEvent()
     {
-
+        rlUser.setOnClickListener(this);
+        rlPwd.setOnClickListener(this);
+        ivSwitch.setOnClickListener(this);
     }
 
     @Override
@@ -81,9 +83,29 @@ public class SettingFragment extends BaseFragment
     }
 
     @Override
-    public void onDestroyView()
+    public void onClick(View v)
     {
-        super.onDestroyView();
-        unbinder1.unbind();
+        if (v == rlUser)
+        {
+
+        }
+        else if (v == rlPwd)
+        {
+
+        }
+        else if (v == ivSwitch)
+        {
+            if (voiceOpend)
+            {
+                voiceOpend = false;
+                ivSwitch.setImageResource(R.drawable.ic_switch_off);
+            }
+            else
+            {
+                voiceOpend = true;
+                ivSwitch.setImageResource(R.drawable.ic_switch_on);
+            }
+            ConfigManager.instance().setVoiceIsOpend(voiceOpend);
+        }
     }
 }
