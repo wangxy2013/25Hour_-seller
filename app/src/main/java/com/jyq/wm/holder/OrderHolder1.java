@@ -37,14 +37,22 @@ public class OrderHolder1 extends RecyclerView.ViewHolder
         mTimeTv = (TextView) rootView.findViewById(R.id.tv_time);
         mPhoneTv = (TextView) rootView.findViewById(R.id.tv_customer_phone);
         mNameTv = (TextView) rootView.findViewById(R.id.tv_customer_name);
-        mAddressTv= (TextView) rootView.findViewById(R.id.tv_customer_address);
-        mGetTv= (TextView) rootView.findViewById(R.id.tv_get);
-        mPayStyleTv= (TextView) rootView.findViewById(R.id.tv_pay_style);
+        mAddressTv = (TextView) rootView.findViewById(R.id.tv_customer_address);
+        mGetTv = (TextView) rootView.findViewById(R.id.tv_get);
+        mPayStyleTv = (TextView) rootView.findViewById(R.id.tv_pay_style);
     }
 
 
-    public void setOrderInfo(OrderInfo mLiveInfo, final int p)
+    public void setOrderInfo(OrderInfo mOrderInfo, final int p)
     {
+
+        mNumberTv.setText(mOrderInfo.getId());
+        mShopNameTv.setText(mOrderInfo.getStoreName());
+        mTimeTv.setText(mOrderInfo.getAddTime());
+        mPhoneTv.setText("客户电话:" + mOrderInfo.getPhone());
+        mNameTv.setText("客户姓名:" + mOrderInfo.getName());
+        mAddressTv.setText(mOrderInfo.getAddress());
+        mPayStyleTv.setText("offline".endsWith(mOrderInfo.getPayType()) ? "货到付款" : "微信支付");
 
         mGetTv.setOnClickListener(new View.OnClickListener()
         {

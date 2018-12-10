@@ -10,12 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/tv_test"
-        android:text="测试"
-        android:background="@color/yellow"
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_no_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_no_order" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm_10"
+            android:text="暂无订单点击刷新"
+            android:textColor="@color/redA"
+            android:textSize="@dimen/t16" />
+    </LinearLayout>
 </RelativeLayout>

@@ -36,11 +36,24 @@ public class Urls
     {
         return HTTP_IP + "/app/auth/userInfo";
     }
+
     public static String getOrderListUrl()
     {
-        return HTTP_IP + "/deliverUserOperater/robbing/query";
+        return HTTP_IP + "/app/deliverUserOperater/robbing/query";
     }
 
+    //骑手抢单
+    public static String getRobOrderUrl()
+    {
+        return HTTP_IP + "/app/deliverUserOperater/robbing";
+    }
+
+
+    //上传定位信息
+    public static String getUplaodLocationUrl()
+    {
+        return HTTP_IP + "/deliverUserOperater/location";
+    }
 
 }
 

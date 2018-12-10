@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jyq.wm.MyApplication;
 import com.jyq.wm.R;
 import com.jyq.wm.activity.BaseHandler;
 import com.jyq.wm.activity.LoginActivity;
@@ -68,6 +69,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             {
                 case ONLINE_SUCCESS:
                     isOnline = true;
+                    MyApplication.getInstance().setOnline(isOnline);
                     mReceiptTv.setText("停止接单");
                     break;
 
@@ -77,6 +79,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
                 case OFF_LINE_SUCCESS:
                     isOnline = false;
+                    MyApplication.getInstance().setOnline(isOnline);
                     mReceiptTv.setText("开始接单");
                     break;
 

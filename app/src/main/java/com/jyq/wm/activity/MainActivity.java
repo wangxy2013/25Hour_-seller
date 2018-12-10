@@ -28,9 +28,11 @@ import com.jyq.wm.http.DataRequest;
 import com.jyq.wm.http.HttpRequest;
 import com.jyq.wm.http.IRequestListener;
 import com.jyq.wm.json.LoginHandler;
+import com.jyq.wm.json.ResultHandler;
 import com.jyq.wm.map.LocationService;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.LogUtil;
+import com.jyq.wm.utils.StringUtils;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
 
@@ -49,6 +51,29 @@ public class MainActivity extends BaseActivity implements IRequestListener
     private String texts[] = {"首页", "统计", "设置"};
     private int imageButton[] = {R.drawable.ic_home, R.drawable.ic_statistics, R.drawable.ic_setting};
     private Class fragmentArray[] = {HomeFragment.class, StatisticsFragment.class, SettingFragment.class};
+
+
+    private static final int UPLOAD_LOCATION = 0x01;
+    @SuppressLint("HandlerLeak")
+    private BaseHandler mHandler = new BaseHandler(MainActivity.this)
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+            switch (msg.what)
+            {
+                case UPLOAD_LOCATION:
+
+
+                    mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
+                    break;
+
+
+            }
+        }
+    };
+
 
     @Override
     protected void initData()
@@ -193,7 +218,9 @@ public class MainActivity extends BaseActivity implements IRequestListener
         {
             locationService.setLocationOption(locationService.getOption());
         }
-        locationService.start();// 定位SDK
+        //    locationService.start();// 定位SDK
+
+        mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
     }
 
 
@@ -310,12 +337,43 @@ public class MainActivity extends BaseActivity implements IRequestListener
                     sb.append("\ndescribe : ");
                     sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
                 }
+                setLocation(location);
+
                 LogUtil.e("TAG", sb.toString());
             }
         }
 
     };
 
+    private BDLocation location;
+
+    private void setLocation(BDLocation location)
+    {
+        this.location = location;
+    }
+
+    public BDLocation getLocation()
+    {
+        return location;
+    }
+
+
+    private void uploadLocation()
+    {
+        BDLocation location = getLocation();
+        if (null != location && location.getLatitude() != 0)
+        {
+            Map<String, String> valuePairs = new HashMap<>();
+            valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
+            valuePairs.put("lat", String.valueOf(location.getLatitude()));
+            valuePairs.put("lng", String.valueOf(location.getLongitude()));
+            Gson gson = new Gson();
+            Map<String, String> postMap = new HashMap<>();
+            postMap.put("json", gson.toJson(valuePairs));
+            DataRequest.instance().request(MainActivity.this, Urls.getUplaodLocationUrl(), this, HttpRequest.POST, "UPLOAD_LOCATION_REQUEST",
+                    postMap, new ResultHandler());
+        }
+    }
 
     @Override
     public void notify(String action, String resultCode, String resultMsg, Object obj)

@@ -29,6 +29,19 @@ public class MyApplication extends Application
         return instance;
     }
 
+
+    private  boolean isOnline;
+
+    public boolean isOnline()
+    {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online)
+    {
+        isOnline = online;
+    }
+
     @Override
     public void onCreate()
     {
