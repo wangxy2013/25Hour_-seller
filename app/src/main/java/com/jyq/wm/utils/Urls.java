@@ -52,7 +52,19 @@ public class Urls
     //上传定位信息
     public static String getUplaodLocationUrl()
     {
-        return HTTP_IP + "/deliverUserOperater/location";
+        return HTTP_IP + "/app/deliverUserOperater/location";
+    }
+    //送单记录的查询status (string, optional): 8-骑士已接单,5-正在配送,1-已完成
+    public static String getSendOutUrl()
+    {
+        return HTTP_IP + "/app/deliverUserOperater/sendOut/query";
+    }
+
+
+    //骑手确认取餐
+    public static String getTakemealConfirmUrl()
+    {
+        return HTTP_IP + "/app/deliverUserOperater/sendOut/query";
     }
 
 }

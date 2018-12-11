@@ -13,6 +13,11 @@ public class OrderInfo
     private String payType;//offline
     private String addTime;
 
+    private double storeLnt;//,
+    private double storeLat;//null,
+    private double userLnt;// 118.432,
+    private double userLat;// 24.62567,
+
     public OrderInfo(JSONObject obj)
     {
         this.id = obj.optString("id");
@@ -22,7 +27,13 @@ public class OrderInfo
         this.phone = obj.optString("phone");
         this.address = obj.optString("address");
         this.payType = obj.optString("payType");
-        this.addTime = obj.optString("addTime");
+        this.addTime = obj.optString("submitOrderTime");
+        this.storeLnt = obj.optDouble("storeLnt",0);
+        this.storeLat = obj.optDouble("storeLat",0);
+        this.userLnt = obj.optDouble("userLnt",0);
+        this.userLat = obj.optDouble("userLat",0);
+
+
     }
 
 
@@ -104,5 +115,45 @@ public class OrderInfo
     public void setAddTime(String addTime)
     {
         this.addTime = addTime;
+    }
+
+    public double getStoreLnt()
+    {
+        return storeLnt;
+    }
+
+    public void setStoreLnt(double storeLnt)
+    {
+        this.storeLnt = storeLnt;
+    }
+
+    public double getStoreLat()
+    {
+        return storeLat;
+    }
+
+    public void setStoreLat(double storeLat)
+    {
+        this.storeLat = storeLat;
+    }
+
+    public double getUserLnt()
+    {
+        return userLnt;
+    }
+
+    public void setUserLnt(double userLnt)
+    {
+        this.userLnt = userLnt;
+    }
+
+    public double getUserLat()
+    {
+        return userLat;
+    }
+
+    public void setUserLat(double userLat)
+    {
+        this.userLat = userLat;
     }
 }

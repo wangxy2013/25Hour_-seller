@@ -6,6 +6,7 @@ import android.os.StrictMode;
 import android.os.Vibrator;
 
 
+import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
 import com.jyq.wm.map.LocationService;
 import com.jyq.wm.utils.APPUtils;
@@ -21,7 +22,7 @@ import java.util.List;
 public class MyApplication extends Application
 {
     private static MyApplication instance;
-
+    private  BDLocation location;
     public LocationService locationService;
     public Vibrator mVibrator;
     public static MyApplication getInstance()
@@ -74,4 +75,13 @@ public class MyApplication extends Application
     }
 
 
+    public BDLocation getLocation()
+    {
+        return location;
+    }
+
+    public void setLocation(BDLocation location)
+    {
+        this.location = location;
+    }
 }

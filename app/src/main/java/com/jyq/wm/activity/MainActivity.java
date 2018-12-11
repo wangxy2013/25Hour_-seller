@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements IRequestListener
                 case UPLOAD_LOCATION:
 
                     uploadLocation();
-                    mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
+                    mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 60 * 1000);
                     break;
 
 
@@ -176,7 +176,7 @@ public class MainActivity extends BaseActivity implements IRequestListener
             {
                 // Toast.makeText(MainActivity.this, "访问摄像头", Toast.LENGTH_LONG).show();
                 locationService.start();// 定位SDK
-                mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
+                mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 60 * 1000);
             }
 
             @Override
@@ -340,6 +340,8 @@ public class MainActivity extends BaseActivity implements IRequestListener
         BDLocation location = getLocation();
         if (null != location && location.getLatitude() != 4.9E-324)
         {
+
+            MyApplication.getInstance().setLocation(location);
             Map<String, String> valuePairs = new HashMap<>();
             valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
             valuePairs.put("lat", String.valueOf(location.getLatitude()));

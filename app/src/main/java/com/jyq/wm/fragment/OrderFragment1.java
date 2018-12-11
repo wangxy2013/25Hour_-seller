@@ -3,6 +3,9 @@ package com.jyq.wm.fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -94,7 +97,14 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                     {
                         if (orderInfoList.isEmpty() || newOrderInfoList.get(0).getId().equals(orderInfoList.get(0).getId()))
                         {
-                            //提示音
+
+                            if(ConfigManager.instance().getVoiceIsOpend())
+                            {
+                                //提示音
+                                Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                Ringtone rt = RingtoneManager.getRingtone(getActivity(), uri);
+                                rt.play();
+                            }
                         }
 
 
