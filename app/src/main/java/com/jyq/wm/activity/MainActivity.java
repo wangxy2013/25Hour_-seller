@@ -3,10 +3,15 @@ package com.jyq.wm.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +19,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -31,6 +37,7 @@ import com.jyq.wm.json.LoginHandler;
 import com.jyq.wm.json.ResultHandler;
 import com.jyq.wm.map.LocationService;
 import com.jyq.wm.utils.ConfigManager;
+import com.jyq.wm.utils.DialogUtils;
 import com.jyq.wm.utils.LogUtil;
 import com.jyq.wm.utils.StringUtils;
 import com.jyq.wm.utils.ToastUtil;
@@ -65,7 +72,7 @@ public class MainActivity extends BaseActivity implements IRequestListener
             {
                 case UPLOAD_LOCATION:
 
-
+                    uploadLocation();
                     mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
                     break;
 
@@ -106,11 +113,28 @@ public class MainActivity extends BaseActivity implements IRequestListener
             fragmentTabHost.addTab(spec, fragmentArray[i], null);
 
             //设置背景(必须在addTab之后，由于需要子节点（底部菜单按钮）否则会出现空指针异常)
-            // fragmentTabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.main_tab_selector);
+            // fragmentTabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable
+            // .main_tab_selector);
         }
         fragmentTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
 
-        getPersimmions();
+        // getPersimmions();
+
+        locationService = ((MyApplication) getApplication()).locationService;
+        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity
+        // ，都是通过此种方式获取locationservice实例的
+        locationService.registerListener(mListener);
+        int type = getIntent().getIntExtra("from", 0);
+        if (type == 0)
+        {
+            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+        }
+        else if (type == 1)
+        {
+            locationService.setLocationOption(locationService.getOption());
+        }
+
+        showContacts();
     }
 
     private View getView(int i)
@@ -128,75 +152,129 @@ public class MainActivity extends BaseActivity implements IRequestListener
         return view;
     }
 
-    private final int SDK_PERMISSION_REQUEST = 127;
 
-    @TargetApi(23)
-    private void getPersimmions()
+    private static final int BAIDU_LOCATION_STATE = 100;
+    private static final int ACTION_LOCATION_SOURCE_SETTINGS = 200;
+
+    public void showContacts()
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+
+        boolean a = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+        boolean b = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+
+        LogUtil.e("TAG", "A ==" + a + "  | b = " + b);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
         {
-            ArrayList<String> permissions = new ArrayList<String>();
-            /***
-             * 定位权限为必须权限，用户如果禁止，则每次进入都会申请
-             */
-            // 定位精确位置
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            {
-                permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-            }
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            {
-                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-            }
-            /*
-             * 读写权限和电话状态权限非必要权限(建议授予)只会申请一次，用户同意或者禁止，只会弹一次
-             */
-            // 读写权限
-            if (addPermission(permissions, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            {
-                // permissionInfo += "Manifest.permission.WRITE_EXTERNAL_STORAGE Deny \n";
-            }
-            // 读取电话状态权限
-            if (addPermission(permissions, Manifest.permission.READ_PHONE_STATE))
-            {
-                //permissionInfo += "Manifest.permission.READ_PHONE_STATE Deny \n";
-            }
-
-            if (permissions.size() > 0)
-            {
-                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
-            }
-        }
-    }
-
-    @TargetApi(23)
-    private boolean addPermission(ArrayList<String> permissionsList, String permission)
-    {
-        if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)
-        { // 如果应用没有获得对应权限,则添加到列表中,准备批量申请
-            if (shouldShowRequestPermissionRationale(permission))
-            {
-                return true;
-            }
-            else
-            {
-                permissionsList.add(permission);
-                return false;
-            }
-
+            Toast.makeText(getApplicationContext(), "没有权限,请手动开启定位权限", Toast.LENGTH_SHORT).show();
+            // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission
+                    .ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE}, BAIDU_LOCATION_STATE);
         }
         else
         {
-            return true;
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            {
+                locationService.start();// 定位SDK
+                mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
+            }
+            else
+            {
+                shouldShowRequestPermissionRationale();
+            }
+
         }
     }
 
-    @TargetApi(23)
+
+    //Android6.0申请权限的回调方法
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
-        // TODO Auto-generated method stub
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode)
+        {
+            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            case BAIDU_LOCATION_STATE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)
+                {
+                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+                    if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    {
+                        locationService.start();// 定位SDK
+                        mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
+                    }
+                    else
+                    {
+                        shouldShowRequestPermissionRationale();
+                    }
+                }
+                else
+                {
+                    // 没有获取到权限，做特殊处理
+                    showLocation();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private void shouldShowRequestPermissionRationale()
+    {
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
+        {
+            showLocation();
+        }
+        else
+        {
+            locationService.start();// 定位SDK
+            mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
+        }
+    }
+
+    private void showLocation()
+    {
+        DialogUtils.showToastDialog2Button(MainActivity.this, "获取位置权限失败，请手动开启", new View.OnClickListener()
+
+
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent mIntent = new Intent();
+                mIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                mIntent.setData(Uri.fromParts("package", getPackageName(), null));
+                startActivityForResult(mIntent, ACTION_LOCATION_SOURCE_SETTINGS);
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ACTION_LOCATION_SOURCE_SETTINGS)
+
+        {
+//
+           if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+           {
+               locationService.start();// 定位SDK
+               mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
+           }
+           else
+           {
+               shouldShowRequestPermissionRationale();
+           }
+
+        }
+
 
     }
 
@@ -206,21 +284,8 @@ public class MainActivity extends BaseActivity implements IRequestListener
     protected void onStart()
     {
         super.onStart();
-        locationService = ((MyApplication) getApplication()).locationService;
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
-        locationService.registerListener(mListener);
-        int type = getIntent().getIntExtra("from", 0);
-        if (type == 0)
-        {
-            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-        }
-        else if (type == 1)
-        {
-            locationService.setLocationOption(locationService.getOption());
-        }
-        //    locationService.start();// 定位SDK
 
-        mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
+
     }
 
 
@@ -379,5 +444,22 @@ public class MainActivity extends BaseActivity implements IRequestListener
     public void notify(String action, String resultCode, String resultMsg, Object obj)
     {
 
+    }
+
+
+    /**
+     * 手机是否开启位置服务，如果没有开启那么所有app将不能使用定位功能
+     */
+    public static boolean isLocServiceEnable(Context context)
+    {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (gps || network)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

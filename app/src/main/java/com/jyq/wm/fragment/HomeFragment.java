@@ -153,6 +153,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     {
         if (v == mReceiptTv)
         {
+
+
             if (isOnline)
             {
                 setOnFffLine("-1");
