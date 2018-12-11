@@ -56,4 +56,5 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:3.2.6'
     compile 'com.google.code.gson:gson:2.8.1'
     implementation files('libs/BaiduLBS_Android.jar')
+    compile 'com.github.dfqin:grantor:2.5'
 }

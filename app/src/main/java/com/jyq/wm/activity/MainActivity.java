@@ -11,10 +11,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -24,6 +26,8 @@ import android.widget.Toast;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.Poi;
+import com.github.dfqin.grantor.PermissionListener;
+import com.github.dfqin.grantor.PermissionsUtil;
 import com.google.gson.Gson;
 import com.jyq.wm.MyApplication;
 import com.jyq.wm.R;
@@ -134,8 +138,9 @@ public class MainActivity extends BaseActivity implements IRequestListener
             locationService.setLocationOption(locationService.getOption());
         }
 
-        showContacts();
+        requestLocationPermission();
     }
+
 
     private View getView(int i)
     {
@@ -153,130 +158,37 @@ public class MainActivity extends BaseActivity implements IRequestListener
     }
 
 
-    private static final int BAIDU_LOCATION_STATE = 100;
-    private static final int ACTION_LOCATION_SOURCE_SETTINGS = 200;
-
-    public void showContacts()
+    private void requestLocationPermission()
     {
+        String[] permission = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        //        if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission[0]))
+        //        {
+        //            Toast.makeText(MainActivity.this, "11111111", Toast.LENGTH_LONG).show();
+        //        }
+        //        else
+        //        {
+        PermissionsUtil.TipInfo mTipInfo = new PermissionsUtil.TipInfo("帮助", "请打开位置信息", "取消", "设置");
 
-        boolean a = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
-        boolean b = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
-
-        LogUtil.e("TAG", "A ==" + a + "  | b = " + b);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+        PermissionsUtil.requestPermission(getApplication(), new PermissionListener()
         {
-            Toast.makeText(getApplicationContext(), "没有权限,请手动开启定位权限", Toast.LENGTH_SHORT).show();
-            // 申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission
-                    .ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE}, BAIDU_LOCATION_STATE);
-        }
-        else
-        {
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            @Override
+            public void permissionGranted(@NonNull String[] permissions)
             {
+                // Toast.makeText(MainActivity.this, "访问摄像头", Toast.LENGTH_LONG).show();
                 locationService.start();// 定位SDK
                 mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
             }
-            else
-            {
-                shouldShowRequestPermissionRationale();
-            }
 
-        }
-    }
-
-
-    //Android6.0申请权限的回调方法
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-    {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode)
-        {
-            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
-            case BAIDU_LOCATION_STATE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)
-                {
-                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
-                    if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                    {
-                        locationService.start();// 定位SDK
-                        mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
-                    }
-                    else
-                    {
-                        shouldShowRequestPermissionRationale();
-                    }
-                }
-                else
-                {
-                    // 没有获取到权限，做特殊处理
-                    showLocation();
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-
-    private void shouldShowRequestPermissionRationale()
-    {
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
-        {
-            showLocation();
-        }
-        else
-        {
-            locationService.start();// 定位SDK
-            mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
-        }
-    }
-
-    private void showLocation()
-    {
-        DialogUtils.showToastDialog2Button(MainActivity.this, "获取位置权限失败，请手动开启", new View.OnClickListener()
-
-
-        {
             @Override
-            public void onClick(View view)
+            public void permissionDenied(@NonNull String[] permissions)
             {
-                Intent mIntent = new Intent();
-                mIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-                mIntent.setData(Uri.fromParts("package", getPackageName(), null));
-                startActivityForResult(mIntent, ACTION_LOCATION_SOURCE_SETTINGS);
+                Toast.makeText(MainActivity.this, "用户拒绝了访问位置信息", Toast.LENGTH_LONG).show();
             }
-        });
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == ACTION_LOCATION_SOURCE_SETTINGS)
-
-        {
-//
-           if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-           {
-               locationService.start();// 定位SDK
-               mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 30 * 1000);
-           }
-           else
-           {
-               shouldShowRequestPermissionRationale();
-           }
-
-        }
-
+        }, permission, true, mTipInfo);
+        //        }
 
     }
+
 
     private LocationService locationService;
 
@@ -426,7 +338,7 @@ public class MainActivity extends BaseActivity implements IRequestListener
     private void uploadLocation()
     {
         BDLocation location = getLocation();
-        if (null != location && location.getLatitude() != 0)
+        if (null != location && location.getLatitude() != 4.9E-324)
         {
             Map<String, String> valuePairs = new HashMap<>();
             valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
