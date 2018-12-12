@@ -226,7 +226,7 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
                 }
                 else
                 {
-                    ToastUtil.show(getActivity(), "请先开始接单");
+                    ToastUtil.show(getActivity(), "请先进行上线操作");
                 }
             }
         });
@@ -242,7 +242,7 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         valuePairs.put("pageNum", pn);
         valuePairs.put("pageSize", 15);
         valuePairs.put("status", 8);
-        valuePairs.put("deliverUserId ", ConfigManager.instance().getUserID());
+        valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));

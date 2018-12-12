@@ -73,7 +73,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 case ONLINE_SUCCESS:
                     isOnline = true;
                     MyApplication.getInstance().setOnline(isOnline);
-                    mReceiptTv.setText("停止接单");
+                    mReceiptTv.setText("骑手下线");
                     break;
 
                 case REQUEST_FAIL:
@@ -83,7 +83,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 case OFF_LINE_SUCCESS:
                     isOnline = false;
                     MyApplication.getInstance().setOnline(isOnline);
-                    mReceiptTv.setText("开始接单");
+                    mReceiptTv.setText("骑手上线");
                     break;
 
             }

@@ -10,13 +10,12 @@ import com.jyq.wm.R;
 import com.jyq.wm.activity.BNaviMainActivity;
 import com.jyq.wm.bean.OrderInfo;
 import com.jyq.wm.listener.MyItemClickListener;
-import com.jyq.wm.utils.DialogUtils;
 import com.jyq.wm.utils.ToastUtil;
 
 
 /**
  */
-public class OrderHolder2 extends RecyclerView.ViewHolder
+public class OrderHolder4 extends RecyclerView.ViewHolder
 {
     private TextView mShopNameTv;
     private TextView mTimeTv;
@@ -31,7 +30,7 @@ public class OrderHolder2 extends RecyclerView.ViewHolder
     private Context context;
 
 
-    public OrderHolder2(View rootView, Context context, MyItemClickListener listener)
+    public OrderHolder4(View rootView, Context context, MyItemClickListener listener)
     {
         super(rootView);
         this.listener = listener;
@@ -74,13 +73,13 @@ public class OrderHolder2 extends RecyclerView.ViewHolder
             {
                 if (mOrderInfo.getStoreLnt() == 0)
                 {
-                    ToastUtil.show(context, "商家坐标缺失！");
+                    ToastUtil.show(context, "客户坐标缺失！");
                 }
                 else
                 {
                     Intent mItent = new Intent(context, BNaviMainActivity.class);
-                    mItent.putExtra("endLnt", mOrderInfo.getStoreLnt());
-                    mItent.putExtra("endLat", mOrderInfo.getStoreLat());
+                    mItent.putExtra("endLnt", mOrderInfo.getUserLnt());
+                    mItent.putExtra("endLat", mOrderInfo.getUserLat());
                     context.startActivity(mItent);
                 }
 

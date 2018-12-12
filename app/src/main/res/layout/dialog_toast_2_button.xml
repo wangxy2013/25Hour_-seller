@@ -41,7 +41,6 @@
         android:paddingBottom="@dimen/dm_5"
         >
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/rl_cancel"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dm_60"

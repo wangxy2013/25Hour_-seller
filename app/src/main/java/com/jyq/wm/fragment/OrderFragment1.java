@@ -251,7 +251,7 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                 }
                 else
                 {
-                    ToastUtil.show(getActivity(), "请先开始接单");
+                    ToastUtil.show(getActivity(), "请先进行上线操作");
                 }
             }
         });

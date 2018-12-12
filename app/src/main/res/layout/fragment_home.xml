@@ -33,7 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dm_15"
             android:background="@drawable/common_yellow_5dp"
-            android:text="开始接单"
+            android:text="骑手上线"
             android:textColor="@color/white"
             android:textSize="@dimen/t18" />
 
