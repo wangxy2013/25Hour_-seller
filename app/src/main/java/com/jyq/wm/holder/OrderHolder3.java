@@ -71,7 +71,7 @@ public class OrderHolder3 extends RecyclerView.ViewHolder
             @Override
             public void onClick(View v)
             {
-                if (mOrderInfo.getStoreLnt() == 0)
+                if (mOrderInfo.getUserLnt() == 0)
                 {
                     ToastUtil.show(context, "客户坐标缺失！");
                 }

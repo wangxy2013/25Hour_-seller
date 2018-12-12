@@ -170,6 +170,13 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
     };
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        mHandler.sendEmptyMessage(GET_ORDER_LIST);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
 
@@ -257,7 +264,6 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         });
 
         mRecyclerView.setAdapter(mAdapter);
-        mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
 
 

@@ -58,33 +58,33 @@ public class OrderHolder4 extends RecyclerView.ViewHolder
         mAddressTv.setText("客户地址:"+mOrderInfo.getAddress());
         mPayStyleTv.setText("offline".endsWith(mOrderInfo.getPayType()) ? "货到付款" : "微信支付");
 
-        mPikupTv.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                listener.onItemClick(v, p);
-            }
-        });
-        mNavigationTv.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if (mOrderInfo.getStoreLnt() == 0)
-                {
-                    ToastUtil.show(context, "客户坐标缺失！");
-                }
-                else
-                {
-                    Intent mItent = new Intent(context, BNaviMainActivity.class);
-                    mItent.putExtra("endLnt", mOrderInfo.getUserLnt());
-                    mItent.putExtra("endLat", mOrderInfo.getUserLat());
-                    context.startActivity(mItent);
-                }
-
-            }
-        });
+//        mPikupTv.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                listener.onItemClick(v, p);
+//            }
+//        });
+//        mNavigationTv.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                if (mOrderInfo.getStoreLnt() == 0)
+//                {
+//                    ToastUtil.show(context, "客户坐标缺失！");
+//                }
+//                else
+//                {
+//                    Intent mItent = new Intent(context, BNaviMainActivity.class);
+//                    mItent.putExtra("endLnt", mOrderInfo.getUserLnt());
+//                    mItent.putExtra("endLat", mOrderInfo.getUserLat());
+//                    context.startActivity(mItent);
+//                }
+//
+//            }
+//        });
     }
 
 

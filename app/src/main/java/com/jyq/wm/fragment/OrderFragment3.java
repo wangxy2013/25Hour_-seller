@@ -194,9 +194,7 @@ public class OrderFragment3 extends BaseFragment  implements IRequestListener, P
             @Override
             public void onClick(View v)
             {
-                pn = 1;
-                mRefreshStatus = 0;
-                loadData();
+                mHandler.sendEmptyMessage(GET_ORDER_LIST);
             }
         });
     }
@@ -229,7 +227,6 @@ public class OrderFragment3 extends BaseFragment  implements IRequestListener, P
         });
 
         mRecyclerView.setAdapter(mAdapter);
-        mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
 
 
@@ -257,9 +254,15 @@ public class OrderFragment3 extends BaseFragment  implements IRequestListener, P
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getTakemealConfirmUrl(), this, HttpRequest.POST, PICK_UP_REQUEST, postMap, new ResultHandler());
+        DataRequest.instance().request(getActivity(), Urls.getRobbingConfirmUrl(), this, HttpRequest.POST, PICK_UP_REQUEST, postMap, new ResultHandler());
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        mHandler.sendEmptyMessage(GET_ORDER_LIST);
+    }
 
     @Override
     public void onDestroy()

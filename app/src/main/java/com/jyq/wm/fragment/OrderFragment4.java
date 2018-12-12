@@ -162,13 +162,13 @@ public class OrderFragment4 extends BaseFragment  implements IRequestListener, P
         return rootView;
     }
 
-    private static OrderFragment3 instance = null;
+    private static OrderFragment4 instance = null;
 
-    public static OrderFragment3 newInstance()
+    public static OrderFragment4 newInstance()
     {
         if (instance == null)
         {
-            instance = new OrderFragment3();
+            instance = new OrderFragment4();
         }
         return instance;
     }
@@ -200,7 +200,12 @@ public class OrderFragment4 extends BaseFragment  implements IRequestListener, P
             }
         });
     }
-
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        mHandler.sendEmptyMessage(GET_ORDER_LIST);
+    }
     @Override
     protected void initViewData()
     {
@@ -229,7 +234,6 @@ public class OrderFragment4 extends BaseFragment  implements IRequestListener, P
         });
 
         mRecyclerView.setAdapter(mAdapter);
-        mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
 
 
@@ -238,7 +242,7 @@ public class OrderFragment4 extends BaseFragment  implements IRequestListener, P
         Map<String, Object> valuePairs = new HashMap<>();
         valuePairs.put("pageNum", pn);
         valuePairs.put("pageSize", 15);
-        valuePairs.put("status", 5);
+        valuePairs.put("status", 1);
         valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();

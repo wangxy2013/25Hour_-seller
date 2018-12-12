@@ -203,7 +203,12 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
             }
         });
     }
-
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        mHandler.sendEmptyMessage(GET_ORDER_LIST);
+    }
     @Override
     protected void initViewData()
     {
@@ -232,7 +237,6 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         });
 
         mRecyclerView.setAdapter(mAdapter);
-        mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
 
 

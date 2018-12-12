@@ -64,7 +64,13 @@ public class Urls
     //骑手确认取餐
     public static String getTakemealConfirmUrl()
     {
-        return HTTP_IP + "/app/deliverUserOperater/sendOut/query";
+        return HTTP_IP + "/app/deliverUserOperater/takemeal/confirm";
+    }
+
+    //骑手确认完成送单
+    public static String getRobbingConfirmUrl()
+    {
+        return HTTP_IP + "/app/deliverUserOperater/robbing/confirm";
     }
 
 }

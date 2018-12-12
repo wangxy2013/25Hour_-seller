@@ -13,6 +13,7 @@
 
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_bikenavi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
         android:text="骑行导航" />
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_walknavi_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

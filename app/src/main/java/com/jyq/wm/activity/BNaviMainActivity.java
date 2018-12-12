@@ -24,6 +24,7 @@ import com.baidu.mapapi.walknavi.model.WalkRoutePlanError;
 import com.baidu.mapapi.walknavi.params.WalkNaviLaunchParam;
 import com.jyq.wm.MyApplication;
 import com.jyq.wm.R;
+import com.jyq.wm.utils.ToastUtil;
 
 import android.Manifest;
 import android.app.Activity;
@@ -52,7 +53,7 @@ public class BNaviMainActivity extends Activity
     BikeNaviLaunchParam bikeParam;
     WalkNaviLaunchParam walkParam;
 
-    private double endLnt,endLat;
+    private double endLnt, endLat;
 
     private static boolean isPermissionRequested = false;
 
@@ -67,8 +68,26 @@ public class BNaviMainActivity extends Activity
         requestPermission();
         mMapView = (MapView) findViewById(R.id.mapview);
 
-        endLnt = getIntent().getDoubleExtra("endLnt",0);
-        endLat = getIntent().getDoubleExtra("endLat",0);
+        endLnt = getIntent().getDoubleExtra("endLnt", 0);
+        endLat = getIntent().getDoubleExtra("endLat", 0);
+        BDLocation mBDLocation = MyApplication.getInstance().getLocation();
+        mBDLocation = new BDLocation();
+        if (null != mBDLocation)
+        {
+            mBDLocation.setLatitude(32.121021);
+            mBDLocation.setLongitude(118.896602);
+            startPt = new LatLng(mBDLocation.getLatitude(), mBDLocation.getLongitude());
+        }
+        else
+        {
+            ToastUtil.show(this,"地图初始化失败！");
+            return;
+        }
+        //        startPt = new LatLng(40.047416, 116.312143);
+        endPt = new LatLng(endLat, endLnt);
+
+
+
         initMapStatus();
         initOverlay();
 
@@ -107,18 +126,12 @@ public class BNaviMainActivity extends Activity
             }
         });
 
-        BDLocation mBDLocation = MyApplication.getInstance().getLocation();
-
-        if (null != mBDLocation)
-        {
-            startPt = new LatLng(mBDLocation.getLatitude(), mBDLocation.getLongitude());
-        }
-//        startPt = new LatLng(40.047416, 116.312143);
-        endPt = new LatLng(endLat, endLnt);
 
         /*构造导航起终点参数对象*/
         bikeParam = new BikeNaviLaunchParam().stPt(startPt).endPt(endPt);
         walkParam = new WalkNaviLaunchParam().stPt(startPt).endPt(endPt);
+
+        startBikeNavi();
 
     }
 
@@ -129,7 +142,7 @@ public class BNaviMainActivity extends Activity
     {
         mBaiduMap = mMapView.getMap();
         MapStatus.Builder builder = new MapStatus.Builder();
-        builder.target(new LatLng(40.048424, 116.313513)).zoom(19);
+        builder.target(new LatLng(startPt.latitude, startPt.latitude)).zoom(19);
         mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
     }
 
@@ -139,10 +152,11 @@ public class BNaviMainActivity extends Activity
     public void initOverlay()
     {
         // add marker overlay
-        LatLng llA = new LatLng(40.047416, 116.312143);
-        LatLng llB = new LatLng(40.048424, 116.313513);
+        LatLng llA = new LatLng(32.121021, 118.896602);
+        LatLng llB = new LatLng(endLat, endLnt);
 
-        MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdStart).zIndex(9).draggable(true);
+        MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdStart).zIndex(9).draggable
+                (true);
 
         mStartMarker = (Marker) (mBaiduMap.addOverlay(ooA));
         mStartMarker.setDraggable(true);
@@ -258,6 +272,7 @@ public class BNaviMainActivity extends Activity
                 Intent intent = new Intent();
                 intent.setClass(BNaviMainActivity.this, BNaviGuideActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override
@@ -312,7 +327,8 @@ public class BNaviMainActivity extends Activity
             isPermissionRequested = true;
 
             ArrayList<String> permissions = new ArrayList<>();
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager
+                    .PERMISSION_GRANTED)
             {
                 permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
             }
