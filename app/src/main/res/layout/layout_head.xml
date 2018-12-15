@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:id="@+id/ll_head"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/main_bg"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dm_5"
+        >
+
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:padding="@dimen/dm_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back_white"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dm_30"
+            android:layout_marginRight="@dimen/dm_30"
+            android:gravity="center"
+            android:padding="@dimen/dm_8"
+            android:textColor="@color/white"
+            android:textSize="@dimen/t16"
+            />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dm_10"
+            android:textColor="@color/white"
+            android:textSize="@dimen/t14"
+            />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

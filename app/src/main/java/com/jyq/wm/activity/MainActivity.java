@@ -46,6 +46,7 @@ import com.jyq.wm.utils.LogUtil;
 import com.jyq.wm.utils.StringUtils;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
+import com.jyq.wm.widget.statusbar.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,7 +97,8 @@ public class MainActivity extends BaseActivity implements IRequestListener
     protected void initViews(Bundle savedInstanceState)
     {
         setContentView(R.layout.activity_main);
-
+        StatusBarUtil.setStatusBarBackground(this,R.drawable.main_bg);
+        StatusBarUtil.StatusBarLightMode(MainActivity.this, false);
     }
 
     @Override
@@ -104,6 +106,9 @@ public class MainActivity extends BaseActivity implements IRequestListener
     {
 
     }
+
+
+    private static final int PRIVATE_CODE = 1315;//开启GPS权限
 
     @Override
     protected void initViewData()
@@ -139,6 +144,25 @@ public class MainActivity extends BaseActivity implements IRequestListener
         }
 
         requestLocationPermission();
+
+//        if (isLocServiceEnable(this))
+//        {
+//            locationService.start();// 定位SDK
+//            mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 60 * 1000);
+//        }
+//        else
+//        {
+//            DialogUtils.showToastDialog2Button(this, "未开启定位，请立即设置", new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View view)
+//                {
+//                    Intent intent = new Intent();
+//                    intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                    startActivityForResult(intent, PRIVATE_CODE);
+//                }
+//            });
+//        }
     }
 
 

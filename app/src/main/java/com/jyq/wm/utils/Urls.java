@@ -73,5 +73,13 @@ public class Urls
         return HTTP_IP + "/app/deliverUserOperater/robbing/confirm";
     }
 
+
+    //修改密码
+    public static String getModifyPwdUrl()
+    {
+        return HTTP_IP + "/app/auth/modify/password";
+    }
+
+
 }
 

@@ -1,4 +1,4 @@
-package com.jyq.wm.utils.statusbar;
+package com.jyq.wm.widget.statusbar;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -12,7 +12,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * Created by xiongxuesong-pc on 2016/5/15.
  */
 public class StatusBarUtil
 {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jyq.wm.utils.statusbar;
+package com.jyq.wm.widget.statusbar;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

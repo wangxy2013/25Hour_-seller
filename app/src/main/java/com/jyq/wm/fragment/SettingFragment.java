@@ -1,5 +1,7 @@
 package com.jyq.wm.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jyq.wm.R;
+import com.jyq.wm.activity.MainActivity;
+import com.jyq.wm.activity.ModifyPwdActivity;
 import com.jyq.wm.utils.ConfigManager;
 
 import java.util.ArrayList;
@@ -36,7 +40,8 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     private boolean voiceOpend = true;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState)
     {
 
         if (rootView == null)
@@ -91,7 +96,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         }
         else if (v == rlPwd)
         {
-
+            startActivityForResult(new Intent(getActivity(), ModifyPwdActivity.class), 9001);
         }
         else if (v == ivSwitch)
         {
@@ -107,5 +112,22 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             }
             ConfigManager.instance().setVoiceIsOpend(voiceOpend);
         }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if (requestCode == 9001)
+            {
+                ((MainActivity) getActivity()).finish();
+            }
+        }
+
     }
 }

@@ -20,7 +20,7 @@ import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
-import com.jyq.wm.utils.statusbar.StatusBarUtil;
+import com.jyq.wm.widget.statusbar.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
