@@ -11,7 +11,12 @@ import org.json.JSONObject;
  */
 public class UserInfoHandler extends JsonHandler
 {
+    private UserInfo mUserInfo;
 
+    public UserInfo getUserInfo()
+    {
+        return mUserInfo;
+    }
 
     @Override
     protected void parseJson(JSONObject jsonObject) throws Exception
@@ -21,14 +26,14 @@ public class UserInfoHandler extends JsonHandler
 
             if (null != jsonObject)
             {
-                UserInfo mUserInfo = new UserInfo(jsonObject);
+                 mUserInfo = new UserInfo(jsonObject);
 
-                if(null != mUserInfo)
+                if (null != mUserInfo)
                 {
                     ConfigManager.instance().setUserId(mUserInfo.getId());
+                    ConfigManager.instance().setIsClose(mUserInfo.getIsClosed());
                 }
             }
-
 
 
         }

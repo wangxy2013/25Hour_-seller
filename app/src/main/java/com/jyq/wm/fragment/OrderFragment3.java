@@ -219,12 +219,22 @@ public class OrderFragment3 extends BaseFragment implements IRequestListener, Pu
             {
                 if (i == 0)
                 {
-                    orederReminder(orderInfoList.get(p).getId());
+                    if ("0".equals(ConfigManager.instance().getIsClose()))
+                    {
+                        ToastUtil.show(getActivity(), "请先进行开店铺操作");
+                    }
+                    else
+                    {
+                        orederReminder(orderInfoList.get(p).getId());
+                    }
+
                 }
                 else
                 {
                     startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("ORDER_ID", orderInfoList.get(p).getId()));
                 }
+
+
             }
         });
 

@@ -56,10 +56,10 @@ public class Urls
     }
 
 
-    //送单记录的查询status (string, optional): 8-骑士已接单,5-正在配送,1-已完成
-    public static String getSendOutUrl()
+    //店铺开关操作
+    public static String getStoreOperateUrl()
     {
-        return HTTP_IP + "/app/deliverUserOperater/sendOut/query";
+        return HTTP_IP + "/app/store/operate";
     }
 
 

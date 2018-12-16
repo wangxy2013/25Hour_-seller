@@ -170,12 +170,6 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         }
     };
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        mHandler.sendEmptyMessage(GET_ORDER_LIST);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -238,6 +232,13 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        mHandler.sendEmptyMessage(GET_ORDER_LIST);
+    }
+
+    @Override
     protected void initViewData()
     {
         mPullToRefreshRecyclerView.setPullLoadEnabled(true);
@@ -254,7 +255,15 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
             {
                 if (i == 0)
                 {
-                    receiptOrder(orderInfoList.get(p).getId());
+                    if ("0".equals(ConfigManager.instance().getIsClose()))
+                    {
+                        ToastUtil.show(getActivity(),"请先进行开店铺操作");
+                    }
+                    else
+                    {
+                        receiptOrder(orderInfoList.get(p).getId());
+                    }
+
 
                 }
                 else
@@ -265,6 +274,7 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         });
 
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
 
@@ -293,6 +303,7 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         postMap.put("json", gson.toJson(valuePairs));
         DataRequest.instance().request(getActivity(), Urls.getReceiptUrl(), this, HttpRequest.POST, ROB_ORDER_REQUEST, postMap, new ResultHandler());
     }
+
 
 
     @Override
@@ -362,6 +373,5 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         mRefreshStatus = 1;
         loadData();
     }
-
 
 }

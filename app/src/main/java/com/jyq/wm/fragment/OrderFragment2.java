@@ -206,12 +206,14 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
             }
         });
     }
+
     @Override
     public void onResume()
     {
         super.onResume();
         mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
+
     @Override
     protected void initViewData()
     {
@@ -229,11 +231,19 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
             {
                 if (i == 0)
                 {
-                    finishOrder(orderInfoList.get(p).getId());
+                    if ("0".equals(ConfigManager.instance().getIsClose()))
+                    {
+                        ToastUtil.show(getActivity(), "请先进行开店铺操作");
+                    }
+                    else
+                    {
+                        finishOrder(orderInfoList.get(p).getId());
+                    }
+
                 }
                 else
                 {
-                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("ORDER_ID",orderInfoList.get(p).getId()));
+                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("ORDER_ID", orderInfoList.get(p).getId()));
                 }
             }
         });
@@ -252,8 +262,7 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new
-                OrderListHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
     }
 
 

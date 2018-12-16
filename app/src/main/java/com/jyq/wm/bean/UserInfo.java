@@ -6,10 +6,9 @@ public class UserInfo
 {
 
     private String id;
-
     private String name;
-
-    private boolean modifyPwdFlag;
+    private  String phone;
+    private String isClosed;
 
 
 
@@ -17,7 +16,8 @@ public class UserInfo
     {
         this.id = obj.optString("id");
         this.name = obj.optString("name");
-        this.modifyPwdFlag = obj.optBoolean("modifyPwdFlag");
+        this.phone = obj.optString("phone");
+        this.isClosed = obj.optString("isClose");
     }
 
 
@@ -41,13 +41,23 @@ public class UserInfo
         this.name = name;
     }
 
-    public boolean isModifyPwdFlag()
+    public String getPhone()
     {
-        return modifyPwdFlag;
+        return phone;
     }
 
-    public void setModifyPwdFlag(boolean modifyPwdFlag)
+    public void setPhone(String phone)
     {
-        this.modifyPwdFlag = modifyPwdFlag;
+        this.phone = phone;
+    }
+
+    public String getIsClosed()
+    {
+        return isClosed;
+    }
+
+    public void setIsClosed(String isClosed)
+    {
+        this.isClosed = isClosed;
     }
 }

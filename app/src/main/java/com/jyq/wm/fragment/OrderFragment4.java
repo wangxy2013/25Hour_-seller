@@ -130,7 +130,7 @@ public class OrderFragment4 extends BaseFragment implements IRequestListener, Pu
                     mRefreshStatus = 0;
                     loadData();
 
-                    mHandler.sendEmptyMessageDelayed(GET_ORDER_LIST, 30 * 1000);
+                    //   mHandler.sendEmptyMessageDelayed(GET_ORDER_LIST, 30 * 1000);
 
 
                     break;

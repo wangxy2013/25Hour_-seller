@@ -155,6 +155,10 @@ public class HttpRequest implements Runnable
             //String body = response.body().string();
             return response;
         }
+        else
+        {
+            System.out.println(response.body().string());
+        }
         return null;
     }
 

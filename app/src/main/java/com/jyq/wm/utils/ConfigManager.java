@@ -49,9 +49,9 @@ public class ConfigManager
 
     private static final String DOMAIN_NAME = "domain_name";
 
-
-
     private static final String VOICE_IS_OPEND     = "voice_is_opend";
+
+    private static final String IS_CLOSE = "is_close";
 
 
     /**
@@ -266,6 +266,18 @@ public class ConfigManager
         return mSharedPreferences.getString(BG_STARTUP, "");
     }
 
+    public void setIsClose(String str)
+    {
+        mSharedPreferences.edit().putString(IS_CLOSE, str).commit();
+    }
+
+    public String getIsClose()
+    {
+        return mSharedPreferences.getString(IS_CLOSE, "0");
+    }
+
+
+
     public void setDomainName(String str)
     {
         mSharedPreferences.edit().putString(DOMAIN_NAME, str).commit();
@@ -275,6 +287,9 @@ public class ConfigManager
     {
         return mSharedPreferences.getString(DOMAIN_NAME, "");
     }
+
+
+
 
 
 
