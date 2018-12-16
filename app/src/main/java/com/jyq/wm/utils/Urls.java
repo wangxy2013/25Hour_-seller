@@ -80,6 +80,12 @@ public class Urls
         return HTTP_IP + "/app/auth/modify/password";
     }
 
+    //获取订单详情
+    public static String getOrederDetail()
+    {
+        return HTTP_IP + "/app/deliverUserOperater/info";
+    }
+
 
 }
 
