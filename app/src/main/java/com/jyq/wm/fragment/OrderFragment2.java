@@ -211,8 +211,18 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
     public void onResume()
     {
         super.onResume();
-        mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
+
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume
+            mHandler.sendEmptyMessage(GET_ORDER_LIST);
+        } else {
+            //相当于Fragment的onPause
+        }
+    }
+
 
     @Override
     protected void initViewData()
@@ -249,6 +259,7 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         });
 
         mRecyclerView.setAdapter(mAdapter);
+        mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
 
 

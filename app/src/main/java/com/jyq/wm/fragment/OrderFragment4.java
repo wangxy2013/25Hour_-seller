@@ -204,7 +204,15 @@ public class OrderFragment4 extends BaseFragment implements IRequestListener, Pu
     public void onResume()
     {
         super.onResume();
-        mHandler.sendEmptyMessage(GET_ORDER_LIST);
+    }
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume
+            mHandler.sendEmptyMessage(GET_ORDER_LIST);
+        } else {
+            //相当于Fragment的onPause
+        }
     }
 
     @Override
@@ -222,19 +230,12 @@ public class OrderFragment4 extends BaseFragment implements IRequestListener, Pu
             @Override
             public void onItemClick(View view, int position)
             {
-                //                if (MyApplication.getInstance().isOnline())
-                //                {
-                //
-                //                    pikupOrder(orderInfoList.get(position).getId());
-                //                }
-                //                else
-                //                {
-                //                    ToastUtil.show(getActivity(), "请先进行上线操作");
-                //                }
+
             }
         });
 
         mRecyclerView.setAdapter(mAdapter);
+        mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
 
 
