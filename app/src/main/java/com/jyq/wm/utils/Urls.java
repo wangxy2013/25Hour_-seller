@@ -39,13 +39,13 @@ public class Urls
 
     public static String getOrderListUrl()
     {
-        return HTTP_IP + "/app/deliverUserOperater/robbing/query";
+        return HTTP_IP + "/app/store/order/query";
     }
 
-    //骑手抢单
-    public static String getRobOrderUrl()
+    //商户接单
+    public static String getReceiptUrl()
     {
-        return HTTP_IP + "/app/deliverUserOperater/robbing";
+        return HTTP_IP + "/app/store/order/confirm";
     }
 
 
@@ -54,6 +54,8 @@ public class Urls
     {
         return HTTP_IP + "/app/deliverUserOperater/location";
     }
+
+
     //送单记录的查询status (string, optional): 8-骑士已接单,5-正在配送,1-已完成
     public static String getSendOutUrl()
     {

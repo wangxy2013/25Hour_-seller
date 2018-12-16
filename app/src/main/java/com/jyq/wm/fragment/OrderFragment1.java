@@ -33,6 +33,7 @@ import com.jyq.wm.json.LoginHandler;
 import com.jyq.wm.json.OrderListHandler;
 import com.jyq.wm.json.ResultHandler;
 import com.jyq.wm.listener.MyItemClickListener;
+import com.jyq.wm.listener.MyOnClickListener;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.ToastUtil;
@@ -98,7 +99,7 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                         if (orderInfoList.isEmpty() || newOrderInfoList.get(0).getId().equals(orderInfoList.get(0).getId()))
                         {
 
-                            if(ConfigManager.instance().getVoiceIsOpend())
+                            if (ConfigManager.instance().getVoiceIsOpend())
                             {
                                 //提示音
                                 Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -139,12 +140,11 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                         mNoOrderLayout.setVisibility(View.GONE);
                     }
 
-
                     break;
 
                 case ROB_ORDER_SUCCESS:
 
-                    ToastUtil.show(getActivity(), "抢单成功");
+                    ToastUtil.show(getActivity(), "接单成功");
                     pn = 1;
                     mRefreshStatus = 0;
                     loadData();
@@ -246,19 +246,19 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        mAdapter = new OrderAdapter1(orderInfoList, getActivity(), new MyItemClickListener()
+        mAdapter = new OrderAdapter1(orderInfoList, getActivity(), new MyOnClickListener.OnClickCallBackListener()
         {
             @Override
-            public void onItemClick(View view, int position)
+            public void onSubmit(int p, int i)
             {
-                if (MyApplication.getInstance().isOnline())
+                if (i == 0)
                 {
+                    receiptOrder(orderInfoList.get(p).getId());
 
-                    robOrder(orderInfoList.get(position).getId());
                 }
                 else
                 {
-                    ToastUtil.show(getActivity(), "请先进行上线操作");
+
                 }
             }
         });
@@ -269,27 +269,30 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
 
     private void loadData()
     {
-        Map<String, Integer> valuePairs = new HashMap<>();
+        Map<String, Object> valuePairs = new HashMap<>();
         valuePairs.put("pageNum", pn);
         valuePairs.put("pageSize", 15);
+        valuePairs.put("status", 2);
+        valuePairs.put("storeId", ConfigManager.instance().getUserID());
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new
-                OrderListHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
     }
 
 
-    private void robOrder(String orderId)
+
+
+    private void receiptOrder(String orderId)
     {
         showProgressDialog(getActivity());
         Map<String, String> valuePairs = new HashMap<>();
-        valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
+        valuePairs.put("storeId ", ConfigManager.instance().getUserID());
         valuePairs.put("orderId", orderId);
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getRobOrderUrl(), this, HttpRequest.POST, ROB_ORDER_REQUEST, postMap, new ResultHandler());
+        DataRequest.instance().request(getActivity(), Urls.getReceiptUrl(), this, HttpRequest.POST, ROB_ORDER_REQUEST, postMap, new ResultHandler());
     }
 
 

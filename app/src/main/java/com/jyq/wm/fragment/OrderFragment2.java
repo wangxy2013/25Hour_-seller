@@ -245,12 +245,12 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         Map<String, Object> valuePairs = new HashMap<>();
         valuePairs.put("pageNum", pn);
         valuePairs.put("pageSize", 15);
-        valuePairs.put("status", 8);
-        valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
+        valuePairs.put("status", 3);
+        valuePairs.put("storeId", ConfigManager.instance().getUserID());
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getSendOutUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new
+        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new
                 OrderListHandler());
     }
 

@@ -130,7 +130,7 @@ public class LoginActivity extends BaseActivity implements IRequestListener
             Map<String, String> valuePairs = new HashMap<>();
             valuePairs.put("password", pwd);
             valuePairs.put("username", account);
-            valuePairs.put("userType", "7");
+            valuePairs.put("userType", "6");
             Gson gson = new Gson();
             Map<String, String> postMap = new HashMap<>();
             postMap.put("json", gson.toJson(valuePairs));

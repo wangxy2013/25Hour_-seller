@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.jyq.wm.R;
 import com.jyq.wm.bean.OrderInfo;
 import com.jyq.wm.listener.MyItemClickListener;
+import com.jyq.wm.listener.MyOnClickListener;
+import com.jyq.wm.utils.StringUtils;
 
 
 /**
@@ -23,11 +25,12 @@ public class OrderHolder1 extends RecyclerView.ViewHolder
     private TextView mAddressTv;
     private TextView mGetTv;
     private TextView mPayStyleTv;
-    private MyItemClickListener listener;
+    private TextView mRemainingTimeTv;
+    private MyOnClickListener.OnClickCallBackListener listener;
     private Context context;
 
 
-    public OrderHolder1(View rootView, Context context, MyItemClickListener listener)
+    public OrderHolder1(View rootView, Context context, MyOnClickListener.OnClickCallBackListener listener)
     {
         super(rootView);
         this.listener = listener;
@@ -38,8 +41,9 @@ public class OrderHolder1 extends RecyclerView.ViewHolder
         mPhoneTv = (TextView) rootView.findViewById(R.id.tv_customer_phone);
         mNameTv = (TextView) rootView.findViewById(R.id.tv_customer_name);
         mAddressTv = (TextView) rootView.findViewById(R.id.tv_customer_address);
-        mGetTv = (TextView) rootView.findViewById(R.id.tv_get);
+        mGetTv = (TextView) rootView.findViewById(R.id.tv_submit);
         mPayStyleTv = (TextView) rootView.findViewById(R.id.tv_pay_style);
+        mRemainingTimeTv = (TextView) rootView.findViewById(R.id.tv_remaining_time);
     }
 
 
@@ -51,15 +55,37 @@ public class OrderHolder1 extends RecyclerView.ViewHolder
         mTimeTv.setText(mOrderInfo.getAddTime());
         mPhoneTv.setText("客户电话:" + mOrderInfo.getPhone());
         mNameTv.setText("客户姓名:" + mOrderInfo.getName());
-        mAddressTv.setText("客户地址:"+mOrderInfo.getAddress());
+        mAddressTv.setText("客户地址:" + mOrderInfo.getAddress());
         mPayStyleTv.setText("offline".endsWith(mOrderInfo.getPayType()) ? "货到付款" : "微信支付");
+
+        String currentTime = StringUtils.getTimestamp();
+        String addTime = mOrderInfo.getAddTime();
+       // addTime = "2018-12-16 21:10:50";
+        if (!StringUtils.stringIsEmpty(addTime))
+        {
+            int time = StringUtils.differentDaysByMillisecond(currentTime, StringUtils.getOrderEndTime(addTime));
+
+            if (time <= 0)
+            {
+                mRemainingTimeTv.setText("订单已失效");
+            }
+            else
+            {
+                mRemainingTimeTv.setText(StringUtils.formatTime(time));
+            }
+
+
+            //mRemainingTimeTv.setText();
+
+        }
+
 
         mGetTv.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                listener.onItemClick(v, p);
+                listener.onSubmit(p, 0);
             }
         });
     }

@@ -50,9 +50,9 @@ public class MyApplication extends Application
         instance = this;
         APPUtils.configImageLoader(getApplicationContext());
         ConfigManager.instance().init(this);
-        locationService = new LocationService(getApplicationContext());
-        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-        SDKInitializer.initialize(getApplicationContext());
+      //  locationService = new LocationService(getApplicationContext());
+      //  mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+       // SDKInitializer.initialize(getApplicationContext());
     }
 
 

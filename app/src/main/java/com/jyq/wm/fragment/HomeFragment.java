@@ -47,8 +47,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     TabLayout mTabLayout;
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
-    @BindView(R.id.tv_receipt)
-    TextView mReceiptTv;
 
 
     private View rootView = null;
@@ -73,7 +71,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 case ONLINE_SUCCESS:
                     isOnline = true;
                     MyApplication.getInstance().setOnline(isOnline);
-                    mReceiptTv.setText("骑手下线");
                     break;
 
                 case REQUEST_FAIL:
@@ -83,7 +80,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 case OFF_LINE_SUCCESS:
                     isOnline = false;
                     MyApplication.getInstance().setOnline(isOnline);
-                    mReceiptTv.setText("骑手上线");
                     break;
 
             }
@@ -114,10 +110,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     protected void initData()
     {
-        tabs.add("待抢");
-        tabs.add("取货");
-        tabs.add("配送");
-        tabs.add("成功");
+        tabs.add("待接单");
+        tabs.add("已接单");
+        tabs.add("催单");
+        tabs.add("已完成");
     }
 
     @Override
@@ -129,23 +125,22 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     protected void initEvent()
     {
-        mReceiptTv.setOnClickListener(this);
     }
 
     @Override
     protected void initViewData()
     {
         MyViewPagerAdapter viewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.addFragment(OrderFragment1.newInstance(), "待抢");//添加Fragment
-        viewPagerAdapter.addFragment(OrderFragment2.newInstance(), "取货");
-        viewPagerAdapter.addFragment(OrderFragment3.newInstance(), "配送");
-        viewPagerAdapter.addFragment(OrderFragment4.newInstance(), "成功");
+        viewPagerAdapter.addFragment(OrderFragment1.newInstance(), "待接单");//添加Fragment
+        viewPagerAdapter.addFragment(OrderFragment2.newInstance(), "已接单");
+        viewPagerAdapter.addFragment(OrderFragment3.newInstance(), "催单");
+        viewPagerAdapter.addFragment(OrderFragment4.newInstance(), "已完成");
         mViewPager.setAdapter(viewPagerAdapter);//设置适配器
         mViewPager.setOffscreenPageLimit(1);
-        mTabLayout.addTab(mTabLayout.newTab().setText("待抢"));//给TabLayout添加Tab
-        mTabLayout.addTab(mTabLayout.newTab().setText("取货"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("配送"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("成功"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("待接单"));//给TabLayout添加Tab
+        mTabLayout.addTab(mTabLayout.newTab().setText("已接单"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("催单"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("已完成"));
         mTabLayout.setupWithViewPager(mViewPager);
         //给TabLayout设置关联ViewPager，如果设置了ViewPager，那么ViewPagerAdapter中的getPageTitle()方法返回的就是Tab上的标题
 
@@ -154,19 +149,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onClick(View v)
     {
-        if (v == mReceiptTv)
-        {
 
-
-            if (isOnline)
-            {
-                setOnFffLine("-1");
-            }
-            else
-            {
-                setOnFffLine("1");
-            }
-        }
     }
 
 

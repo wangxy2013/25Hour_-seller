@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -60,7 +61,7 @@ public class MainActivity extends BaseActivity implements IRequestListener
 
     @BindView(android.R.id.tabhost)
     FragmentTabHost fragmentTabHost;
-    private String texts[] = {"首页", "统计", "设置"};
+    private String texts[] = {"首页", "店铺", "设置"};
     private int imageButton[] = {R.drawable.ic_home, R.drawable.ic_statistics, R.drawable.ic_setting};
     private Class fragmentArray[] = {HomeFragment.class, StatisticsFragment.class, SettingFragment.class};
 
@@ -97,7 +98,7 @@ public class MainActivity extends BaseActivity implements IRequestListener
     protected void initViews(Bundle savedInstanceState)
     {
         setContentView(R.layout.activity_main);
-        StatusBarUtil.setStatusBarBackground(this,R.drawable.main_bg);
+        StatusBarUtil.setStatusBarBackground(this, R.drawable.main_bg);
         StatusBarUtil.StatusBarLightMode(MainActivity.this, false);
     }
 
@@ -129,40 +130,21 @@ public class MainActivity extends BaseActivity implements IRequestListener
 
         // getPersimmions();
 
-        locationService = ((MyApplication) getApplication()).locationService;
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity
-        // ，都是通过此种方式获取locationservice实例的
-        locationService.registerListener(mListener);
-        int type = getIntent().getIntExtra("from", 0);
-        if (type == 0)
-        {
-            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
-        }
-        else if (type == 1)
-        {
-            locationService.setLocationOption(locationService.getOption());
-        }
+        //        locationService = ((MyApplication) getApplication()).locationService;
+        //        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity
+        //        // ，都是通过此种方式获取locationservice实例的
+        //        locationService.registerListener(mListener);
+        //        int type = getIntent().getIntExtra("from", 0);
+        //        if (type == 0)
+        //        {
+        //            locationService.setLocationOption(locationService.getDefaultLocationClientOption());
+        //        }
+        //        else if (type == 1)
+        //        {
+        //            locationService.setLocationOption(locationService.getOption());
+        //        }
+        //        requestLocationPermission();
 
-        requestLocationPermission();
-
-//        if (isLocServiceEnable(this))
-//        {
-//            locationService.start();// 定位SDK
-//            mHandler.sendEmptyMessageDelayed(UPLOAD_LOCATION, 60 * 1000);
-//        }
-//        else
-//        {
-//            DialogUtils.showToastDialog2Button(this, "未开启定位，请立即设置", new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View view)
-//                {
-//                    Intent intent = new Intent();
-//                    intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//                    startActivityForResult(intent, PRIVATE_CODE);
-//                }
-//            });
-//        }
     }
 
 
@@ -229,7 +211,7 @@ public class MainActivity extends BaseActivity implements IRequestListener
     protected void onDestroy()
     {
         super.onDestroy();
-        locationService.stop();
+        //locationService.stop();
     }
 
     /*****
@@ -373,8 +355,8 @@ public class MainActivity extends BaseActivity implements IRequestListener
             Gson gson = new Gson();
             Map<String, String> postMap = new HashMap<>();
             postMap.put("json", gson.toJson(valuePairs));
-            DataRequest.instance().request(MainActivity.this, Urls.getUplaodLocationUrl(), this, HttpRequest.POST, "UPLOAD_LOCATION_REQUEST",
-                    postMap, new ResultHandler());
+            DataRequest.instance().request(MainActivity.this, Urls.getUplaodLocationUrl(), this, HttpRequest.POST, "UPLOAD_LOCATION_REQUEST", postMap, new
+                    ResultHandler());
         }
     }
 
@@ -399,5 +381,29 @@ public class MainActivity extends BaseActivity implements IRequestListener
         }
 
         return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            DialogUtils.showToastDialog2Button(MainActivity.this, "是否退出商户端APP", new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    finish();
+
+                }
+            });
+
+            return false;
+        }
+        else
+        {
+            return super.onKeyDown(keyCode, event);
+        }
+
     }
 }

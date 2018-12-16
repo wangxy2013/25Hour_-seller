@@ -113,22 +113,7 @@ public class ConfigManager
 
     public void setUserId(String userId)
     {
-        mSharedPreferences.edit().putString(USER_ID, userId).apply();
-    }
-
-    public String getIdentifier()
-    {
-        return mSharedPreferences.getString(IDENTIFIER, "");
-    }
-
-    public void setUUID(String uuid)
-    {
-        mSharedPreferences.edit().putString(PREF_UUID, uuid).commit();
-    }
-
-    public String getUUID()
-    {
-        return mSharedPreferences.getString(PREF_UUID, null);
+        mSharedPreferences.edit().putString(USER_ID, userId).commit();
     }
 
 

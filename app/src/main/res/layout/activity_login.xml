@@ -21,7 +21,7 @@
         android:layout_height="@dimen/dm_50"
         android:layout_below="@+id/iv_logo"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_qs_app" />
+        android:src="@drawable/ic_seller" />
 
     <RelativeLayout
         android:id="@+id/ll_account"

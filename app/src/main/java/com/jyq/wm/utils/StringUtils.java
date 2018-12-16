@@ -79,9 +79,9 @@ public class StringUtils
         return df.format(date);// new Date()为获取当前系统时间
     }
 
-    SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd");
-    Date             date = new Date();
-    String           str  = sdf.format(date);
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = new Date();
+    String str = sdf.format(date);
 
     public static String formatTime(long ms)
     {
@@ -139,7 +139,8 @@ public class StringUtils
         try
         {
             currentTime = sdf.format(format1.parse(time));
-        } catch (ParseException e)
+        }
+        catch (ParseException e)
         {
             e.printStackTrace();
         }
@@ -187,7 +188,8 @@ public class StringUtils
             {
                 return 0;
             }
-        } catch (Exception exception)
+        }
+        catch (Exception exception)
         {
             exception.printStackTrace();
         }
@@ -226,7 +228,8 @@ public class StringUtils
             {
                 return 0;
             }
-        } catch (Exception exception)
+        }
+        catch (Exception exception)
         {
             exception.printStackTrace();
         }
@@ -244,8 +247,8 @@ public class StringUtils
      */
     public static boolean checkEmail(String email)
     {
-        Pattern pattern = Pattern
-                .compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
+        Pattern pattern = Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2," +
+                "4}|[0-9]{1,3})(\\]?)$");
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
@@ -282,7 +285,8 @@ public class StringUtils
             calendar.add(Calendar.DAY_OF_MONTH, -1);
             date1 = calendar.getTime();
             day = getDateToString(date1);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -304,7 +308,8 @@ public class StringUtils
             calendar.add(Calendar.DAY_OF_MONTH, 1);
             date1 = calendar.getTime();
             day = getDateToString(date1);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -322,7 +327,8 @@ public class StringUtils
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date1 = sdf.parse(time);
             day = getDateToString(date1);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -432,8 +438,6 @@ public class StringUtils
 
         return dateString;
     }
-
-
 
 
     public static String formatString(String str)
@@ -586,7 +590,8 @@ public class StringUtils
             String strDatatime = time + "000";
             Long lDatatime = Long.parseLong(strDatatime);
             dateTime = sdf.format(lDatatime);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             //TODO 处理异常
             e.printStackTrace();
@@ -606,7 +611,8 @@ public class StringUtils
             String strDatatime = time + "000";
             Long lDatatime = Long.parseLong(strDatatime);
             dateTime = sdf.format(lDatatime);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             //TODO 处理异常
             e.printStackTrace();
@@ -626,7 +632,8 @@ public class StringUtils
             String strDatatime = time + "000";
             Long lDatatime = Long.parseLong(strDatatime);
             dateTime = sdf.format(lDatatime);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             //TODO 处理异常
             e.printStackTrace();
@@ -636,18 +643,17 @@ public class StringUtils
     }
 
 
-    public static String longToShort3(String time)
+    public static String longToTime(long time)
     {
 
         SimpleDateFormat sdf = null;
         String dateTime = "";
         try
         {
-            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            String strDatatime = time + "000";
-            Long lDatatime = Long.parseLong(strDatatime);
-            dateTime = sdf.format(lDatatime);
-        } catch (Exception e)
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dateTime = sdf.format(time);
+        }
+        catch (Exception e)
         {
             //TODO 处理异常
             e.printStackTrace();
@@ -677,27 +683,6 @@ public class StringUtils
     }
 
 
-    //获取聊天类型
-    public static String getChatType(String json)
-    {
-        String type = null;
-        try
-        {
-            JSONObject obj = new JSONObject(json);
-
-            type = obj.optString("type");
-
-
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            return type;
-        }
-
-
-        return type;
-    }
-
     //获取删除聊天消息
     public static String getDelMsg(String json)
     {
@@ -709,7 +694,8 @@ public class StringUtils
             type = obj.optString("msg_ymdid");
 
 
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
             return type;
@@ -730,7 +716,8 @@ public class StringUtils
             type = obj.optString("is_gild");
 
 
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
             return type;
@@ -888,20 +875,39 @@ public class StringUtils
     public static int differentDaysByMillisecond(String time1, String time2)
     {
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Date date2 = null;
         Date date1 = null;
         try
         {
             date1 = format.parse(time1);
             date2 = format.parse(time2);
-        } catch (ParseException e)
+        }
+        catch (ParseException e)
         {
             e.printStackTrace();
         }
 
-        int days = (int) ((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
+        int days = (int) ((date2.getTime() - date1.getTime()));
         return days;
     }
+
+
+    public static String getOrderEndTime(String time)
+    {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date1 = null;
+        try
+        {
+            date1 = format.parse(time);
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+
+        return longToTime(date1.getTime() + 5 * 60 * 1000);
+    }
+
 
 }
