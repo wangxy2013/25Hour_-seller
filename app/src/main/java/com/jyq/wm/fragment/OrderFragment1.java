@@ -24,6 +24,7 @@ import com.jyq.wm.R;
 import com.jyq.wm.activity.BNaviGuideActivity;
 import com.jyq.wm.activity.BNaviMainActivity;
 import com.jyq.wm.activity.LoginActivity;
+import com.jyq.wm.activity.OrderDetailActivity;
 import com.jyq.wm.adapter.OrderAdapter1;
 import com.jyq.wm.bean.OrderInfo;
 import com.jyq.wm.http.DataRequest;
@@ -70,7 +71,7 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
     private OrderAdapter1 mAdapter;
 
     private static final String ROB_ORDER_REQUEST = "rob_order_request";
-    private static final String GET_ORDER_REQUEST = "get_order_request";
+    private static final String GET_ORDER_REQUEST = "get_order_request_2";
     private static final int REQUEST_SUCCESS = 0x01;
     private static final int REQUEST_FAIL = 0x02;
     private static final int ROB_ORDER_SUCCESS = 0x03;
@@ -258,7 +259,7 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                 }
                 else
                 {
-
+                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("ORDER_ID", orderInfoList.get(p).getId()));
                 }
             }
         });
@@ -279,8 +280,6 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         postMap.put("json", gson.toJson(valuePairs));
         DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
     }
-
-
 
 
     private void receiptOrder(String orderId)

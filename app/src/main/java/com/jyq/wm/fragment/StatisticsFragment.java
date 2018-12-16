@@ -28,8 +28,6 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
 
     @BindView(R.id.tv_order_count)
     TextView tvOrderCount;
-    @BindView(R.id.tv_delivery)
-    TextView tvDelivery;
     @BindView(R.id.tv_total)
     TextView tvTotal;
     @BindView(R.id.tv_wx_total)

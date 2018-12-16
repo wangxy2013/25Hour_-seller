@@ -11,20 +11,21 @@ import com.jyq.wm.bean.OrderInfo;
 import com.jyq.wm.holder.OrderHolder1;
 import com.jyq.wm.holder.OrderHolder2;
 import com.jyq.wm.listener.MyItemClickListener;
+import com.jyq.wm.listener.MyOnClickListener;
 
 import java.util.List;
 
 /**
- * 取货
+ * 已接单列表
  */
 public class OrderAdapter2 extends RecyclerView.Adapter<OrderHolder2>
 {
 
-    private MyItemClickListener listener;
+    private  MyOnClickListener.OnClickCallBackListener listener;
     private List<OrderInfo> list;
     private Context mContext;
 
-    public OrderAdapter2(List<OrderInfo> list, Context mContext, MyItemClickListener listener)
+    public OrderAdapter2(List<OrderInfo> list, Context mContext,  MyOnClickListener.OnClickCallBackListener listener)
     {
         this.list = list;
         this.mContext = mContext;

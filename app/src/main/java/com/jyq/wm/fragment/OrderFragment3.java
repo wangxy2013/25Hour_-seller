@@ -1,6 +1,7 @@
 package com.jyq.wm.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.jyq.wm.MyApplication;
 import com.jyq.wm.R;
+import com.jyq.wm.activity.OrderDetailActivity;
 import com.jyq.wm.adapter.OrderAdapter2;
 import com.jyq.wm.adapter.OrderAdapter3;
 import com.jyq.wm.bean.OrderInfo;
@@ -23,6 +25,7 @@ import com.jyq.wm.http.IRequestListener;
 import com.jyq.wm.json.OrderListHandler;
 import com.jyq.wm.json.ResultHandler;
 import com.jyq.wm.listener.MyItemClickListener;
+import com.jyq.wm.listener.MyOnClickListener;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.ToastUtil;
@@ -39,7 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class OrderFragment3 extends BaseFragment  implements IRequestListener, PullToRefreshBase.OnRefreshListener<RecyclerView>
+public class OrderFragment3 extends BaseFragment implements IRequestListener, PullToRefreshBase.OnRefreshListener<RecyclerView>
 {
 
     @BindView(R.id.refreshRecyclerView)
@@ -59,7 +62,7 @@ public class OrderFragment3 extends BaseFragment  implements IRequestListener, P
     private OrderAdapter3 mAdapter;
 
     private static final String PICK_UP_REQUEST = "pick_up_request";
-    private static final String GET_ORDER_REQUEST = "get_delivery_order_request";
+    private static final String GET_ORDER_REQUEST = "get_order_request_9";
     private static final int REQUEST_SUCCESS = 0x01;
     private static final int REQUEST_FAIL = 0x02;
     private static final int ROB_ORDER_SUCCESS = 0x03;
@@ -209,22 +212,22 @@ public class OrderFragment3 extends BaseFragment  implements IRequestListener, P
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        mAdapter = new OrderAdapter3(orderInfoList, getActivity(), new MyItemClickListener()
+        mAdapter = new OrderAdapter3(orderInfoList, getActivity(), new MyOnClickListener.OnClickCallBackListener()
         {
             @Override
-            public void onItemClick(View view, int position)
+            public void onSubmit(int p, int i)
             {
-                if (MyApplication.getInstance().isOnline())
+                if (i == 0)
                 {
-
-                    pikupOrder(orderInfoList.get(position).getId());
+                    orederReminder(orderInfoList.get(p).getId());
                 }
                 else
                 {
-                    ToastUtil.show(getActivity(), "请先进行上线操作");
+                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("ORDER_ID", orderInfoList.get(p).getId()));
                 }
             }
         });
+
 
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -235,26 +238,26 @@ public class OrderFragment3 extends BaseFragment  implements IRequestListener, P
         Map<String, Object> valuePairs = new HashMap<>();
         valuePairs.put("pageNum", pn);
         valuePairs.put("pageSize", 15);
-        valuePairs.put("status", 5);
-        valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
+        valuePairs.put("status", 9);
+        valuePairs.put("storeId", ConfigManager.instance().getUserID());
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getSendOutUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new
-                OrderListHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
     }
 
 
-    private void pikupOrder(String orderId)
+    private void orederReminder(String orderId)
     {
         showProgressDialog(getActivity());
         Map<String, String> valuePairs = new HashMap<>();
-        valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
-        valuePairs.put("id", orderId);
+        valuePairs.put("operateId", ConfigManager.instance().getUserID());
+        valuePairs.put("orderId", orderId);
+        valuePairs.put("type", "1");
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getRobbingConfirmUrl(), this, HttpRequest.POST, PICK_UP_REQUEST, postMap, new ResultHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrederReminderUrl(), this, HttpRequest.POST, PICK_UP_REQUEST, postMap, new ResultHandler());
     }
 
     @Override

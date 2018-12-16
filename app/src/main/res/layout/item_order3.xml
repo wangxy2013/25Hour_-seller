@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/ll_item"
     android:orientation="vertical">
 
 
@@ -137,29 +138,17 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tv_navigation"
-                android:layout_width="@dimen/dm_90"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/common_yellow_5dp"
-                android:gravity="center"
-                android:padding="@dimen/dm_5"
-                android:text="导航到客户"
-                android:textColor="@color/white"
-                android:textSize="@dimen/t14" />
 
             <TextView
-                android:id="@+id/tv_pickup"
-                android:layout_width="@dimen/dm_90"
+                android:id="@+id/tv_submit"
+                android:layout_width="@dimen/dm_100"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_navigation"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/dm_8"
                 android:background="@drawable/common_red_5dp"
                 android:gravity="center"
                 android:padding="@dimen/dm_5"
-                android:text="送餐完成"
+                android:text="催骑手接单"
                 android:textColor="@color/white"
                 android:textSize="@dimen/t14" />
         </RelativeLayout>

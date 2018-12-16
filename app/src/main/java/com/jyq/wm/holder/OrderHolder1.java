@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jyq.wm.R;
@@ -26,6 +27,7 @@ public class OrderHolder1 extends RecyclerView.ViewHolder
     private TextView mGetTv;
     private TextView mPayStyleTv;
     private TextView mRemainingTimeTv;
+    private LinearLayout mItemLayout;
     private MyOnClickListener.OnClickCallBackListener listener;
     private Context context;
 
@@ -44,6 +46,7 @@ public class OrderHolder1 extends RecyclerView.ViewHolder
         mGetTv = (TextView) rootView.findViewById(R.id.tv_submit);
         mPayStyleTv = (TextView) rootView.findViewById(R.id.tv_pay_style);
         mRemainingTimeTv = (TextView) rootView.findViewById(R.id.tv_remaining_time);
+        mItemLayout= (LinearLayout) rootView.findViewById(R.id.ll_item);
     }
 
 
@@ -86,6 +89,14 @@ public class OrderHolder1 extends RecyclerView.ViewHolder
             public void onClick(View v)
             {
                 listener.onSubmit(p, 0);
+            }
+        });
+        mItemLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                listener.onSubmit(p, 1);
             }
         });
     }

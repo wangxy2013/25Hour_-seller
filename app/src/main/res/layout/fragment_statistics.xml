@@ -11,13 +11,25 @@
     <RelativeLayout
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="200dp"
         android:background="@drawable/main_bg">
 
         <ImageView
+            android:layout_marginBottom="@dimen/dm_60"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_main_logo" />
+
+        <TextView
+            android:paddingLeft="@dimen/dm_30"
+            android:gravity="center_vertical"
+            android:textColor="@color/yellow"
+            android:text="销售统计"
+            android:textSize="@dimen/t22"
+            android:layout_alignParentBottom="true"
+            android:background="#50000000"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
     </RelativeLayout>
 
 
@@ -56,40 +68,7 @@
         android:layout_marginRight="@dimen/dm_30"
         android:background="@color/red" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dm_30"
-        android:layout_marginTop="@dimen/dm_30"
-        android:layout_marginRight="@dimen/dm_30"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="配送费："
-            android:textColor="@color/blackD"
-            android:textSize="@dimen/t16" />
-
-        <TextView
-            android:id="@+id/tv_delivery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dm_15"
-            android:text="0"
-            android:textColor="@color/red"
-            android:textSize="@dimen/t16" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dm_1"
-        android:layout_marginLeft="@dimen/dm_30"
-        android:layout_marginTop="@dimen/dm_5"
-        android:layout_marginRight="@dimen/dm_30"
-        android:background="@color/red" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="总金额："
+            android:text="货到付款总金额："
             android:textColor="@color/blackD"
             android:textSize="@dimen/t16" />
 

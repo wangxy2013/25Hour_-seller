@@ -39,7 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class OrderFragment4 extends BaseFragment  implements IRequestListener, PullToRefreshBase.OnRefreshListener<RecyclerView>
+public class OrderFragment4 extends BaseFragment implements IRequestListener, PullToRefreshBase.OnRefreshListener<RecyclerView>
 {
 
     @BindView(R.id.refreshRecyclerView)
@@ -58,8 +58,7 @@ public class OrderFragment4 extends BaseFragment  implements IRequestListener, P
 
     private OrderAdapter4 mAdapter;
 
-    private static final String PICK_UP_REQUEST = "pick_up_request";
-    private static final String GET_ORDER_REQUEST = "get_delivery_order_request";
+    private static final String GET_ORDER_REQUEST = "get_order_request_1";
     private static final int REQUEST_SUCCESS = 0x01;
     private static final int REQUEST_FAIL = 0x02;
     private static final int ROB_ORDER_SUCCESS = 0x03;
@@ -200,12 +199,14 @@ public class OrderFragment4 extends BaseFragment  implements IRequestListener, P
             }
         });
     }
+
     @Override
     public void onResume()
     {
         super.onResume();
         mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
+
     @Override
     protected void initViewData()
     {
@@ -221,15 +222,15 @@ public class OrderFragment4 extends BaseFragment  implements IRequestListener, P
             @Override
             public void onItemClick(View view, int position)
             {
-                if (MyApplication.getInstance().isOnline())
-                {
-
-                    pikupOrder(orderInfoList.get(position).getId());
-                }
-                else
-                {
-                    ToastUtil.show(getActivity(), "请先进行上线操作");
-                }
+                //                if (MyApplication.getInstance().isOnline())
+                //                {
+                //
+                //                    pikupOrder(orderInfoList.get(position).getId());
+                //                }
+                //                else
+                //                {
+                //                    ToastUtil.show(getActivity(), "请先进行上线操作");
+                //                }
             }
         });
 
@@ -243,25 +244,11 @@ public class OrderFragment4 extends BaseFragment  implements IRequestListener, P
         valuePairs.put("pageNum", pn);
         valuePairs.put("pageSize", 15);
         valuePairs.put("status", 1);
-        valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
+        valuePairs.put("storeId", ConfigManager.instance().getUserID());
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getSendOutUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new
-                OrderListHandler());
-    }
-
-
-    private void pikupOrder(String orderId)
-    {
-        showProgressDialog(getActivity());
-        Map<String, String> valuePairs = new HashMap<>();
-        valuePairs.put("deliverUserId", ConfigManager.instance().getUserID());
-        valuePairs.put("id", orderId);
-        Gson gson = new Gson();
-        Map<String, String> postMap = new HashMap<>();
-        postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getTakemealConfirmUrl(), this, HttpRequest.POST, PICK_UP_REQUEST, postMap, new ResultHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
     }
 
 
@@ -301,17 +288,6 @@ public class OrderFragment4 extends BaseFragment  implements IRequestListener, P
             else
             {
                 mHandler.sendMessage(mHandler.obtainMessage(REQUEST_FAIL, resultMsg));
-            }
-        }
-        else if (PICK_UP_REQUEST.equals(action))
-        {
-            if (ConstantUtil.RESULT_SUCCESS.equals(resultCode))
-            {
-                mHandler.sendMessage(mHandler.obtainMessage(ROB_ORDER_SUCCESS, obj));
-            }
-            else
-            {
-                mHandler.sendMessage(mHandler.obtainMessage(ROB_ORDER_FAIL, resultMsg));
             }
         }
 

@@ -88,6 +88,17 @@ public class Urls
         return HTTP_IP + "/app/deliverUserOperater/info";
     }
 
+    //商家催单
+    public static String getOrederReminderUrl()
+    {
+        return HTTP_IP + "/app/store/order/reminder";
+    }
+
+    //完成备餐
+    public static String getOrederFinishUrl()
+    {
+        return HTTP_IP + "/app/store/order/finish/meal";
+    }
 
 }
 

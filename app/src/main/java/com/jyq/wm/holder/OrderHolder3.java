@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jyq.wm.R;
 import com.jyq.wm.activity.BNaviMainActivity;
 import com.jyq.wm.bean.OrderInfo;
 import com.jyq.wm.listener.MyItemClickListener;
+import com.jyq.wm.listener.MyOnClickListener;
 import com.jyq.wm.utils.ToastUtil;
 
 
@@ -23,14 +25,14 @@ public class OrderHolder3 extends RecyclerView.ViewHolder
     private TextView mPhoneTv;
     private TextView mNameTv;
     private TextView mAddressTv;
-    private TextView mPikupTv;
-    private TextView mNavigationTv;
+    private TextView mGetTv;
     private TextView mPayStyleTv;
-    private MyItemClickListener listener;
+    private LinearLayout mItemLayout;
+    private MyOnClickListener.OnClickCallBackListener listener;
     private Context context;
 
 
-    public OrderHolder3(View rootView, Context context, MyItemClickListener listener)
+    public OrderHolder3(View rootView, Context context, MyOnClickListener.OnClickCallBackListener listener)
     {
         super(rootView);
         this.listener = listener;
@@ -41,13 +43,13 @@ public class OrderHolder3 extends RecyclerView.ViewHolder
         mPhoneTv = (TextView) rootView.findViewById(R.id.tv_customer_phone);
         mNameTv = (TextView) rootView.findViewById(R.id.tv_customer_name);
         mAddressTv = (TextView) rootView.findViewById(R.id.tv_customer_address);
-        mPikupTv = (TextView) rootView.findViewById(R.id.tv_pickup);
+        mGetTv = (TextView) rootView.findViewById(R.id.tv_submit);
         mPayStyleTv = (TextView) rootView.findViewById(R.id.tv_pay_style);
-        mNavigationTv = (TextView) rootView.findViewById(R.id.tv_navigation);
+        mItemLayout= (LinearLayout) rootView.findViewById(R.id.ll_item);
     }
 
 
-    public void setOrderInfo(final OrderInfo mOrderInfo, final int p)
+    public void setOrderInfo(OrderInfo mOrderInfo, final int p)
     {
 
         mNumberTv.setText(mOrderInfo.getId());
@@ -55,34 +57,24 @@ public class OrderHolder3 extends RecyclerView.ViewHolder
         mTimeTv.setText(mOrderInfo.getAddTime());
         mPhoneTv.setText("客户电话:" + mOrderInfo.getPhone());
         mNameTv.setText("客户姓名:" + mOrderInfo.getName());
-        mAddressTv.setText("客户地址:"+mOrderInfo.getAddress());
+        mAddressTv.setText("客户地址:" + mOrderInfo.getAddress());
         mPayStyleTv.setText("offline".endsWith(mOrderInfo.getPayType()) ? "货到付款" : "微信支付");
 
-        mPikupTv.setOnClickListener(new View.OnClickListener()
+
+        mGetTv.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                listener.onItemClick(v, p);
+                listener.onSubmit(p, 0);
             }
         });
-        mNavigationTv.setOnClickListener(new View.OnClickListener()
+        mItemLayout.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                if (mOrderInfo.getUserLnt() == 0)
-                {
-                    ToastUtil.show(context, "客户坐标缺失！");
-                }
-                else
-                {
-                    Intent mItent = new Intent(context, BNaviMainActivity.class);
-                    mItent.putExtra("endLnt", mOrderInfo.getUserLnt());
-                    mItent.putExtra("endLat", mOrderInfo.getUserLat());
-                    context.startActivity(mItent);
-                }
-
+                listener.onSubmit(p, 1);
             }
         });
     }
