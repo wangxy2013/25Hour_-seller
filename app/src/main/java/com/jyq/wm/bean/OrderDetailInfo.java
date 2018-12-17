@@ -26,12 +26,17 @@ public class OrderDetailInfo
     private String storeName;//((string, optional): 店铺id ,
     private String systemPay;//((number, optional): 使用商户余额 ,
     private String totalPrice;//((number, optional): 总价
+    private String dateline;
+    private String address;
+
 
     private List<GoodsInfo> goodsInfoList;
 
 
     public OrderDetailInfo(JSONObject obj)
     {
+        this.address = obj.optString("address");
+        this.dateline = obj.optString("dateline");
         this.deliveryFee = obj.optString("deliveryFee");
         this.deposit = obj.optString("deposit");
         this.discountList = obj.optString("discountList");
@@ -52,6 +57,16 @@ public class OrderDetailInfo
         this.storeName = obj.optString("storeName");
         this.totalPrice = obj.optString("totalPrice");
 
+    }
+
+    public String getAddress()
+    {
+        return address;
+    }
+
+    public void setAddress(String address)
+    {
+        this.address = address;
     }
 
     public String getDeliveryFee()
@@ -262,5 +277,15 @@ public class OrderDetailInfo
     public void setGoodsInfoList(List<GoodsInfo> goodsInfoList)
     {
         this.goodsInfoList = goodsInfoList;
+    }
+
+    public String getDateline()
+    {
+        return dateline;
+    }
+
+    public void setDateline(String dateline)
+    {
+        this.dateline = dateline;
     }
 }

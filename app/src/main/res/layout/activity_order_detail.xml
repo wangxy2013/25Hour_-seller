@@ -141,8 +141,7 @@
                 android:layout_marginLeft="@dimen/dm_15"
                 android:layout_marginRight="@dimen/dm_15"
                 android:background="@drawable/common_white_5dp"
-                android:orientation="vertical"
-                android:padding="@dimen/dm_10">
+                android:orientation="vertical">
 
                 <com.jyq.wm.widget.MaxRecyclerView
                     android:id="@+id/rv_goods"
@@ -179,6 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:textColor="@color/redA"
                         android:textSize="@dimen/t14" />
 
                 </RelativeLayout>
@@ -200,6 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:textColor="@color/redA"
                         android:textSize="@dimen/t14" />
 
                 </RelativeLayout>
@@ -221,6 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:textColor="@color/redA"
                         android:textSize="@dimen/t14" />
 
                 </RelativeLayout>
@@ -242,6 +244,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:textColor="@color/redA"
                         android:textSize="@dimen/t14" />
 
                 </RelativeLayout>
@@ -263,6 +266,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:textColor="@color/redA"
                         android:textSize="@dimen/t14" />
 
                 </RelativeLayout>
@@ -274,6 +278,7 @@
                 android:layout_marginLeft="@dimen/dm_15"
                 android:layout_marginTop="@dimen/dm_15"
                 android:layout_marginRight="@dimen/dm_15"
+                android:layout_marginBottom="@dimen/dm_20"
                 android:background="@drawable/common_white_5dp"
                 android:orientation="vertical"
                 android:padding="@dimen/dm_10">
@@ -294,6 +299,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:textColor="@color/redA"
                         android:textSize="@dimen/t14" />
 
                 </RelativeLayout>
@@ -315,6 +321,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:textColor="@color/redA"
                         android:textSize="@dimen/t14" />
 
                 </RelativeLayout>

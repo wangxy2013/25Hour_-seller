@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jyq.wm.R;
@@ -23,9 +24,8 @@ public class OrderHolder4 extends RecyclerView.ViewHolder
     private TextView mPhoneTv;
     private TextView mNameTv;
     private TextView mAddressTv;
-    private TextView mPikupTv;
-    private TextView mNavigationTv;
     private TextView mPayStyleTv;
+    private LinearLayout mItemLayout;
     private MyItemClickListener listener;
     private Context context;
 
@@ -41,9 +41,8 @@ public class OrderHolder4 extends RecyclerView.ViewHolder
         mPhoneTv = (TextView) rootView.findViewById(R.id.tv_customer_phone);
         mNameTv = (TextView) rootView.findViewById(R.id.tv_customer_name);
         mAddressTv = (TextView) rootView.findViewById(R.id.tv_customer_address);
-        mPikupTv = (TextView) rootView.findViewById(R.id.tv_pickup);
         mPayStyleTv = (TextView) rootView.findViewById(R.id.tv_pay_style);
-        mNavigationTv = (TextView) rootView.findViewById(R.id.tv_navigation);
+        mItemLayout= (LinearLayout) rootView.findViewById(R.id.ll_item);
     }
 
 
@@ -58,14 +57,14 @@ public class OrderHolder4 extends RecyclerView.ViewHolder
         mAddressTv.setText("客户地址:"+mOrderInfo.getAddress());
         mPayStyleTv.setText("offline".endsWith(mOrderInfo.getPayType()) ? "货到付款" : "微信支付");
 
-//        mPikupTv.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                listener.onItemClick(v, p);
-//            }
-//        });
+        mItemLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                listener.onItemClick(v, p);
+            }
+        });
 //        mNavigationTv.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override

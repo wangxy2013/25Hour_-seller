@@ -3,11 +3,16 @@ package com.jyq.wm.activity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.jyq.wm.R;
+import com.jyq.wm.adapter.GoodsAdapter;
+import com.jyq.wm.bean.GoodsInfo;
+import com.jyq.wm.bean.OrderDetailInfo;
 import com.jyq.wm.http.DataRequest;
 import com.jyq.wm.http.HttpRequest;
 import com.jyq.wm.http.IRequestListener;
@@ -15,10 +20,14 @@ import com.jyq.wm.json.OrderDetailHandler;
 import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
+import com.jyq.wm.widget.DividerDecoration;
+import com.jyq.wm.widget.FullyLinearLayoutManager;
 import com.jyq.wm.widget.MaxRecyclerView;
 import com.jyq.wm.widget.statusbar.StatusBarUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -60,7 +69,8 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     TextView tvNote;
     private String orderId;
 
-
+    private GoodsAdapter mGoodsAdapter;
+    private List<GoodsInfo> goodsInfoList = new ArrayList<>();
     private static final String GET_ORDER_DETAIL = "get_order_detail";
     private static final int REQUEST_SUCCESS = 0x01;
     private static final int REQUEST_FAIL = 0x02;
@@ -74,6 +84,40 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
             switch (msg.what)
             {
                 case REQUEST_SUCCESS:
+                    OrderDetailHandler mOrderDetailHandler = (OrderDetailHandler) msg.obj;
+                    OrderDetailInfo mOrderDetailInfo = mOrderDetailHandler.getOrderDetailInfo();
+
+                    if (null != mOrderDetailInfo)
+                    {
+                        tvOrderInterId.setText(mOrderDetailInfo.getOrderInterId());
+                        tvName.setText(mOrderDetailInfo.getName());
+
+                        String phone = mOrderDetailInfo.getPhone();
+
+                        if (!TextUtils.isEmpty(phone) && phone.length() > 6)
+                        {
+                            String phoneNumber = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+                            tvPhone.setText(phoneNumber);
+                        }
+                        else
+                        {
+                            tvPhone.setText(phone);
+                        }
+
+                        tvDateline.setText(mOrderDetailInfo.getDateline());
+                        tvAddress.setText(mOrderDetailInfo.getAddress());
+                        tvDeposit.setText(mOrderDetailInfo.getDeposit());
+                        tvDeliveryFee.setText(mOrderDetailInfo.getDeliveryFee());
+                        tvMinusPrice.setText(mOrderDetailInfo.getMinusPrice());
+                        tvTotalPrice.setText(mOrderDetailInfo.getTotalPrice());
+                        tvPrice.setText(mOrderDetailInfo.getPrice());
+                        tvPayType.setText(("online".equals(mOrderDetailInfo.getPayType())) ? "线上支付" : "线下支付");
+                        tvPayStatus.setText(("1".equals(mOrderDetailInfo.getPayStatue())) ? "已支付" : "未支付");
+                        tvNote.setText(mOrderDetailInfo.getNote());
+                        goodsInfoList.clear();
+                        goodsInfoList.addAll(mOrderDetailInfo.getGoodsInfoList());
+                        mGoodsAdapter.notifyDataSetChanged();
+                    }
 
                     break;
 
@@ -103,14 +147,16 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     @Override
     protected void initEvent()
     {
-
+        ivBack.setOnClickListener(this);
     }
 
     @Override
     protected void initViewData()
     {
-
-
+        tvTitle.setText("订单详情");
+        rvGoods.setLayoutManager(new FullyLinearLayoutManager(OrderDetailActivity.this));
+        mGoodsAdapter = new GoodsAdapter(goodsInfoList, this);
+        rvGoods.setAdapter(mGoodsAdapter);
         showProgressDialog();
         Map<String, String> valuePairs = new HashMap<>();
         valuePairs.put("id", orderId);
@@ -140,11 +186,14 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
         }
     }
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public void onClick(View v)
     {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+        super.onClick(v);
+        if (v == ivBack)
+        {
+            finish();
+        }
     }
 }

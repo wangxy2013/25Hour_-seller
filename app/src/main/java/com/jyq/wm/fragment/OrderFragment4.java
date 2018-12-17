@@ -1,6 +1,7 @@
 package com.jyq.wm.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.jyq.wm.MyApplication;
 import com.jyq.wm.R;
+import com.jyq.wm.activity.OrderDetailActivity;
 import com.jyq.wm.adapter.OrderAdapter2;
 import com.jyq.wm.adapter.OrderAdapter4;
 import com.jyq.wm.bean.OrderInfo;
@@ -205,12 +207,17 @@ public class OrderFragment4 extends BaseFragment implements IRequestListener, Pu
     {
         super.onResume();
     }
-    public void setUserVisibleHint(boolean isVisibleToUser) {
+
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+        if (isVisibleToUser)
+        {
             //相当于Fragment的onResume
             mHandler.sendEmptyMessage(GET_ORDER_LIST);
-        } else {
+        }
+        else
+        {
             //相当于Fragment的onPause
         }
     }
@@ -230,7 +237,7 @@ public class OrderFragment4 extends BaseFragment implements IRequestListener, Pu
             @Override
             public void onItemClick(View view, int position)
             {
-
+                startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("ORDER_ID", orderInfoList.get(position).getId()));
             }
         });
 
@@ -249,7 +256,8 @@ public class OrderFragment4 extends BaseFragment implements IRequestListener, Pu
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new
+                OrderListHandler());
     }
 
 
