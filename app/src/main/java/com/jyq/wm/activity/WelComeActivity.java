@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.jyq.wm.R;
@@ -58,9 +60,9 @@ public class WelComeActivity extends BaseActivity
     @Override
     protected void initViews(Bundle savedInstanceState)
     {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
-        StatusBarUtil.transparencyBar(WelComeActivity.this);
-        StatusBarUtil.StatusBarLightMode(WelComeActivity.this, false);
     }
 
     @Override
