@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dm_15"
-        android:text="版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新版本更新"
+        android:text="版本更新"
         android:textColor="@color/blackA"
         android:textSize="14sp" />
 

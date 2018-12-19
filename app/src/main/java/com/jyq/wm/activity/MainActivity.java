@@ -47,6 +47,7 @@ import com.jyq.wm.utils.LogUtil;
 import com.jyq.wm.utils.StringUtils;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
+import com.jyq.wm.utils.VersionManager;
 import com.jyq.wm.widget.statusbar.StatusBarUtil;
 
 import java.util.ArrayList;
@@ -127,7 +128,7 @@ public class MainActivity extends BaseActivity implements IRequestListener
             // .main_tab_selector);
         }
         fragmentTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
-
+        new VersionManager(this).init();
         // getPersimmions();
 
         //        locationService = ((MyApplication) getApplication()).locationService;

@@ -14,7 +14,7 @@ public class Urls
     //获取版本信息
     public static String getVersionUrl()
     {
-        return ConfigManager.instance().getDomainName() + "/index/config";
+        return HTTP_IP + "/app/appInfo/obtain";
     }
 
 
@@ -98,6 +98,13 @@ public class Urls
     public static String getOrederFinishUrl()
     {
         return HTTP_IP + "/app/store/order/finish/meal";
+    }
+
+
+    //店铺界面查询
+    public static String getQuerySellerUrl()
+    {
+        return "http://47.100.107.253:8080/settlementser/providerBatch/query";
     }
 
 }

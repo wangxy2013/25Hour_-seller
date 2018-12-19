@@ -98,6 +98,18 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
 
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.jyq.seller.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_screencapture"/>
+        </provider>
+
+
         <!-- 声明service组件 -->
         <service
             android:name="com.baidu.location.f"

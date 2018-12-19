@@ -1,6 +1,9 @@
 package com.jyq.wm.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +11,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
+import com.google.gson.Gson;
 import com.jyq.wm.R;
+import com.jyq.wm.bean.OrderInfo;
+import com.jyq.wm.http.DataRequest;
+import com.jyq.wm.http.HttpRequest;
 import com.jyq.wm.http.IRequestListener;
+import com.jyq.wm.json.OrderListHandler;
+import com.jyq.wm.json.ResultHandler;
+import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.LogUtil;
 import com.jyq.wm.utils.StringUtils;
 import com.jyq.wm.utils.ToastUtil;
+import com.jyq.wm.utils.Urls;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +70,32 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
     private Unbinder unbinder;
     private String mStartTime;
     private String mEndTime;
+    private static final String QUERY_SELLER = "query_seller";
+    private static final int REQUEST_SUCCESS = 0x01;
+    private static final int REQUEST_FAIL = 0x02;
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+            switch (msg.what)
+            {
+
+                case REQUEST_SUCCESS:
+
+
+                    break;
+
+                case REQUEST_FAIL:
+
+                    break;
+
+
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -219,6 +259,26 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
                 ToastUtil.show(getActivity(), "请选择正确的查询周期");
                 return;
             }
+
+
+
+            Map<String, String > requestHeaderPairs = new HashMap<>();
+            requestHeaderPairs.put("requestId", UUID.randomUUID().toString());
+            requestHeaderPairs.put("appId", "com.jyq.seller");
+
+
+            Map<String, String > conditionsPairs = new HashMap<>();
+            conditionsPairs.put("providerId", ConfigManager.instance().getUserID());
+            conditionsPairs.put("startDate", mStartTime);
+            conditionsPairs.put("endDate", mEndTime);
+
+            Map<String, Object> valuePairs = new HashMap<>();
+            valuePairs.put("requestHeader", requestHeaderPairs);
+            valuePairs.put("conditions", conditionsPairs);
+            Gson gson = new Gson();
+            Map<String, String> postMap = new HashMap<>();
+            postMap.put("json", gson.toJson(valuePairs));
+            DataRequest.instance().request(getActivity(), Urls.getQuerySellerUrl(), this, HttpRequest.POST, QUERY_SELLER, postMap, new ResultHandler());
 
         }
 
