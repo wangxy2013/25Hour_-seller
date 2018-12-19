@@ -16,10 +16,10 @@ public class VersionInfo
     {
 
         this.version = obj.optString("version");
-        this.version_desc = obj.optString("version_desc");
-        this.version_name = obj.optString("version_name");
-        this.link = obj.optString("version_down");
-        this.forcedup = obj.optString("upgrade");
+        this.version_desc = obj.optString("versionDesc");
+        this.version_name = obj.optString("versionName");
+        this.link = obj.optString("link");
+        this.forcedup = obj.optString("forcedup");
         this.add_time = obj.optString("add_time");
         this.update_time = obj.optString("update_time");
 
