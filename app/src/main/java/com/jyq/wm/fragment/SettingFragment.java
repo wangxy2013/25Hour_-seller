@@ -25,6 +25,7 @@ import com.jyq.wm.json.LoginHandler;
 import com.jyq.wm.json.ResultHandler;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.ConstantUtil;
+import com.jyq.wm.utils.NetWorkUtil;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
 
@@ -178,6 +179,11 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     private void operate(String operateType)
     {
+        if (!NetWorkUtil.isConn(getActivity()))
+        {
+            NetWorkUtil.showNoNetWorkDlg(getActivity());
+            return;
+        }
         showProgressDialog(getActivity());
         Map<String, String> valuePairs = new HashMap<>();
         valuePairs.put("storeId", ConfigManager.instance().getUserID());

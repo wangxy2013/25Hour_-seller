@@ -126,7 +126,10 @@ public class VersionManager implements IRequestListener
     public void init()
     {
 
-
+        if (!NetWorkUtil.isConn(mContext))
+        {
+            return;
+        }
         Map<String, Object> valuePairs = new HashMap<>();
         valuePairs.put("appType", "android");
         valuePairs.put("type", 2);

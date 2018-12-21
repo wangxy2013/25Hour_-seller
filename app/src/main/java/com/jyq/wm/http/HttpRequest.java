@@ -7,6 +7,7 @@ import com.jyq.wm.json.JsonHandler;
 import com.jyq.wm.utils.APPUtils;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.LogUtil;
+import com.jyq.wm.utils.NetWorkUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +43,8 @@ public class HttpRequest implements Runnable
     private File mFile;
     private Context mContext;
 
-    public HttpRequest(int action, String type, String url, IRequestListener listener, JsonHandler handler)
+    public HttpRequest(int action, String type, String url, IRequestListener listener,
+                       JsonHandler handler)
     {
         mAction = action;
         urlRequest = url;
@@ -51,8 +53,8 @@ public class HttpRequest implements Runnable
         mHandler = handler;
     }
 
-    public HttpRequest(Context mContext, int action, String type, String url, Map<String, String> valuePairs, IRequestListener listener,
-                       JsonHandler handler)
+    public HttpRequest(Context mContext, int action, String type, String url, Map<String, String>
+            valuePairs, IRequestListener listener, JsonHandler handler)
     {
         this(action, type, url, listener, handler);
         this.mContext = mContext;
@@ -70,8 +72,8 @@ public class HttpRequest implements Runnable
         }
     }
 
-    public HttpRequest(Context mContext, int action, String type, String url, Map<String, String> valuePairs, File mFile, IRequestListener
-            listener, JsonHandler handler)
+    public HttpRequest(Context mContext, int action, String type, String url, Map<String, String>
+            valuePairs, File mFile, IRequestListener listener, JsonHandler handler)
     {
         this(mContext, action, type, url, valuePairs, listener, handler);
         this.mFile = mFile;
@@ -83,7 +85,8 @@ public class HttpRequest implements Runnable
         try
         {
 
-            //            String target = RSAUtils.decrypt((String)result, ConstantUtil.PRIVATE_KEY);
+            //            String target = RSAUtils.decrypt((String)result, ConstantUtil
+            // .PRIVATE_KEY);
             //            Log.e("tag", "response result : " + target);
             if (mIRequestListener != null)
             {
@@ -92,7 +95,8 @@ public class HttpRequest implements Runnable
                     if (mHandler != null)
                     {
                         mHandler.parseJson(mContext, result);
-                        mIRequestListener.notify(mType, mHandler.getResultCode(), mHandler.getResultMsg(), mHandler);
+                        mIRequestListener.notify(mType, mHandler.getResultCode(), mHandler
+                                .getResultMsg(), mHandler);
                     }
 
                 }
@@ -146,8 +150,11 @@ public class HttpRequest implements Runnable
         //        mOkHttpClient.newBuilder().writeTimeout(10, TimeUnit.SECONDS);
         urlRequest = urlRequest + concatParams();
         LogUtil.e("TAG", urlRequest);
-        Request request = new Request.Builder().url(urlRequest).addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                .addHeader("Accept-Encoding", "gzip, deflate").addHeader("Connection", "close").addHeader("Accept", "*/*").addHeader("Authorization" , "Bearer " + ConfigManager.instance().getToken()).build();
+        Request request = new Request.Builder().url(urlRequest).addHeader("Content-Type",
+                "application/x-www-form-urlencoded; charset=UTF-8").addHeader("Accept-Encoding",
+                "gzip, deflate").addHeader("Connection", "close").addHeader("Accept", "*/*")
+                .addHeader("Authorization", "Bearer " + ConfigManager.instance().getToken())
+                .build();
         Response response = mOkHttpClient.newCall(request).execute();// execute
         if (response.isSuccessful())
         {
@@ -166,17 +173,20 @@ public class HttpRequest implements Runnable
     private Response doPost() throws Exception
     {
         LogUtil.e("TAG", urlRequest + concatParams());
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).writeTimeout(10, TimeUnit.SECONDS).readTimeout
-                (20, TimeUnit.SECONDS).build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit
+                .SECONDS).writeTimeout(10, TimeUnit.SECONDS).readTimeout(20, TimeUnit.SECONDS)
+                .build();
 
         //使用Gson将对象转换为json字符串
         String json = valuePair.get("json");
 
         //MediaType  设置Content-Type 标头中包含的媒体类型值
-        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8"), json);
+        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; " +
+                "charset=utf-8"), json);
 
         Request request = new Request.Builder().url(urlRequest)//请求的url
-                .post(requestBody).addHeader("Accept", "*/*").addHeader("Authorization", "Bearer " + ConfigManager.instance().getToken()).build();
+                .post(requestBody).addHeader("Accept", "*/*").addHeader("Authorization", "Bearer " +
+                        "" + ConfigManager.instance().getToken()).build();
         Response response = okHttpClient.newCall(request).execute();
         return response;
 
@@ -199,8 +209,9 @@ public class HttpRequest implements Runnable
 
         }
 
-        Request request = new Request.Builder().url(urlRequest).addHeader("User-Agent", "android").header("Content-Type", "text/html; " +
-                "charset=utf-8;").post(requestBody.build())//传参数、文件或者混合，改一下就行请求体就行
+        Request request = new Request.Builder().url(urlRequest).addHeader("User-Agent",
+                "android").header("Content-Type", "text/html; " + "charset=utf-8;").post
+                (requestBody.build())//传参数、文件或者混合，改一下就行请求体就行
                 .build();
 
         Response response = client.newCall(request).execute();// execute

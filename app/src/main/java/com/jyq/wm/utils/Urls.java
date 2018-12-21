@@ -104,7 +104,7 @@ public class Urls
     //店铺界面查询
     public static String getQuerySellerUrl()
     {
-        return "http://47.100.107.253:8080/settlementser/providerBatch/query";
+        return "http://47.100.107.253:8080/settlementser/providerSettlement/summary";
     }
 
 }

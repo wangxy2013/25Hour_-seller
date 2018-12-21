@@ -21,6 +21,7 @@ import com.jyq.wm.json.OrderListHandler;
 import com.jyq.wm.json.ResultHandler;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.LogUtil;
+import com.jyq.wm.utils.NetWorkUtil;
 import com.jyq.wm.utils.StringUtils;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
@@ -260,7 +261,11 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
                 return;
             }
 
-
+            if (!NetWorkUtil.isConn(getActivity()))
+            {
+                NetWorkUtil.showNoNetWorkDlg(getActivity());
+                return;
+            }
 
             Map<String, String > requestHeaderPairs = new HashMap<>();
             requestHeaderPairs.put("requestId", UUID.randomUUID().toString());

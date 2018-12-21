@@ -31,6 +31,7 @@ import com.jyq.wm.listener.MyItemClickListener;
 import com.jyq.wm.listener.MyOnClickListener;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.ConstantUtil;
+import com.jyq.wm.utils.NetWorkUtil;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
 import com.jyq.wm.widget.list.refresh.PullToRefreshBase;
@@ -45,7 +46,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class OrderFragment2 extends BaseFragment implements IRequestListener, PullToRefreshBase.OnRefreshListener<RecyclerView>
+public class OrderFragment2 extends BaseFragment implements IRequestListener, PullToRefreshBase
+        .OnRefreshListener<RecyclerView>
 {
 
     @BindView(R.id.refreshRecyclerView)
@@ -148,7 +150,8 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState)
     {
 
         if (rootView == null)
@@ -200,6 +203,7 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
             @Override
             public void onClick(View v)
             {
+                showProgressDialog(getActivity());
                 pn = 1;
                 mRefreshStatus = 0;
                 loadData();
@@ -213,12 +217,16 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         super.onResume();
     }
 
-    public void setUserVisibleHint(boolean isVisibleToUser) {
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+        if (isVisibleToUser)
+        {
             //相当于Fragment的onResume
             mHandler.sendEmptyMessage(GET_ORDER_LIST);
-        } else {
+        }
+        else
+        {
             //相当于Fragment的onPause
         }
     }
@@ -234,7 +242,8 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        mAdapter = new OrderAdapter2(orderInfoList, getActivity(), new MyOnClickListener.OnClickCallBackListener()
+        mAdapter = new OrderAdapter2(orderInfoList, getActivity(), new MyOnClickListener
+                .OnClickCallBackListener()
         {
             @Override
             public void onSubmit(int p, int i)
@@ -253,7 +262,8 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
                 }
                 else
                 {
-                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("ORDER_ID", orderInfoList.get(p).getId()));
+                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra
+                            ("ORDER_ID", orderInfoList.get(p).getId()));
                 }
             }
         });
@@ -265,6 +275,21 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
 
     private void loadData()
     {
+        if (!NetWorkUtil.isConn(getActivity()))
+        {
+            hideProgressDialog(getActivity());
+            if (mRefreshStatus == 1)
+            {
+                mPullToRefreshRecyclerView.onPullUpRefreshComplete();
+            }
+            else
+            {
+                mPullToRefreshRecyclerView.onPullDownRefreshComplete();
+            }
+
+            NetWorkUtil.showNoNetWorkDlg(getActivity());
+            return;
+        }
         Map<String, Object> valuePairs = new HashMap<>();
         valuePairs.put("pageNum", pn);
         valuePairs.put("pageSize", 15);
@@ -273,12 +298,18 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest
+                .POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
     }
 
 
     private void finishOrder(String orderId)
     {
+        if (!NetWorkUtil.isConn(getActivity()))
+        {
+            NetWorkUtil.showNoNetWorkDlg(getActivity());
+            return;
+        }
         showProgressDialog(getActivity());
         Map<String, String> valuePairs = new HashMap<>();
         valuePairs.put("storeId", ConfigManager.instance().getUserID());
@@ -286,7 +317,8 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getOrederFinishUrl(), this, HttpRequest.POST, PICK_UP_REQUEST, postMap, new ResultHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrederFinishUrl(), this,
+                HttpRequest.POST, PICK_UP_REQUEST, postMap, new ResultHandler());
     }
 
 

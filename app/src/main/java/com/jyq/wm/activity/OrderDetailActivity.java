@@ -18,6 +18,7 @@ import com.jyq.wm.http.HttpRequest;
 import com.jyq.wm.http.IRequestListener;
 import com.jyq.wm.json.OrderDetailHandler;
 import com.jyq.wm.utils.ConstantUtil;
+import com.jyq.wm.utils.NetWorkUtil;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
 import com.jyq.wm.widget.DividerDecoration;
@@ -157,6 +158,19 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
         rvGoods.setLayoutManager(new FullyLinearLayoutManager(OrderDetailActivity.this));
         mGoodsAdapter = new GoodsAdapter(goodsInfoList, this);
         rvGoods.setAdapter(mGoodsAdapter);
+
+
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (!NetWorkUtil.isConn(this))
+        {
+            NetWorkUtil.showNoNetWorkDlg(this);
+            return;
+        }
         showProgressDialog();
         Map<String, String> valuePairs = new HashMap<>();
         valuePairs.put("id", orderId);
@@ -165,7 +179,6 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
         postMap.put("json", gson.toJson(valuePairs));
         DataRequest.instance().request(OrderDetailActivity.this, Urls.getOrederDetail(), this, HttpRequest.POST, GET_ORDER_DETAIL, postMap, new
                 OrderDetailHandler());
-
     }
 
     @Override

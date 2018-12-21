@@ -23,6 +23,7 @@ import com.jyq.wm.listener.MyItemClickListener;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.DialogUtils;
+import com.jyq.wm.utils.NetWorkUtil;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
 import com.jyq.wm.widget.statusbar.StatusBarUtil;
@@ -157,7 +158,11 @@ public class ModifyPwdActivity extends BaseActivity implements IRequestListener
                 ToastUtil.show(this, "两次密码输入不一致");
                 return;
             }
-
+            if (!NetWorkUtil.isConn(this))
+            {
+                NetWorkUtil.showNoNetWorkDlg(this);
+                return;
+            }
             showProgressDialog();
             Map<String, String> valuePairs = new HashMap<>();
             valuePairs.put("id", ConfigManager.instance().getUserID());
