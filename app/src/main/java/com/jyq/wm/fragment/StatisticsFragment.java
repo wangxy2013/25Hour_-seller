@@ -14,12 +14,16 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.Gson;
 import com.jyq.wm.R;
 import com.jyq.wm.bean.OrderInfo;
+import com.jyq.wm.bean.ResponseHeaderInfo;
+import com.jyq.wm.bean.StatisticsInfo;
+import com.jyq.wm.holder.StatisticsHandler;
 import com.jyq.wm.http.DataRequest;
 import com.jyq.wm.http.HttpRequest;
 import com.jyq.wm.http.IRequestListener;
 import com.jyq.wm.json.OrderListHandler;
 import com.jyq.wm.json.ResultHandler;
 import com.jyq.wm.utils.ConfigManager;
+import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.LogUtil;
 import com.jyq.wm.utils.NetWorkUtil;
 import com.jyq.wm.utils.StringUtils;
@@ -85,6 +89,29 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
             {
 
                 case REQUEST_SUCCESS:
+                    StatisticsHandler mStatisticsHandler = (StatisticsHandler) msg.obj;
+
+                    ResponseHeaderInfo responseHeaderInfo = mStatisticsHandler.getResponseHeaderInfo();
+                    StatisticsInfo statisticsInfo = mStatisticsHandler.getStatisticsInfo();
+
+
+                    if (null != responseHeaderInfo)
+                    {
+                        if ("0000".equals(responseHeaderInfo.getRetCode()))
+                        {
+                            if (null != statisticsInfo)
+                            {
+//                                tvOrderCount.setText(statisticsInfo.getDataCount());
+//                                tvDelivery.setText(statisticsInfo.getDistributorCommissionAmount());
+//                                tvTotal.setText(statisticsInfo.getAmount());
+//                                tvWxTotal.setText(statisticsInfo.getPayOnlineAmount());
+                            }
+                        }
+                        else
+                        {
+                            ToastUtil.show(getActivity(), responseHeaderInfo.getRetMsg());
+                        }
+                    }
 
 
                     break;
@@ -97,6 +124,7 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
             }
         }
     };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -164,11 +192,6 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
 
     }
 
-    @Override
-    public void notify(String action, String resultCode, String resultMsg, Object obj)
-    {
-
-    }
 
     @Override
     public void onClick(View v)
@@ -283,10 +306,25 @@ public class StatisticsFragment extends BaseFragment implements IRequestListener
             Gson gson = new Gson();
             Map<String, String> postMap = new HashMap<>();
             postMap.put("json", gson.toJson(valuePairs));
-            DataRequest.instance().request(getActivity(), Urls.getQuerySellerUrl(), this, HttpRequest.POST, QUERY_SELLER, postMap, new ResultHandler());
+            DataRequest.instance().request(getActivity(), Urls.getQuerySellerUrl(), this, HttpRequest.POST, QUERY_SELLER, postMap, new StatisticsHandler());
 
         }
+    }
 
-
+    @Override
+    public void notify(String action, String resultCode, String resultMsg, Object obj)
+    {
+        hideProgressDialog(getActivity());
+        if (QUERY_SELLER.equals(action))
+        {
+            if (ConstantUtil.RESULT_SUCCESS.equals(resultCode))
+            {
+                mHandler.sendMessage(mHandler.obtainMessage(REQUEST_SUCCESS, obj));
+            }
+            else
+            {
+                mHandler.sendMessage(mHandler.obtainMessage(REQUEST_FAIL, resultMsg));
+            }
+        }
     }
 }
