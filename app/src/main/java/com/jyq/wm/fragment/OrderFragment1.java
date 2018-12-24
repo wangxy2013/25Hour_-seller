@@ -40,6 +40,7 @@ import com.jyq.wm.listener.MyOnClickListener;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.NetWorkUtil;
+import com.jyq.wm.utils.StringUtils;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
 import com.jyq.wm.widget.list.refresh.PullToRefreshBase;
@@ -68,9 +69,9 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
 
     private int pn = 1;
     private int mRefreshStatus;
-
+    private List<String> oldOrderIdList = new ArrayList<>();
+    private List<String> newOrderIdList = new ArrayList<>();
     private List<OrderInfo> orderInfoList = new ArrayList<>();
-
     private OrderAdapter1 mAdapter;
 
     private static final String ROB_ORDER_REQUEST = "rob_order_request";
@@ -98,12 +99,36 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                     List<OrderInfo> newOrderInfoList = mOrderListHandler.getOrderInfoList();
 
 
-                    if (!newOrderInfoList.isEmpty())
+                    if (!newOrderInfoList.isEmpty() && !orderInfoList.isEmpty())
                     {
-                        if (orderInfoList.isEmpty() || !newOrderInfoList.get(0).getId().equals(orderInfoList.get(0).getId()))
+                        //                        if (orderInfoList.isEmpty() || !newOrderInfoList.get(0).getId().equals(orderInfoList.get(0).getId
+                        // ()))
+                        //                    {
+                        //                        //提示音
+                        //                        playVoice(getActivity());
+                        //
+                        //                    }
+
+                        oldOrderIdList.clear();
+                        newOrderIdList.clear();
+
+                        for (int i = 0; i < orderInfoList.size(); i++)
                         {
-                            //提示音
-                            playVoice(getActivity());
+                            oldOrderIdList.add(orderInfoList.get(i).getId());
+                        }
+                        for (int i = 0; i < newOrderInfoList.size(); i++)
+                        {
+                            newOrderIdList.add(newOrderInfoList.get(i).getId());
+                        }
+
+
+                        for (int j = 0; j < newOrderIdList.size(); j++)
+                        {
+                            if (!oldOrderIdList.contains(newOrderIdList.get(j)))
+                            {
+                                playVoice(getActivity());
+                                break;
+                            }
 
                         }
 
