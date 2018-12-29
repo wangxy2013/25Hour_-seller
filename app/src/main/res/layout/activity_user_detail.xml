@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="@dimen/dm_100"
             android:layout_height="wrap_content"
-            android:text="商家姓名："
+            android:text="店铺名称："
             android:textColor="@color/black"
             android:textSize="@dimen/t18" />
 

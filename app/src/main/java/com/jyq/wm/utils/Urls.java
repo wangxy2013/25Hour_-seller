@@ -104,7 +104,7 @@ public class Urls
     //店铺界面查询
     public static String getQuerySellerUrl()
     {
-        return "http://47.110.229.196:8080/settlementser/providerSettlement/summary";
+        return "http://www.ershiwu.cn:8081/settlementser/providerSettlement/summary";
     }
 
 }

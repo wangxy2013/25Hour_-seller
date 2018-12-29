@@ -56,7 +56,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerView>, IRequestListener
+public class OrderFragment1 extends BaseFragment implements PullToRefreshBase
+        .OnRefreshListener<RecyclerView>, IRequestListener
 {
     @BindView(R.id.refreshRecyclerView)
     PullToRefreshRecyclerView mPullToRefreshRecyclerView;
@@ -101,7 +102,8 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
 
                     if (!newOrderInfoList.isEmpty() && !orderInfoList.isEmpty())
                     {
-                        //                        if (orderInfoList.isEmpty() || !newOrderInfoList.get(0).getId().equals(orderInfoList.get(0).getId
+                        //                        if (orderInfoList.isEmpty() ||
+                        // !newOrderInfoList.get(0).getId().equals(orderInfoList.get(0).getId
                         // ()))
                         //                    {
                         //                        //提示音
@@ -133,6 +135,10 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                         }
 
 
+                    }
+                    else if (newOrderInfoList.size() > oldOrderIdList.size())
+                    {
+                        playVoice(getActivity());
                     }
 
                     if (pn == 1)
@@ -212,7 +218,8 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState)
     {
 
         if (rootView == null)
@@ -303,7 +310,8 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        mAdapter = new OrderAdapter1(orderInfoList, getActivity(), new MyOnClickListener.OnClickCallBackListener()
+        mAdapter = new OrderAdapter1(orderInfoList, getActivity(), new MyOnClickListener
+                .OnClickCallBackListener()
         {
             @Override
             public void onSubmit(int p, int i)
@@ -323,7 +331,8 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                 }
                 else
                 {
-                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("ORDER_ID", orderInfoList.get(p).getId()));
+                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra
+                            ("ORDER_ID", orderInfoList.get(p).getId()));
                 }
             }
         });
@@ -358,8 +367,8 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new
-                OrderListHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest
+                .POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
     }
 
 
@@ -377,7 +386,8 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getReceiptUrl(), this, HttpRequest.POST, ROB_ORDER_REQUEST, postMap, new ResultHandler());
+        DataRequest.instance().request(getActivity(), Urls.getReceiptUrl(), this, HttpRequest
+                .POST, ROB_ORDER_REQUEST, postMap, new ResultHandler());
     }
 
 

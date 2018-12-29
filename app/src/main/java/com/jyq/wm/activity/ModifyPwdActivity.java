@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -68,8 +69,8 @@ public class ModifyPwdActivity extends BaseActivity implements IRequestListener
                 case REQUEST_SUCCESS:
                     //                    ToastUtil.show(ModifyPwdActivity.this, "密码修改成功,请重新登录");
 
-                    DialogUtils.showPromptDialog(ModifyPwdActivity.this, "密码修改成功,请重新登录", new MyItemClickListener()
-
+                    DialogUtils.showPromptDialog(ModifyPwdActivity.this, "密码修改成功,请重新登录", new
+                            MyItemClickListener()
                     {
                         @Override
                         public void onItemClick(View view, int position)
@@ -144,7 +145,11 @@ public class ModifyPwdActivity extends BaseActivity implements IRequestListener
                 ToastUtil.show(this, "请输入新密码");
                 return;
             }
-
+            if (oldPwd.equals(newPwd))
+            {
+                ToastUtil.show(this, "新密码与旧密码不能相同");
+                return;
+            }
 
             if (newPwd.length() < 6)
             {
@@ -155,7 +160,7 @@ public class ModifyPwdActivity extends BaseActivity implements IRequestListener
 
             if (!newPwd1.equals(newPwd))
             {
-                ToastUtil.show(this, "两次密码输入不一致");
+                ToastUtil.show(this, "两次新密码输入不一致");
                 return;
             }
             if (!NetWorkUtil.isConn(this))
@@ -171,14 +176,21 @@ public class ModifyPwdActivity extends BaseActivity implements IRequestListener
             Gson gson = new Gson();
             Map<String, String> postMap = new HashMap<>();
             postMap.put("json", gson.toJson(valuePairs));
-            DataRequest.instance().request(ModifyPwdActivity.this, Urls.getModifyPwdUrl(), this, HttpRequest.POST, USER_MODIFY_PWD, postMap, new
-                    ResultHandler());
+            DataRequest.instance().request(ModifyPwdActivity.this, Urls.getModifyPwdUrl(), this,
+                    HttpRequest.POST, USER_MODIFY_PWD, postMap, new ResultHandler());
 
 
         }
         else if (v == ivBack)
         {
-            finish();
+            if (ConstantUtil.DEFAULT_PWD.equals(ConfigManager.instance().getUserPwd()))
+            {
+                ToastUtil.show(ModifyPwdActivity.this, "请修改密码");
+            }
+            else
+            {
+                finish();
+            }
         }
 
     }
@@ -199,5 +211,27 @@ public class ModifyPwdActivity extends BaseActivity implements IRequestListener
                 mHandler.sendMessage(mHandler.obtainMessage(REQUEST_FAIL, resultMsg));
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            if (ConstantUtil.DEFAULT_PWD.equals(ConfigManager.instance().getUserPwd()))
+            {
+                ToastUtil.show(ModifyPwdActivity.this, "请修改密码");
+                return false;
+            }
+            else
+            {
+                return super.onKeyDown(keyCode, event);
+            }
+        }
+        else
+        {
+            return super.onKeyDown(keyCode, event);
+        }
+
     }
 }
