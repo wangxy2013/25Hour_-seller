@@ -90,29 +90,29 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
 
                     if (null != mOrderDetailInfo)
                     {
-                        tvOrderInterId.setText(mOrderDetailInfo.getOrderInterId());
+                        tvOrderInterId.setText(mOrderDetailInfo.getId());
                         tvName.setText(mOrderDetailInfo.getName());
 
                         String phone = mOrderDetailInfo.getPhone();
 
                         if (!TextUtils.isEmpty(phone) && phone.length() > 6)
                         {
-                            String phoneNumber = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
-                            tvPhone.setText(phoneNumber);
+                            // String phoneNumber = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})",   "$1****$2");
+                            tvPhone.setText(phone);
                         }
                         else
                         {
                             tvPhone.setText(phone);
                         }
 
-                        tvDateline.setText(mOrderDetailInfo.getDateline());
+                        tvDateline.setText(mOrderDetailInfo.getSubmitOrderTime());
                         tvAddress.setText(mOrderDetailInfo.getAddress());
                         tvDeposit.setText(mOrderDetailInfo.getDeposit());
                         tvDeliveryFee.setText(mOrderDetailInfo.getDeliveryFee());
                         tvMinusPrice.setText(mOrderDetailInfo.getMinusPrice());
                         tvTotalPrice.setText(mOrderDetailInfo.getTotalPrice());
                         tvPrice.setText(mOrderDetailInfo.getPrice());
-                        tvPayType.setText(("online".equals(mOrderDetailInfo.getPayType())) ? "线上支付" : "线下支付");
+                        tvPayType.setText(("online".equals(mOrderDetailInfo.getPayType())) ? "微信支付" : "货到付款");
                         tvPayStatus.setText(("1".equals(mOrderDetailInfo.getPayStatue())) ? "已支付" : "未支付");
                         tvNote.setText(mOrderDetailInfo.getNote());
                         goodsInfoList.clear();

@@ -28,7 +28,7 @@ public class OrderDetailInfo
     private String totalPrice;//((number, optional): 总价
     private String dateline;
     private String address;
-
+    private String submitOrderTime;
 
     private List<GoodsInfo> goodsInfoList;
 
@@ -56,6 +56,7 @@ public class OrderDetailInfo
         this.storeId = obj.optString("storeId");
         this.storeName = obj.optString("storeName");
         this.totalPrice = obj.optString("totalPrice");
+        this.submitOrderTime = obj.optString("submitOrderTime");
 
     }
 
@@ -287,5 +288,15 @@ public class OrderDetailInfo
     public void setDateline(String dateline)
     {
         this.dateline = dateline;
+    }
+
+    public String getSubmitOrderTime()
+    {
+        return submitOrderTime;
+    }
+
+    public void setSubmitOrderTime(String submitOrderTime)
+    {
+        this.submitOrderTime = submitOrderTime;
     }
 }
