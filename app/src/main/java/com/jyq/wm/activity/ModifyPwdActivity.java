@@ -76,6 +76,7 @@ public class ModifyPwdActivity extends BaseActivity implements IRequestListener
                         public void onItemClick(View view, int position)
                         {
                             setResult(Activity.RESULT_OK);
+                            ConfigManager.instance().setUserPwd("");
                             finish();
                         }
                     });
