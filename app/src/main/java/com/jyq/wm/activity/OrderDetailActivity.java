@@ -21,7 +21,6 @@ import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.NetWorkUtil;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
-import com.jyq.wm.widget.DividerDecoration;
 import com.jyq.wm.widget.FullyLinearLayoutManager;
 import com.jyq.wm.widget.MaxRecyclerView;
 import com.jyq.wm.widget.statusbar.StatusBarUtil;
@@ -68,6 +67,12 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     TextView tvPayStatus;
     @BindView(R.id.tv_note)
     TextView tvNote;
+    @BindView(R.id.tv_store_name)
+    TextView tvStoreName;
+    @BindView(R.id.tv_store_address)
+    TextView tvStoreAddress;
+    @BindView(R.id.tv_remark)
+    TextView tvRemark;
     private String orderId;
 
     private GoodsAdapter mGoodsAdapter;
@@ -104,14 +109,15 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
                         {
                             tvPhone.setText(phone);
                         }
-
+                        tvStoreName.setText(mOrderDetailInfo.getStoreName());
+                        tvStoreAddress.setText(mOrderDetailInfo.getStoreAddress());
                         tvDateline.setText(mOrderDetailInfo.getSubmitOrderTime());
                         tvAddress.setText(mOrderDetailInfo.getAddress());
-                        tvDeposit.setText(mOrderDetailInfo.getDeposit());
-                        tvDeliveryFee.setText(mOrderDetailInfo.getDeliveryFee());
-                        tvMinusPrice.setText(mOrderDetailInfo.getMinusPrice());
-                        tvTotalPrice.setText(mOrderDetailInfo.getTotalPrice());
-                        tvPrice.setText(mOrderDetailInfo.getPrice());
+                        tvDeposit.setText("¥:"+mOrderDetailInfo.getDeposit());
+                        tvDeliveryFee.setText("¥:"+mOrderDetailInfo.getDeliveryFee());
+                        tvMinusPrice.setText("¥:"+mOrderDetailInfo.getMinusPrice());
+                        tvTotalPrice.setText("¥:"+mOrderDetailInfo.getTotalPrice());
+                        tvPrice.setText("¥:"+mOrderDetailInfo.getPrice());
                         tvPayType.setText(("online".equals(mOrderDetailInfo.getPayType())) ? "微信支付" : "货到付款");
                         tvPayStatus.setText(("1".equals(mOrderDetailInfo.getPayStatue())) ? "已支付" : "未支付");
                         tvNote.setText(mOrderDetailInfo.getNote());
@@ -208,5 +214,13 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
         {
             finish();
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

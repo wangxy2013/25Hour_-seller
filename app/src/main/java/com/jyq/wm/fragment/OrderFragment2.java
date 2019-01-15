@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.NetWorkUtil;
 import com.jyq.wm.utils.ToastUtil;
 import com.jyq.wm.utils.Urls;
+import com.jyq.wm.widget.VerticalSwipeRefreshLayout;
 import com.jyq.wm.widget.list.refresh.PullToRefreshBase;
 import com.jyq.wm.widget.list.refresh.PullToRefreshRecyclerView;
 
@@ -46,10 +48,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class OrderFragment2 extends BaseFragment implements IRequestListener, PullToRefreshBase
-        .OnRefreshListener<RecyclerView>
+public class OrderFragment2 extends BaseFragment implements IRequestListener, PullToRefreshBase.OnRefreshListener<RecyclerView>, SwipeRefreshLayout
+        .OnRefreshListener
 {
-
+    @BindView(R.id.swipeRefreshLayout)
+    VerticalSwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.refreshRecyclerView)
     PullToRefreshRecyclerView mPullToRefreshRecyclerView;
 
@@ -150,8 +153,7 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
-            savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
 
         if (rootView == null)
@@ -209,6 +211,7 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
                 loadData();
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -242,8 +245,7 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        mAdapter = new OrderAdapter2(orderInfoList, getActivity(), new MyOnClickListener
-                .OnClickCallBackListener()
+        mAdapter = new OrderAdapter2(orderInfoList, getActivity(), new MyOnClickListener.OnClickCallBackListener()
         {
             @Override
             public void onSubmit(int p, int i)
@@ -262,13 +264,28 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
                 }
                 else
                 {
-                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra
-                            ("ORDER_ID", orderInfoList.get(p).getId()));
+                    startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("ORDER_ID", orderInfoList.get(p).getId()));
                 }
             }
         });
 
         mRecyclerView.setAdapter(mAdapter);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                int topRowVerticalPosition = (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getTop();
+                mSwipeRefreshLayout.setEnabled(topRowVerticalPosition >= 0);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
         mHandler.sendEmptyMessage(GET_ORDER_LIST);
     }
 
@@ -287,8 +304,8 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
                 mPullToRefreshRecyclerView.onPullDownRefreshComplete();
             }
 
-//            NetWorkUtil.showNoNetWorkDlg(getActivity());
-            ToastUtil.show(getActivity(),"请检查网络是否可用");
+            //            NetWorkUtil.showNoNetWorkDlg(getActivity());
+            ToastUtil.show(getActivity(), "请检查网络是否可用");
             return;
         }
         Map<String, Object> valuePairs = new HashMap<>();
@@ -299,8 +316,8 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest
-                .POST, GET_ORDER_REQUEST, postMap, new OrderListHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrderListUrl(), this, HttpRequest.POST, GET_ORDER_REQUEST, postMap, new
+                OrderListHandler());
     }
 
 
@@ -318,8 +335,8 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         Gson gson = new Gson();
         Map<String, String> postMap = new HashMap<>();
         postMap.put("json", gson.toJson(valuePairs));
-        DataRequest.instance().request(getActivity(), Urls.getOrederFinishUrl(), this,
-                HttpRequest.POST, PICK_UP_REQUEST, postMap, new ResultHandler());
+        DataRequest.instance().request(getActivity(), Urls.getOrederFinishUrl(), this, HttpRequest.POST, PICK_UP_REQUEST, postMap, new
+                ResultHandler());
     }
 
 
@@ -391,4 +408,23 @@ public class OrderFragment2 extends BaseFragment implements IRequestListener, Pu
         loadData();
     }
 
+    @Override
+    public void onRefresh()
+    {
+
+        if (mSwipeRefreshLayout != null)
+        {
+            pn = 1;
+            mRefreshStatus = 0;
+            loadData();
+            mSwipeRefreshLayout.post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            });
+        }
+    }
 }
