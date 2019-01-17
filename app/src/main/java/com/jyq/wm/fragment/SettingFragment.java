@@ -135,6 +135,14 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     @Override
     protected void initViewData()
     {
+
+
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
         if ("0".equals(ConfigManager.instance().getIsClose()))
         {
             isOpened = false;
@@ -145,7 +153,6 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             isOpened = true;
             ivSwitch.setImageResource(R.drawable.ic_switch_on);
         }
-
     }
 
     @Override

@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dm_10"
-                android:text="暂无订单点击刷新"
+                android:text="暂无订单下拉刷新"
                 android:textColor="@color/redA"
                 android:textSize="@dimen/t16" />
         </LinearLayout>

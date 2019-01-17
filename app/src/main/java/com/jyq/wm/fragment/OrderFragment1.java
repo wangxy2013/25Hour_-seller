@@ -58,7 +58,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerView>, IRequestListener,SwipeRefreshLayout.OnRefreshListener
+public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerView>, IRequestListener, SwipeRefreshLayout
+        .OnRefreshListener
 {
 
     @BindView(R.id.refreshRecyclerView)
@@ -87,6 +88,9 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
     private static final int ROB_ORDER_SUCCESS = 0x03;
     private static final int ROB_ORDER_FAIL = 0x04;
     private static final int GET_ORDER_LIST = 0x05;
+    private static final int PLAY_VOICE = 0x06;
+
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler()
     {
@@ -100,52 +104,7 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                 case REQUEST_SUCCESS:
 
                     OrderListHandler mOrderListHandler = (OrderListHandler) msg.obj;
-
-
                     List<OrderInfo> newOrderInfoList = mOrderListHandler.getOrderInfoList();
-
-
-                    if (!newOrderInfoList.isEmpty() && !orderInfoList.isEmpty())
-                    {
-                        //                        if (orderInfoList.isEmpty() ||
-                        // !newOrderInfoList.get(0).getId().equals(orderInfoList.get(0).getId
-                        // ()))
-                        //                    {
-                        //                        //提示音
-                        //                        playVoice(getActivity());
-                        //
-                        //                    }
-
-                        oldOrderIdList.clear();
-                        newOrderIdList.clear();
-
-                        for (int i = 0; i < orderInfoList.size(); i++)
-                        {
-                            oldOrderIdList.add(orderInfoList.get(i).getId());
-                        }
-                        for (int i = 0; i < newOrderInfoList.size(); i++)
-                        {
-                            newOrderIdList.add(newOrderInfoList.get(i).getId());
-                        }
-
-
-                        for (int j = 0; j < newOrderIdList.size(); j++)
-                        {
-                            if (!oldOrderIdList.contains(newOrderIdList.get(j)))
-                            {
-                                playVoice(getActivity());
-                                break;
-                            }
-
-                        }
-
-
-                    }
-                    else if (newOrderInfoList.size() > oldOrderIdList.size())
-                    {
-                        playVoice(getActivity());
-                    }
-
                     if (pn == 1)
                     {
                         orderInfoList.clear();
@@ -161,6 +120,52 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                     {
                         mNoOrderLayout.setVisibility(View.GONE);
                     }
+
+
+
+
+                    //                    if (!newOrderInfoList.isEmpty() && !orderInfoList.isEmpty())
+                    //                    {
+                    //                        //                        if (orderInfoList.isEmpty() ||
+                    //                        // !newOrderInfoList.get(0).getId().equals(orderInfoList.get(0).getId
+                    //                        // ()))
+                    //                        //                    {
+                    //                        //                        //提示音
+                    //                        //                        playVoice(getActivity());
+                    //                        //
+                    //                        //                    }
+                    //
+                    //                        oldOrderIdList.clear();
+                    //                        newOrderIdList.clear();
+                    //
+                    //                        for (int i = 0; i < orderInfoList.size(); i++)
+                    //                        {
+                    //                            oldOrderIdList.add(orderInfoList.get(i).getId());
+                    //                        }
+                    //                        for (int i = 0; i < newOrderInfoList.size(); i++)
+                    //                        {
+                    //                            newOrderIdList.add(newOrderInfoList.get(i).getId());
+                    //                        }
+                    //
+                    //
+                    //                        for (int j = 0; j < newOrderIdList.size(); j++)
+                    //                        {
+                    //                            if (!oldOrderIdList.contains(newOrderIdList.get(j)))
+                    //                            {
+                    //                                playVoice(getActivity());
+                    //                                break;
+                    //                            }
+                    //
+                    //                        }
+                    //
+                    //
+                    //                    }
+                    //                    else if (newOrderInfoList.size() > oldOrderIdList.size())
+                    //                    {
+                    //                        playVoice(getActivity());
+                    //                    }
+
+
 
 
                     break;
@@ -194,12 +199,17 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
                     mRefreshStatus = 0;
                     loadData();
 
-                    mHandler.sendEmptyMessageDelayed(GET_ORDER_LIST, 30 * 1000);
-
-
+                    mHandler.sendEmptyMessageDelayed(GET_ORDER_LIST, 15 * 1000);
                     break;
 
 
+                case PLAY_VOICE:
+                    if (!orderInfoList.isEmpty())
+                    {
+                        playVoice(getActivity());
+                    }
+                    mHandler.sendEmptyMessageDelayed(PLAY_VOICE, 10 * 1000);
+                    break;
             }
         }
     };
@@ -360,6 +370,7 @@ public class OrderFragment1 extends BaseFragment implements PullToRefreshBase.On
             }
         });
         mHandler.sendEmptyMessage(GET_ORDER_LIST);
+        mHandler.sendEmptyMessageDelayed(PLAY_VOICE, 5 * 1000);
     }
 
 

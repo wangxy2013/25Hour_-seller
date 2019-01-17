@@ -2,6 +2,7 @@ package com.jyq.wm.holder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -56,7 +57,14 @@ public class OrderHolder4 extends RecyclerView.ViewHolder
         mNameTv.setText("客户姓名:" + mOrderInfo.getName());
         mAddressTv.setText("客户地址:"+mOrderInfo.getAddress());
         mPayStyleTv.setText("offline".equals(mOrderInfo.getPayType()) ? "货到付款" : "微信支付");
-
+        if ("offline".equals(mOrderInfo.getPayType()))
+        {
+            mPayStyleTv.setTextColor(ContextCompat.getColor(context,R.color.redA));
+        }
+        else
+        {
+            mPayStyleTv.setTextColor(ContextCompat.getColor(context,R.color.green));
+        }
         mItemLayout.setOnClickListener(new View.OnClickListener()
         {
             @Override
