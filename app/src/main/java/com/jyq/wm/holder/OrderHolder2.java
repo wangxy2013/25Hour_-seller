@@ -2,8 +2,10 @@ package com.jyq.wm.holder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -52,7 +54,7 @@ public class OrderHolder2 extends RecyclerView.ViewHolder
     }
 
 
-    public void setOrderInfo(OrderInfo mOrderInfo, final int p)
+    public void setOrderInfo(final OrderInfo mOrderInfo, final int p)
     {
 
         mNumberTv.setText(mOrderInfo.getId());
@@ -85,6 +87,22 @@ public class OrderHolder2 extends RecyclerView.ViewHolder
             public void onClick(View v)
             {
                 listener.onSubmit(p, 1);
+            }
+        });
+
+        mPhoneTv.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(!TextUtils.isEmpty(mOrderInfo.getPhone()))
+                {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    Uri data = Uri.parse("tel:" + mOrderInfo.getPhone());
+                    intent.setData(data);
+                    context. startActivity(intent);
+
+                }
             }
         });
     }

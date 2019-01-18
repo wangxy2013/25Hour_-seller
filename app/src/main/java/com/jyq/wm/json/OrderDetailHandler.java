@@ -1,6 +1,7 @@
 package com.jyq.wm.json;
 
 
+import com.jyq.wm.bean.DeliverSupply;
 import com.jyq.wm.bean.GoodsInfo;
 import com.jyq.wm.bean.OrderDetailInfo;
 import com.jyq.wm.bean.UserInfo;
@@ -46,7 +47,18 @@ public class OrderDetailHandler extends JsonHandler
                             goodsInfoList.add(new GoodsInfo(array.optJSONObject(i)));
                         }
                     }
+
                     orderDetailInfo.setGoodsInfoList(goodsInfoList);
+
+
+                    JSONObject deliverSupplyObj = jsonObject.optJSONObject("deliverSupply");
+
+                    if (null !=deliverSupplyObj)
+                    {
+                        DeliverSupply mDeliverSupply = new DeliverSupply(deliverSupplyObj);
+
+                        orderDetailInfo.setDeliverSupply(mDeliverSupply);
+                    }
                 }
             }
 

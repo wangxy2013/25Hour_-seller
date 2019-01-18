@@ -12,7 +12,7 @@ public class OrderInfo
     private String address;//福建省泉州市南安市石井镇石井镇 实景路23号1020 实景路23号1020
     private String payType;//offline
     private String addTime;
-
+    private String orderStatue; //10.骑手已接单 且完成备餐  9.完成备餐 骑手未接单
     private double storeLnt;//,
     private double storeLat;//null,
     private double userLnt;// 118.432,
@@ -28,10 +28,12 @@ public class OrderInfo
         this.address = obj.optString("address");
         this.payType = obj.optString("payType");
         this.addTime = obj.optString("submitOrderTime");
-        this.storeLnt = obj.optDouble("storeLnt",0);
-        this.storeLat = obj.optDouble("storeLat",0);
-        this.userLnt = obj.optDouble("userLnt",0);
-        this.userLat = obj.optDouble("userLat",0);
+        this.storeLnt = obj.optDouble("storeLnt", 0);
+        this.storeLat = obj.optDouble("storeLat", 0);
+        this.userLnt = obj.optDouble("userLnt", 0);
+        this.userLat = obj.optDouble("userLat", 0);
+        this.orderStatue = obj.optString("orderStatue");
+
 
 
     }
@@ -155,5 +157,15 @@ public class OrderInfo
     public void setUserLat(double userLat)
     {
         this.userLat = userLat;
+    }
+
+    public String getOrderStatue()
+    {
+        return orderStatue;
+    }
+
+    public void setOrderStatue(String orderStatue)
+    {
+        this.orderStatue = orderStatue;
     }
 }

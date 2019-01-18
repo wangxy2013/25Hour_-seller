@@ -2,9 +2,12 @@ package com.jyq.wm.holder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +23,9 @@ import com.jyq.wm.utils.ToastUtil;
  */
 public class OrderHolder3 extends RecyclerView.ViewHolder
 {
+    private TextView mStatusTv;
+    private TextView mCustomerTv;
+
     private TextView mShopNameTv;
     private TextView mTimeTv;
     private TextView mNumberTv;
@@ -38,6 +44,8 @@ public class OrderHolder3 extends RecyclerView.ViewHolder
         super(rootView);
         this.listener = listener;
         this.context = context;
+        mCustomerTv = (TextView) rootView.findViewById(R.id.tv_customer);
+        mStatusTv = (TextView) rootView.findViewById(R.id.tv_status);
         mNumberTv = (TextView) rootView.findViewById(R.id.tv_code);
         mShopNameTv = (TextView) rootView.findViewById(R.id.tv_shop_name);
         mTimeTv = (TextView) rootView.findViewById(R.id.tv_time);
@@ -46,11 +54,11 @@ public class OrderHolder3 extends RecyclerView.ViewHolder
         mAddressTv = (TextView) rootView.findViewById(R.id.tv_customer_address);
         mGetTv = (TextView) rootView.findViewById(R.id.tv_submit);
         mPayStyleTv = (TextView) rootView.findViewById(R.id.tv_pay_style);
-        mItemLayout= (LinearLayout) rootView.findViewById(R.id.ll_item);
+        mItemLayout = (LinearLayout) rootView.findViewById(R.id.ll_item);
     }
 
 
-    public void setOrderInfo(OrderInfo mOrderInfo, final int p)
+    public void setOrderInfo(final OrderInfo mOrderInfo, final int p)
     {
 
         mNumberTv.setText(mOrderInfo.getId());
@@ -62,12 +70,26 @@ public class OrderHolder3 extends RecyclerView.ViewHolder
         mPayStyleTv.setText("offline".equals(mOrderInfo.getPayType()) ? "货到付款" : "微信支付");
         if ("offline".equals(mOrderInfo.getPayType()))
         {
-            mPayStyleTv.setTextColor(ContextCompat.getColor(context,R.color.redA));
+            mPayStyleTv.setTextColor(ContextCompat.getColor(context, R.color.redA));
         }
         else
         {
-            mPayStyleTv.setTextColor(ContextCompat.getColor(context,R.color.green));
+            mPayStyleTv.setTextColor(ContextCompat.getColor(context, R.color.green));
         }
+
+        if ("10".equals(mOrderInfo.getOrderStatue()))
+        {
+            mStatusTv.setVisibility(View.GONE);
+            mCustomerTv.setVisibility(View.GONE);
+            mGetTv.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            mStatusTv.setVisibility(View.VISIBLE);
+            mCustomerTv.setVisibility(View.VISIBLE);
+            mGetTv.setVisibility(View.GONE);
+        }
+
         mGetTv.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -82,6 +104,33 @@ public class OrderHolder3 extends RecyclerView.ViewHolder
             public void onClick(View v)
             {
                 listener.onSubmit(p, 1);
+            }
+        });
+
+        mPhoneTv.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (!TextUtils.isEmpty(mOrderInfo.getPhone()))
+                {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    Uri data = Uri.parse("tel:" + mOrderInfo.getPhone());
+                    intent.setData(data);
+                    context.startActivity(intent);
+
+                }
+            }
+        });
+        mCustomerTv.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:86917917");
+                intent.setData(data);
+                context.startActivity(intent);
             }
         });
     }

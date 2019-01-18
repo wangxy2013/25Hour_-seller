@@ -155,6 +155,7 @@
                 </RelativeLayout>
             </LinearLayout>
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dm_15"
@@ -163,17 +164,10 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dm_10">
 
-
-
-
-
-
-
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                  >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -192,7 +186,26 @@
                 </RelativeLayout>
 
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dm_10">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="店铺电话"
+                        android:textColor="@color/blackC"
+                        android:textSize="@dimen/t14" />
+
+                    <TextView
+                        android:id="@+id/tv_store_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/t14" />
+
+                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -218,6 +231,62 @@
 
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dm_15"
+                android:layout_marginLeft="@dimen/dm_15"
+                android:background="@drawable/common_white_5dp"
+                android:orientation="vertical"
+                android:padding="@dimen/dm_10">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="骑手姓名"
+                        android:textColor="@color/blackC"
+                        android:textSize="@dimen/t14" />
+
+                    <TextView
+                        android:id="@+id/tv_qs_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/t14" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dm_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="骑手电话"
+                        android:textColor="@color/blackC"
+                        android:textSize="@dimen/t14" />
+
+                    <TextView
+                        android:id="@+id/tv_qs_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/t14" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

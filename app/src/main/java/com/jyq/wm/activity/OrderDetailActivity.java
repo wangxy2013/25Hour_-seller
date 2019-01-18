@@ -1,6 +1,8 @@
 package com.jyq.wm.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.jyq.wm.R;
 import com.jyq.wm.adapter.GoodsAdapter;
+import com.jyq.wm.bean.DeliverSupply;
 import com.jyq.wm.bean.GoodsInfo;
 import com.jyq.wm.bean.OrderDetailInfo;
 import com.jyq.wm.http.DataRequest;
@@ -73,6 +76,12 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     TextView tvStoreAddress;
     @BindView(R.id.tv_remark)
     TextView tvRemark;
+    @BindView(R.id.tv_store_phone)
+    TextView tvStorePhone;
+    @BindView(R.id.tv_qs_name)
+    TextView tvQsName;
+    @BindView(R.id.tv_qs_phone)
+    TextView tvQsPhone;
     private String orderId;
 
     private GoodsAdapter mGoodsAdapter;
@@ -95,6 +104,13 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
 
                     if (null != mOrderDetailInfo)
                     {
+                        DeliverSupply mDeliverSupply = mOrderDetailInfo.getDeliverSupply();
+                        if (null != mDeliverSupply)
+                        {
+                            tvQsName.setText(mDeliverSupply.getName());
+                            tvQsPhone.setText(mDeliverSupply.getPhone());
+                        }
+
                         tvOrderInterId.setText(mOrderDetailInfo.getId());
                         tvName.setText(mOrderDetailInfo.getName());
 
@@ -109,15 +125,17 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
                         {
                             tvPhone.setText(phone);
                         }
+
+                        tvStorePhone.setText(mOrderDetailInfo.getStorePhone());
                         tvStoreName.setText(mOrderDetailInfo.getStoreName());
                         tvStoreAddress.setText(mOrderDetailInfo.getStoreAddress());
                         tvDateline.setText(mOrderDetailInfo.getSubmitOrderTime());
                         tvAddress.setText(mOrderDetailInfo.getAddress());
-                        tvDeposit.setText("¥:"+mOrderDetailInfo.getDeposit());
-                        tvDeliveryFee.setText("¥:"+mOrderDetailInfo.getDeliveryFee());
-                        tvMinusPrice.setText("¥:"+mOrderDetailInfo.getMinusPrice());
-                        tvTotalPrice.setText("¥:"+mOrderDetailInfo.getTotalPrice());
-                        tvPrice.setText("¥:"+mOrderDetailInfo.getPrice());
+                        tvDeposit.setText("¥:" + mOrderDetailInfo.getDeposit());
+                        tvDeliveryFee.setText("¥:" + mOrderDetailInfo.getDeliveryFee());
+                        tvMinusPrice.setText("¥:" + mOrderDetailInfo.getMinusPrice());
+                        tvTotalPrice.setText("¥:" + mOrderDetailInfo.getTotalPrice());
+                        tvPrice.setText("¥:" + mOrderDetailInfo.getPrice());
                         tvPayType.setText(("online".equals(mOrderDetailInfo.getPayType())) ? "微信支付" : "货到付款");
                         tvPayStatus.setText(("1".equals(mOrderDetailInfo.getPayStatue())) ? "已支付" : "未支付");
                         tvNote.setText(mOrderDetailInfo.getNote());
@@ -155,6 +173,7 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     protected void initEvent()
     {
         ivBack.setOnClickListener(this);
+        tvQsPhone.setOnClickListener(this);
     }
 
     @Override
@@ -214,13 +233,18 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
         {
             finish();
         }
+        else if(v == tvQsPhone)
+        {
+            if(!TextUtils.isEmpty(tvQsPhone.getText().toString()))
+            {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + tvQsPhone.getText().toString());
+                intent.setData(data);
+                startActivity(intent);
+
+            }
+        }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }
