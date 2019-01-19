@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.jyq.wm.R;
@@ -23,6 +24,7 @@ import com.jyq.wm.http.HttpRequest;
 import com.jyq.wm.http.IRequestListener;
 import com.jyq.wm.json.LoginHandler;
 import com.jyq.wm.json.ResultHandler;
+import com.jyq.wm.utils.APPUtils;
 import com.jyq.wm.utils.ConfigManager;
 import com.jyq.wm.utils.ConstantUtil;
 import com.jyq.wm.utils.NetWorkUtil;
@@ -53,9 +55,10 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     ImageView ivAutomaticSwitch;
 
     @BindView(R.id.rl_opened)
-    RelativeLayout mOpendLayout;
+    RelativeLayout mOpenedLayout;
 
-
+    @BindView(R.id.tv_version)
+    TextView mVersionTv;
     private View rootView = null;
     private Unbinder unbinder;
     private boolean isOpened = false;
@@ -101,7 +104,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                         ConfigManager.instance().setIsCloseOffline(isAutomatic);
                         ivAutomaticSwitch.setImageResource(R.drawable.ic_switch_off);
                         //ConfigManager.instance().setIsClose("0");
-                        mOpendLayout.setVisibility(View.VISIBLE);
+                        mOpenedLayout.setVisibility(View.VISIBLE);
                     }
                     else
                     {
@@ -109,7 +112,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                         ConfigManager.instance().setIsCloseOffline(isAutomatic);
                         ivAutomaticSwitch.setImageResource(R.drawable.ic_switch_on);
                         //ConfigManager.instance().setIsClose("1");
-                        mOpendLayout.setVisibility(View.GONE);
+                        mOpenedLayout.setVisibility(View.GONE);
                     }
                     ToastUtil.show(getActivity(), "操作成功");
 
@@ -169,8 +172,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     @Override
     protected void initViewData()
     {
-
-
+        mVersionTv.setText("当前版本号:"+APPUtils.getVersionName(getActivity()));
     }
 
     @Override
@@ -193,14 +195,14 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             isAutomatic = false;
             ivAutomaticSwitch.setImageResource(R.drawable.ic_switch_off);
             //ConfigManager.instance().setIsClose("0");
-            mOpendLayout.setVisibility(View.VISIBLE);
+            mOpenedLayout.setVisibility(View.VISIBLE);
         }
         else
         {
             isAutomatic = true;
             ivAutomaticSwitch.setImageResource(R.drawable.ic_switch_on);
             //ConfigManager.instance().setIsClose("1");
-            mOpendLayout.setVisibility(View.GONE);
+            mOpenedLayout.setVisibility(View.GONE);
         }
 
     }
