@@ -49,13 +49,24 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     RelativeLayout rlCache;
     @BindView(R.id.iv_switch)
     ImageView ivSwitch;
+    @BindView(R.id.iv_automatic_switch)
+    ImageView ivAutomaticSwitch;
+
+    @BindView(R.id.rl_opened)
+    RelativeLayout mOpendLayout;
+
+
     private View rootView = null;
     private Unbinder unbinder;
     private boolean isOpened = false;
 
+    private boolean isAutomatic = false;
+
+    private static final String STORE_CHANGE_STATUS = "store_change_status";
     private static final String STORE_OPERATE = "store_operate";
     private static final int REQUEST_SUCCESS = 0x01;
-    private static final int REQUEST_FAIL = 0x02;
+    private static final int STORE_CHANGE_SUCCESS = 0x02;
+    private static final int REQUEST_FAIL = 0x03;
     @SuppressLint("HandlerLeak")
     private BaseHandler mHandler = new BaseHandler(getActivity())
     {
@@ -77,6 +88,28 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                         isOpened = true;
                         ivSwitch.setImageResource(R.drawable.ic_switch_on);
                         ConfigManager.instance().setIsClose("1");
+                    }
+                    ToastUtil.show(getActivity(), "操作成功");
+
+                    break;
+
+                case STORE_CHANGE_SUCCESS:
+
+                    if (isAutomatic)
+                    {
+                        isAutomatic = false;
+                        ConfigManager.instance().setIsCloseOffline(isAutomatic);
+                        ivAutomaticSwitch.setImageResource(R.drawable.ic_switch_off);
+                        //ConfigManager.instance().setIsClose("0");
+                        mOpendLayout.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        isAutomatic = true;
+                        ConfigManager.instance().setIsCloseOffline(isAutomatic);
+                        ivAutomaticSwitch.setImageResource(R.drawable.ic_switch_on);
+                        //ConfigManager.instance().setIsClose("1");
+                        mOpendLayout.setVisibility(View.GONE);
                     }
                     ToastUtil.show(getActivity(), "操作成功");
 
@@ -130,6 +163,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         rlUser.setOnClickListener(this);
         rlPwd.setOnClickListener(this);
         ivSwitch.setOnClickListener(this);
+        ivAutomaticSwitch.setOnClickListener(this);
     }
 
     @Override
@@ -153,6 +187,22 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             isOpened = true;
             ivSwitch.setImageResource(R.drawable.ic_switch_on);
         }
+
+        if (!ConfigManager.instance().getIsCloseOffline())
+        {
+            isAutomatic = false;
+            ivAutomaticSwitch.setImageResource(R.drawable.ic_switch_off);
+            //ConfigManager.instance().setIsClose("0");
+            mOpendLayout.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            isAutomatic = true;
+            ivAutomaticSwitch.setImageResource(R.drawable.ic_switch_on);
+            //ConfigManager.instance().setIsClose("1");
+            mOpendLayout.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -181,6 +231,39 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                 operate("1");
             }
         }
+        else if (v == ivAutomaticSwitch)
+        {
+            //自动
+            if(isAutomatic)
+            {
+                changeStore(false);
+            }
+            else
+            {
+                changeStore(true);
+            }
+        }
+    }
+
+
+    private void changeStore(boolean status)
+    {
+        if (!NetWorkUtil.isConn(getActivity()))
+        {
+            NetWorkUtil.showNoNetWorkDlg(getActivity());
+            return;
+        }
+        showProgressDialog(getActivity());
+        Map<String, Object> valuePairs = new HashMap<>();
+        valuePairs.put("storeId", ConfigManager.instance().getUserID());
+        valuePairs.put("isCloseOffline", status);
+        valuePairs.put("isOffline", !status);
+
+        Gson gson = new Gson();
+        Map<String, String> postMap = new HashMap<>();
+        postMap.put("json", gson.toJson(valuePairs));
+        DataRequest.instance().request(getActivity(), Urls.getChangeStoreUrl(), this, HttpRequest.POST, STORE_CHANGE_STATUS, postMap, new ResultHandler());
+
     }
 
 
@@ -226,6 +309,17 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
             if (ConstantUtil.RESULT_SUCCESS.equals(resultCode))
             {
                 mHandler.sendMessage(mHandler.obtainMessage(REQUEST_SUCCESS, obj));
+            }
+            else
+            {
+                mHandler.sendMessage(mHandler.obtainMessage(REQUEST_FAIL, resultMsg));
+            }
+        }
+        else if(STORE_CHANGE_STATUS.equals(action))
+        {
+            if (ConstantUtil.RESULT_SUCCESS.equals(resultCode))
+            {
+                mHandler.sendMessage(mHandler.obtainMessage(STORE_CHANGE_SUCCESS, obj));
             }
             else
             {

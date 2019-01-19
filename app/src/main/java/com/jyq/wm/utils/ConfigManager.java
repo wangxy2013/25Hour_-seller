@@ -46,12 +46,14 @@ public class ConfigManager
     private static final String SYSTEM_QQ    = "system_qq";
     private static final String BG_LOGIN     = "bg_login";
     private static final String BG_STARTUP   = "bg_startup";
-
     private static final String DOMAIN_NAME = "domain_name";
 
     private static final String VOICE_IS_OPEND     = "voice_is_opend";
 
     private static final String IS_CLOSE = "is_close";
+
+    private static final String IS_CLOSE_OFFLINE = "is_close_offline";
+
 
 
     /**
@@ -288,11 +290,6 @@ public class ConfigManager
         return mSharedPreferences.getString(DOMAIN_NAME, "");
     }
 
-
-
-
-
-
     public void setVoiceIsOpend(boolean opend)
     {
         mSharedPreferences.edit().putBoolean(VOICE_IS_OPEND, opend).commit();
@@ -303,6 +300,16 @@ public class ConfigManager
         return mSharedPreferences.getBoolean(VOICE_IS_OPEND, true);
     }
 
+
+    public void setIsCloseOffline(boolean opend)
+    {
+        mSharedPreferences.edit().putBoolean(IS_CLOSE_OFFLINE, opend).commit();
+    }
+
+    public boolean getIsCloseOffline()
+    {
+        return mSharedPreferences.getBoolean(IS_CLOSE_OFFLINE, true);
+    }
 
 }
 

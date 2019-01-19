@@ -32,6 +32,7 @@ public class UserInfoHandler extends JsonHandler
                 {
                     ConfigManager.instance().setUserId(mUserInfo.getId());
                     ConfigManager.instance().setIsClose(mUserInfo.getIsClosed());
+                    ConfigManager.instance().setIsCloseOffline(mUserInfo.getCloseOffline());
                 }
             }
 

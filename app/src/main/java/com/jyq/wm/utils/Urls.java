@@ -107,5 +107,11 @@ public class Urls
         return "http://www.ershiwu.cn:8081/settlementser/providerSettlement/summary";
     }
 
+    //改变手自动
+    public static String getChangeStoreUrl()
+    {
+        return HTTP_IP + "/app/store/change";
+    }
+
 }
 

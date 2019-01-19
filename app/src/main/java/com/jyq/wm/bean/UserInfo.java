@@ -9,6 +9,7 @@ public class UserInfo
     private String name;
     private  String phone;
     private String isClosed;
+    private Boolean isCloseOffline;
 
 
 
@@ -18,6 +19,7 @@ public class UserInfo
         this.name = obj.optString("name");
         this.phone = obj.optString("phone");
         this.isClosed = obj.optString("isClose");
+        this.isCloseOffline=obj.optBoolean("isCloseOffline");
     }
 
 
@@ -59,5 +61,15 @@ public class UserInfo
     public void setIsClosed(String isClosed)
     {
         this.isClosed = isClosed;
+    }
+
+    public Boolean getCloseOffline()
+    {
+        return isCloseOffline;
+    }
+
+    public void setCloseOffline(Boolean closeOffline)
+    {
+        isCloseOffline = closeOffline;
     }
 }
