@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -136,7 +137,19 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
                         tvMinusPrice.setText("¥:" + mOrderDetailInfo.getMinusPrice());
                         tvTotalPrice.setText("¥:" + mOrderDetailInfo.getTotalPrice());
                         tvPrice.setText("¥:" + mOrderDetailInfo.getPrice());
-                        tvPayType.setText(("online".equals(mOrderDetailInfo.getPayType())) ? "微信支付" : "货到付款");
+
+                        if("online".equals(mOrderDetailInfo.getPayType()))
+                        {
+                            tvPayType.setText("微信支付");
+                            tvPayType.setTextColor(ContextCompat.getColor(OrderDetailActivity.this,R.color.black));
+                        }
+                        else
+
+                        {
+                            tvPayType.setText("货到付款");
+                            tvPayType.setTextColor(ContextCompat.getColor(OrderDetailActivity.this,R.color.redA));
+                        }
+
                         tvPayStatus.setText(("1".equals(mOrderDetailInfo.getPayStatue())) ? "已支付" : "未支付");
                         tvNote.setText(mOrderDetailInfo.getNote());
                         goodsInfoList.clear();
@@ -174,6 +187,8 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     {
         ivBack.setOnClickListener(this);
         tvQsPhone.setOnClickListener(this);
+        tvStorePhone.setOnClickListener(this);
+        tvPhone.setOnClickListener(this);
     }
 
     @Override
@@ -233,9 +248,9 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
         {
             finish();
         }
-        else if(v == tvQsPhone)
+        else if (v == tvQsPhone)
         {
-            if(!TextUtils.isEmpty(tvQsPhone.getText().toString()))
+            if (!TextUtils.isEmpty(tvQsPhone.getText().toString()))
             {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 Uri data = Uri.parse("tel:" + tvQsPhone.getText().toString());
@@ -244,6 +259,30 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
 
             }
         }
+        else if (v == tvStorePhone)
+        {
+            if (!TextUtils.isEmpty(tvStorePhone.getText().toString()))
+            {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + tvStorePhone.getText().toString());
+                intent.setData(data);
+                startActivity(intent);
+
+            }
+        }
+        else if (v == tvPhone)
+        {
+            if (!TextUtils.isEmpty(tvPhone.getText().toString()))
+            {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + tvPhone.getText().toString());
+                intent.setData(data);
+                startActivity(intent);
+
+            }
+        }
+
+
     }
 
 

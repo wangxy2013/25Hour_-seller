@@ -21,14 +21,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dm_15"
-                android:background="@drawable/common_white_5dp"
-                android:orientation="vertical"
-                android:padding="@dimen/dm_10">
+                android:layout_marginLeft="@dimen/dm_15"
+                android:layout_marginTop="@dimen/dm_15"
+                android:layout_marginRight="@dimen/dm_15"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray"
+                    android:padding="@dimen/dm_10"
+                    android:text="订单信息："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/t16" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -42,14 +55,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -63,14 +80,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -84,14 +105,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -105,19 +130,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dm_10"
+
                         android:text="客户地址："
                         android:textColor="@color/blackC"
                         android:textSize="@dimen/t14" />
@@ -126,16 +156,16 @@
                         android:id="@+id/tv_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dm_10"
-                        android:textColor="@color/text_gray2"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_margin="@dimen/dm_10">
 
                     <TextView
                         android:id="@+id/tv_remark"
@@ -150,24 +180,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/tv_remark"
+                        android:textColor="@color/redA"
                         android:textSize="@dimen/t14" />
 
                 </RelativeLayout>
             </LinearLayout>
+
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dm_15"
                 android:layout_marginLeft="@dimen/dm_15"
+                android:layout_marginRight="@dimen/dm_15"
                 android:background="@drawable/common_white_5dp"
                 android:orientation="vertical"
-                android:padding="@dimen/dm_10">
+                android:padding="@dimen/dm_10"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                  >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -206,6 +237,7 @@
                         android:textSize="@dimen/t14" />
 
                 </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -232,19 +264,30 @@
 
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dm_15"
                 android:layout_marginLeft="@dimen/dm_15"
-                android:background="@drawable/common_white_5dp"
-                android:orientation="vertical"
-                android:padding="@dimen/dm_10">
+                android:layout_marginRight="@dimen/dm_15"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray"
+                    android:padding="@dimen/dm_10"
+                    android:text="骑手信息："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/t16" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    >
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -258,7 +301,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -266,7 +311,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_margin="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -280,7 +325,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -292,9 +339,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dm_15"
                 android:layout_marginRight="@dimen/dm_15"
-                android:layout_marginTop="@dimen/dm_15"
-                android:background="@drawable/common_white_5dp"
+                android:background="@color/white"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray"
+                    android:padding="@dimen/dm_10"
+                    android:text="商品信息："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/t16" />
 
                 <com.jyq.wm.widget.MaxRecyclerView
                     android:id="@+id/rv_goods"
@@ -309,15 +364,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dm_15"
-                android:layout_marginTop="@dimen/dm_15"
                 android:layout_marginRight="@dimen/dm_15"
-                android:background="@drawable/common_white_5dp"
-                android:orientation="vertical"
-                android:padding="@dimen/dm_10">
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray"
+                    android:padding="@dimen/dm_10"
+                    android:text="费用明细："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/t16" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -331,15 +396,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textColor="@color/redA"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -353,15 +421,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textColor="@color/redA"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -375,15 +446,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textColor="@color/redA"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -397,15 +471,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textColor="@color/redA"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_margin="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -419,8 +494,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textColor="@color/redA"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -429,21 +505,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dm_15"
-                android:layout_marginTop="@dimen/dm_15"
                 android:layout_marginRight="@dimen/dm_15"
                 android:layout_marginBottom="@dimen/dm_20"
-                android:background="@drawable/common_white_5dp"
-                android:orientation="vertical"
-                android:padding="@dimen/dm_10">
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray"
+                    android:padding="@dimen/dm_10"
+                    android:text="支付相关："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/t16" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dm_10"
+                    android:layout_marginTop="@dimen/dm_10"
+                    android:layout_marginRight="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="支付方式"
+
                         android:textColor="@color/blackC"
                         android:textSize="@dimen/t14" />
 
@@ -460,7 +547,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dm_10">
+                    android:layout_margin="@dimen/dm_10">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -474,8 +561,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:textColor="@color/redA"
-                        android:textSize="@dimen/t14" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/t14"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
