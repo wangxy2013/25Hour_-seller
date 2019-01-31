@@ -9,6 +9,12 @@ android {
         versionCode 12000
         versionName "1.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
     buildTypes {
         release {
@@ -31,6 +37,8 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+
 }
 
 dependencies {
@@ -57,4 +65,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     implementation files('libs/BaiduLBS_Android.jar')
     compile 'com.github.dfqin:grantor:2.5'
+    implementation files('libs/jcore-android-1.2.6.jar')
+    implementation files('libs/jpush-android-3.1.8.jar')
 }
