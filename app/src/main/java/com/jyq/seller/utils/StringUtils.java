@@ -925,4 +925,21 @@ public class StringUtils
         return diff;
     }
 
+
+    public static String getIndex(int p)
+    {
+        p+=1;
+       if(p<10)
+       {
+           return "00"+p;
+       }
+       else  if(p<100)
+       {
+           return "0"+p;
+       }
+       else
+       {
+           return String.valueOf(p);
+       }
+    }
 }

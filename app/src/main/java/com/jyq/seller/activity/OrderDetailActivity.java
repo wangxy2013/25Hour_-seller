@@ -82,6 +82,9 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     TextView tvQsName;
     @BindView(R.id.tv_qs_phone)
     TextView tvQsPhone;
+
+    @BindView(R.id.tv_goods_allprice)
+    TextView tvGoodsAllprice;
     private String orderId;
 
     private GoodsAdapter mGoodsAdapter;
@@ -131,28 +134,39 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
                         tvStoreAddress.setText(mOrderDetailInfo.getStoreAddress());
                         tvDateline.setText(mOrderDetailInfo.getSubmitOrderTime());
                         tvAddress.setText(mOrderDetailInfo.getAddress());
-                        tvDeposit.setText("¥:" + mOrderDetailInfo.getDeposit());
-                        tvDeliveryFee.setText("¥:" + mOrderDetailInfo.getDeliveryFee());
-                        tvMinusPrice.setText("¥:" + mOrderDetailInfo.getMinusPrice());
-                        tvTotalPrice.setText("¥:" + mOrderDetailInfo.getTotalPrice());
-                        tvPrice.setText("¥:" + mOrderDetailInfo.getPrice());
+                        tvDeposit.setText("¥" + mOrderDetailInfo.getDeposit());
+                        tvDeliveryFee.setText("¥" + mOrderDetailInfo.getDeliveryFee());
+                        tvMinusPrice.setText("¥" + mOrderDetailInfo.getMinusPrice());
+                        tvTotalPrice.setText("¥" + mOrderDetailInfo.getTotalPrice());
+                        tvPrice.setText("¥" + mOrderDetailInfo.getPrice());
 
-                        if("online".equals(mOrderDetailInfo.getPayType()))
+                        if ("online".equals(mOrderDetailInfo.getPayType()))
                         {
                             tvPayType.setText("微信支付");
-                            tvPayType.setTextColor(ContextCompat.getColor(OrderDetailActivity.this,R.color.black));
+                            tvPayType.setTextColor(ContextCompat.getColor(OrderDetailActivity
+                                    .this, R.color.green));
                         }
                         else
 
                         {
                             tvPayType.setText("货到付款");
-                            tvPayType.setTextColor(ContextCompat.getColor(OrderDetailActivity.this,R.color.redA));
+                            tvPayType.setTextColor(ContextCompat.getColor(OrderDetailActivity.this, R.color.redA));
                         }
 
                         tvPayStatus.setText(("1".equals(mOrderDetailInfo.getPayStatue())) ? "已支付" : "未支付");
                         tvNote.setText(mOrderDetailInfo.getNote());
                         goodsInfoList.clear();
                         goodsInfoList.addAll(mOrderDetailInfo.getGoodsInfoList());
+
+
+                        double goodsAllPrice=0;
+
+                        for (int i = 0; i <goodsInfoList.size() ; i++)
+                        {
+                            goodsAllPrice +=Double.parseDouble(goodsInfoList.get(i).getPrice()) * Integer.parseInt(goodsInfoList.get(i).getSize());
+                        }
+
+                        tvGoodsAllprice.setText("¥" +goodsAllPrice);
                         mGoodsAdapter.notifyDataSetChanged();
                     }
 

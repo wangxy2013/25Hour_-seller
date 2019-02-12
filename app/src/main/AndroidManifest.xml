@@ -21,6 +21,7 @@
     <permission
         android:name="com.jyq.seller.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.jyq.seller.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -51,8 +52,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:persistent="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
@@ -73,8 +74,8 @@
         <activity
             android:name="com.jyq.seller.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.jyq.seller.activity.ModifyPwdActivity"
@@ -111,15 +112,15 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
 
-        <!--<provider-->
-        <!--android:name="android.support.v4.content.FileProvider"-->
-        <!--android:authorities="com.jyq.seller.fileprovider"-->
-        <!--android:exported="false"-->
-        <!--android:grantUriPermissions="true">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-        <!--android:resource="@xml/file_paths_screencapture" />-->
-        <!--</provider>-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.jyq.seller.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_screencapture" />
+        </provider>
 
 
         <!-- 声明service组件 -->
@@ -139,10 +140,11 @@
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.jyq.seller" />
             </intent-filter>
@@ -152,8 +154,8 @@
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
-            android:process=":pushcore"
-            android:exported="false">
+            android:exported="false"
+            android:process=":pushcore">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
@@ -163,11 +165,10 @@
         </service>
         <!-- since 3.0.9 Required SDK 核心功能-->
         <provider
-            android:authorities="com.jyq.seller.DataProvider"
             android:name="cn.jpush.android.service.DataProvider"
-            android:process=":pushcore"
+            android:authorities="com.jyq.seller.DataProvider"
             android:exported="false"
-            />
+            android:process=":pushcore" />
 
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
         <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
@@ -183,10 +184,9 @@
         </service>
         <!-- since 3.1.0 Required SDK 核心功能-->
         <provider
-            android:authorities="com.jyq.seller.DownloadProvider"
             android:name="cn.jpush.android.service.DownloadProvider"
-            android:exported="true"
-            />
+            android:authorities="com.jyq.seller.DownloadProvider"
+            android:exported="true" />
         <!-- Required SDK核心功能-->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
@@ -210,13 +210,15 @@
         </receiver>
 
         <!-- Required SDK核心功能-->
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" android:exported="false"/>
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
 
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <receiver
             android:name=".push.MyReceiver"
-            android:exported="false"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" /><!--开机广播-->
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -238,8 +240,12 @@
             </intent-filter>
         </receiver>
         <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="4480149c940bb6663f5ea945" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="4480149c940bb6663f5ea945" /> <!--  </>值来自开发者平台取得的AppKey-->
 
 
     </application>
