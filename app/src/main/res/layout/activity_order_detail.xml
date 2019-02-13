@@ -75,21 +75,23 @@
                         android:text="客户信息"
                         android:textColor="@color/blackB"
                         android:textSize="@dimen/t14" />
+
                     <TextView
-                        android:layout_marginLeft="@dimen/dm_15"
-                        android:layout_toRightOf="@+id/tv_khxx"
                         android:id="@+id/tv_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dm_15"
+                        android:layout_toRightOf="@+id/tv_khxx"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/t16"
                         android:textStyle="bold" />
+
                     <TextView
-                        android:layout_toRightOf="@+id/tv_phone"
-                        android:layout_marginLeft="@dimen/dm_15"
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dm_15"
+                        android:layout_toRightOf="@+id/tv_phone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/t16"
                         android:textStyle="bold" />
@@ -259,26 +261,19 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/gray"
-                    android:paddingLeft="@dimen/dm_10"
-                    android:text="骑手信息："
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/t16" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dm_10"
-                    android:layout_marginTop="@dimen/dm_10"
-                    android:layout_marginRight="@dimen/dm_10">
+                    android:layout_marginRight="@dimen/dm_10"
+                    android:layout_marginBottom="@dimen/dm_10">
 
                     <TextView
+                        android:id="@+id/tv_qsxx"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="骑手姓名"
+                        android:text="骑手信息:"
                         android:textColor="@color/blackB"
                         android:textSize="@dimen/t14" />
 
@@ -286,35 +281,21 @@
                         android:id="@+id/tv_qs_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/dm_10"
+                        android:layout_toRightOf="@+id/tv_qsxx"
                         android:textColor="@color/black"
                         android:textSize="@dimen/t14"
                         android:textStyle="bold" />
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dm_10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="骑手电话"
-                        android:textColor="@color/blackB"
-                        android:textSize="@dimen/t14" />
 
                     <TextView
                         android:id="@+id/tv_qs_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/t14"
+                        android:layout_marginLeft="@dimen/dm_10"
+                        android:layout_toRightOf="@+id/tv_qs_name"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/t16"
                         android:textStyle="bold" />
-
                 </RelativeLayout>
 
 
@@ -387,6 +368,7 @@
                         android:textStyle="bold" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -411,6 +393,7 @@
                         android:textStyle="bold" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -435,6 +418,7 @@
                         android:textStyle="bold" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -459,6 +443,7 @@
                         android:textStyle="bold" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -483,7 +468,6 @@
                         android:textStyle="bold" />
 
                 </RelativeLayout>
-
 
 
                 <RelativeLayout

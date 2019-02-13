@@ -185,6 +185,7 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     protected void initData()
     {
         orderId = getIntent().getStringExtra("ORDER_ID");
+        orderId ="3084058692371456";
     }
 
     @Override
