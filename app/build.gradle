@@ -6,8 +6,8 @@ android {
         applicationId "com.jyq.seller"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 12000
-        versionName "1.2.0"
+        versionCode 15000
+        versionName "1.5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }

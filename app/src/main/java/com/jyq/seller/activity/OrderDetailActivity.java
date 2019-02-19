@@ -163,7 +163,7 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
 
                         for (int i = 0; i <goodsInfoList.size() ; i++)
                         {
-                            goodsAllPrice +=Double.parseDouble(goodsInfoList.get(i).getPrice()) * Integer.parseInt(goodsInfoList.get(i).getSize());
+                            goodsAllPrice +=Double.parseDouble(goodsInfoList.get(i).getGoodsTotalPrice());
                         }
 
                         tvGoodsAllprice.setText("¥" +goodsAllPrice);
@@ -185,7 +185,6 @@ public class OrderDetailActivity extends BaseActivity implements IRequestListene
     protected void initData()
     {
         orderId = getIntent().getStringExtra("ORDER_ID");
-        orderId ="3084058692371456";
     }
 
     @Override
